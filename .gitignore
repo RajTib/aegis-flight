@@ -1,0 +1,50 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+
+# ---- Node / frontend ----
+node_modules/
+frontend/dist/
+frontend/.vite/
+*.local
+
+# ---- Generated data & artifacts (reproducible; not source of truth) ----
+data/generated/*
+!data/generated/.gitkeep
+artifacts/benchmarks/*
+!artifacts/benchmarks/.gitkeep
+artifacts/figures/*
+!artifacts/figures/.gitkeep
+artifacts/reports/*
+!artifacts/reports/.gitkeep
+demo/screenshots/*
+!demo/screenshots/.gitkeep
+
+# ---- Databases / logs ----
+*.sqlite
+*.sqlite3
+*.db
+*.log
+
+# ---- Trained models (regenerable via scripts/train_model.py) ----
+models/*.joblib
+models/*.pkl
+
+# ---- OS / editor cruft ----
+.DS_Store
+Thumbs.db
+*.swp
+*.tmp
+*~
+.idea/
+.vscode/

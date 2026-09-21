@@ -1,0 +1,83 @@
+# AegisFlight - detection engine configuration
+#
+# Every threshold documents: what it means, its unit, and the rationale.
+# Thresholds were set above the benign 99.x-percentile observed in generated
+# baseline flights (see scripts/tune_thresholds.py) to keep the false-positive
+# rate low while retaining high recall. Re-tune after changing the simulator.
+
+decision_rate_hz: 5.0          # fusion/decision cadence
+
+# ------------------------------------------------------------------ #
+# Detector A: protocol / rule engine
+# ------------------------------------------------------------------ #
+protocol:
+  expected_sysids: [1]              # legitimate vehicle system id(s)
+  expected_gcs_sysids: [255, 254]   # legitimate ground station id(s)
+  autopilot_compid: 1               # MAV_COMP_ID_AUTOPILOT1
+  gcs_compids: [190, 191, 200]      # MAV_COMP_ID_MISSIONPLANNER etc.
+  heartbeat_timeout_s: 3.0          # missing heartbeat => link fault
+  max_msg_rate_hz: 400.0            # aggregate rate above this => flood (DoS)
+  nominal_msg_rate_hz: 28.0         # expected steady-state aggregate rate
+  msg_rate_spike_factor: 3.0        # rate > factor*nominal => suspicious
+  max_seq_gap: 30                   # per-source sequence jump => loss/DoS
+  min_interarrival_ms: 0.4          # bursts faster than this are abnormal
+  gps_dropout_s: 2.0                # GPS silence longer than this => stale
+  allowed_commands_in_flight:
+    - MAV_CMD_NAV_WAYPOINT
+    - MAV_CMD_DO_SET_MODE
+    - MAV_CMD_NAV_LOITER_UNLIM
+    - MAV_CMD_DO_CHANGE_SPEED
+    - MAV_CMD_NAV_RETURN_TO_LAUNCH
+  sensitive_commands:
+    - MAV_CMD_COMPONENT_ARM_DISARM
+    - MAV_CMD_DO_FLIGHTTERMINATION
+    - MAV_CMD_NAV_LAND
+    - MAV_CMD_DO_SET_HOME
+  command_burst_window_s: 2.0
+  command_burst_max: 4
+  require_signing: false            # if true, unsigned msgs are flagged
+
+# ------------------------------------------------------------------ #
+# Detector B: physics / cyber-physical consistency
+# ------------------------------------------------------------------ #
+physics:
+  gps_pos_residual_m: 12.0          # |dead-reckoned pos - reported pos|
+  gps_pos_residual_hard_m: 30.0     # hard trigger regardless of hysteresis
+  gps_speed_consistency_ms: 5.0     # |GPS-derived speed - VFR groundspeed|
+  alt_consistency_m: 8.0            # |GPS alt - baro alt| (bias-corrected)
+  alt_jump_ms: 25.0                 # altitude rate-of-change ceiling (m/s)
+  max_accel_ms2: 20.0               # implausible horizontal acceleration
+  max_jerk_ms3: 60.0                # implausible jerk
+  battery_rise_v: 0.4               # voltage should not spontaneously rise
+  battery_drop_rate_v_s: 2.0        # nor collapse impossibly fast
+  attitude_rate_consistency: 1.2    # attitude-vs-rate mismatch tolerance
+  hysteresis_ticks: 2               # consecutive ticks before firing (soft)
+
+# ------------------------------------------------------------------ #
+# Detector C: ML anomaly detector (Isolation Forest, trained benign-only)
+# ------------------------------------------------------------------ #
+anomaly:
+  model_path: models/isoforest.joblib
+  score_threshold: 0.62             # normalised anomaly score => triggered
+  contamination: 0.02
+  n_estimators: 200
+  warmup_ticks: 20
+
+# ------------------------------------------------------------------ #
+# Fusion engine
+# ------------------------------------------------------------------ #
+fusion:
+  weights:
+    protocol_rule: 0.30
+    physics_consistency: 0.34
+    ml_anomaly: 0.16
+    firmware_integrity: 0.20
+  threat_threshold: 0.45
+  severity_bands:
+    WATCH: 0.30
+    SUSPICIOUS: 0.45
+    HIGH: 0.62
+    CRITICAL: 0.80
+  alert_threshold_severity: SUSPICIOUS
+  cooldown_s: 4.0                    # dedup window per attack type
+  clear_ticks: 4                     # normal ticks before clearing alert state
