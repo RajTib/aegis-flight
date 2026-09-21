@@ -137,7 +137,10 @@ class MavlinkEncoder:
             float(gs),
             int(s.heading) % 360,
             int(max(0, min(100, s.throttle))),
-            float(s.alt_msl + self._n(self.noise.get("baro_m", 0.0))),
+            # VFR_HUD.alt is the baro/EKF-fused altitude -> independent of the
+            # GPS altitude in GLOBAL_POSITION_INT/GPS_RAW_INT. This gives the
+            # physics detector two altitude channels to cross-check.
+            float(s.baro_alt + self.baro_bias + self._n(self.noise.get("baro_m", 0.0))),
             float(s.vertical_speed + self._n(vn)),
         )
 
@@ -194,6 +197,26 @@ class MavlinkEncoder:
             if self.due(tick, name):
                 msg = builder(self, state)
                 out.append(RawPacket(state.t, self._pack(msg, self.sysid, self.compid)))
+        return out
+
+    def encode_as(
+        self,
+        state: FlightState,
+        sysid: int,
+        compid: int,
+        names: tuple[str, ...],
+        send_time: float | None = None,
+    ) -> list[RawPacket]:
+        """Encode telemetry messages *as* a given (possibly rogue) source.
+
+        Used by the MAVLink-anomaly attack to impersonate the vehicle from a
+        rogue system id, complete with its own sequence stream.
+        """
+        st = send_time if send_time is not None else state.t
+        out: list[RawPacket] = []
+        for name in names:
+            msg = self._BUILDERS[name](self, state)
+            out.append(RawPacket(st, self._pack(msg, sysid, compid)))
         return out
 
     def encode_command_long(
