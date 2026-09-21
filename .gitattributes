@@ -1,0 +1,6 @@
+# Normalise line endings so Windows CRLF churn never pollutes diffs.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.joblib binary
+*.sqlite binary
