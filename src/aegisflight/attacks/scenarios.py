@@ -210,8 +210,9 @@ class FirmwareIntegrityAttack(Attack):
         if firmware_dir is None:
             firmware_dir = Path(tempfile.mkdtemp(prefix="aegis_fw_"))
         self.verifier = FirmwareVerifier(firmware_dir)
-        self.verifier.write_fixture()
-        self.verifier.build_manifest()
+        # Only lay down the pristine fixture + manifest if the directory the IDS
+        # verifier watches hasn't already been provisioned (shared filesystem).
+        self.verifier.ensure_fixture()
         self._tampered = False
         self._cached_status: IntegrityStatus | None = None
 
