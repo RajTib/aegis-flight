@@ -1,0 +1,39 @@
+%% AegisFlight — system architecture (reflects src/aegisflight/*)
+flowchart TB
+    subgraph SIM["Simulation & attack (data plane)"]
+        S["FlightSimulator<br/>simulator/flight.py<br/>clean FlightState ground truth"]
+        A["Attack engine<br/>attacks/scenarios.py<br/>value / stream / integrity hooks"]
+        ENC["MavlinkEncoder<br/>mavlink/codec.py<br/>+ sensor noise"]
+        DEC["MavlinkDecoder<br/>mavlink/codec.py"]
+        SRC["SimulatedTelemetrySource<br/>sources/stream.py"]
+        S --> A --> ENC --> DEC --> SRC
+    end
+
+    subgraph IDS["Intrusion Detection System"]
+        FE["FeatureExtractor<br/>features/extractor.py"]
+        D1["ProtocolDetector<br/>detectors/protocol.py"]
+        D2["PhysicsDetector<br/>detectors/physics.py"]
+        D3["AnomalyDetector (ML)<br/>detectors/anomaly.py"]
+        D4["IntegrityDetector<br/>detectors/integrity.py"]
+        FUSE["FusionEngine<br/>fusion/engine.py<br/>noisy-OR + attribution"]
+        FE --> D1 --> FUSE
+        FE --> D2 --> FUSE
+        FE --> D3 --> FUSE
+        D4 --> FUSE
+    end
+
+    SRC -->|MessageEnvelope| FE
+    FV["FirmwareVerifier<br/>integrity/verifier.py<br/>SHA-256 manifest"] --> D4
+    FUSE -->|ThreatAssessment| STORE["EventStore<br/>logging/store.py<br/>SHA-256 hash chain"]
+
+    subgraph DELIVERY["Delivery"]
+        API["FastAPI + WebSocket<br/>backend/app.py + engine.py"]
+        UI["React dashboard<br/>frontend/"]
+        BM["Benchmark harness<br/>benchmark/*"]
+        API --> UI
+    end
+    FUSE --> API
+    STORE --> API
+    IDS --> BM
+
+    PIPE["IDSPipeline (pipeline.py) orchestrates FeatureExtractor -> detectors -> FusionEngine"]

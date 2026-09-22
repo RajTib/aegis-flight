@@ -1,0 +1,23 @@
+%% AegisFlight — PoC deployment (local) and future path
+flowchart TB
+    subgraph poc["Stage-1 PoC (this repo, single machine)"]
+        direction LR
+        BE["aegis serve<br/>FastAPI + LiveEngine :8000"]
+        FEUI["React dashboard<br/>(frontend/dist, served by BE)"]
+        DBP[("SQLite event log")]
+        MODEL["isoforest.joblib"]
+        BE --> FEUI
+        BE --> DBP
+        MODEL --> BE
+    end
+
+    subgraph future["Future deployment path (NOT built — see proposal §Future Work)"]
+        direction LR
+        GCS["Real GCS / SITL<br/>(ArduPilot/PX4)"]
+        UDP["MAVLink UDP link"]
+        EDGE["IDS on companion computer<br/>(e.g. Raspberry Pi / Jetson)"]
+        GCS --> UDP --> EDGE
+    end
+
+    poc -. "same pipeline; swap SimulatedTelemetrySource
+for a real MAVLink UDP source" .-> future

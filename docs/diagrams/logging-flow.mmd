@@ -1,0 +1,12 @@
+%% AegisFlight — tamper-evident event logging (per-run SHA-256 hash chain)
+flowchart LR
+    A["ThreatAssessment<br/>(is_alert = true)"] --> B["canonical JSON<br/>(sorted keys)"]
+    P["prev_hash<br/>(last hash in this run,<br/>GENESIS if first)"] --> H
+    B --> H["hash = SHA-256(prev_hash || canonical)"]
+    H --> ROW["events row<br/>(fields + prev_hash + hash)"]
+    ROW --> DB[("SQLite<br/>logging/store.py")]
+
+    DB --> V["verify_chain(run_id)"]
+    V --> OK{"recompute each hash<br/>== stored hash?"}
+    OK -->|yes| VALID["chain intact"]
+    OK -->|no| BROKEN["broken_at = i<br/>(insert/edit/delete detected)"]

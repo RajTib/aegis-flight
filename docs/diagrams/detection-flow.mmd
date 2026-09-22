@@ -1,0 +1,19 @@
+%% AegisFlight — detection & fusion
+flowchart TB
+    FF["FeatureFrame<br/>(network / nav / sensor / command features)"]
+    FF --> PR["ProtocolDetector<br/>rate, seq gaps, rogue src,<br/>liveness, cmd provenance"]
+    FF --> PH["PhysicsDetector<br/>pos residual, GPS/baro alt,<br/>GPS/VFR speed, battery, yaw/course"]
+    FF --> ML["AnomalyDetector<br/>IsolationForest + Mahalanobis<br/>(benign-trained ensemble)"]
+    FW["FirmwareVerifier verify()"] --> IN["IntegrityDetector"]
+
+    PR --> R1["DetectorResult<br/>score, attack_votes, evidence"]
+    PH --> R2
+    ML --> R3
+    IN --> R4
+
+    R1 & R2 & R3 & R4 --> FU["FusionEngine.fuse()"]
+    FU --> C1["threat_score = 1 - Π(1 - score·w')<br/>w' = w / max(w)"]
+    FU --> C2["attack_type = argmax weighted votes"]
+    FU --> C3["severity from bands"]
+    FU --> C4["cooldown dedup + clear hysteresis"]
+    C1 & C2 & C3 & C4 --> TA["ThreatAssessment"]

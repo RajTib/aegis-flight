@@ -31,6 +31,10 @@ from ..mavlink.codec import MODE_NAMES
 _RESID_WINDOW = 15
 _RESID_CLAMP_M = 30.0
 # ML feature vector order (policy-free continuous signals, benign-stable).
+# NB: battery_v_rate is deliberately excluded — it is ~0 in steady flight
+# (tiny variance), so throttle transitions read as extreme outliers and cause
+# benign false positives. Battery attacks are covered by the physics detector's
+# transition-robust 0.4 V rise threshold instead.
 ML_FEATURES = (
     "msg_rate_hz",
     "interarrival_jitter_ms",
@@ -40,7 +44,6 @@ ML_FEATURES = (
     "gps_baro_alt_diff_m",
     "alt_rate_ms",
     "accel_ms2",
-    "battery_v_rate_abs",
     "yaw_course_diff_deg",
     "cmd_rate_hz",
     "loss_ratio",

@@ -41,7 +41,6 @@ FEATURE_ATTACK_MAP: dict[str, AttackType] = {
     "gps_baro_alt_diff_m": AttackType.TELEMETRY_MANIPULATION,
     "alt_rate_ms": AttackType.TELEMETRY_MANIPULATION,
     "accel_ms2": AttackType.GPS_SPOOFING,
-    "battery_v_rate_abs": AttackType.TELEMETRY_MANIPULATION,
     "yaw_course_diff_deg": AttackType.TELEMETRY_MANIPULATION,
     "cmd_rate_hz": AttackType.COMMAND_INJECTION,
     "loss_ratio": AttackType.DOS,

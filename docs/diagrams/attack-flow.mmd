@@ -1,0 +1,29 @@
+%% AegisFlight — where each attack perturbs the pipeline
+flowchart LR
+    subgraph truth["Clean FlightState"]
+        ST[FlightState]
+    end
+    subgraph value["perturb_state (pre-encode)"]
+        GPS["GPS spoofing<br/>lat/lon drift/offset/freeze"]
+        TM["Telemetry manipulation<br/>alt bias / speed / battery / frozen att"]
+    end
+    subgraph stream["perturb_packets (post-encode)"]
+        MAV["MAVLink anomaly<br/>rogue sysid / rate / seq / loss"]
+        CMD["Command injection<br/>rogue COMMAND_LONG"]
+        DOS["DoS<br/>flood / blackout / latency"]
+    end
+    subgraph files["filesystem"]
+        FW["Firmware tamper<br/>flip byte -> SHA-256 mismatch"]
+    end
+
+    ST --> value --> ENC[MavlinkEncoder]
+    ENC --> stream --> WIRE[RawPacket wire]
+    WIRE --> DEC[Decoder -> IDS]
+    FW -. verified by .-> IV[FirmwareVerifier]
+
+    GPS -.detected by.-> P1[Physics: pos residual]
+    TM -.detected by.-> P2[Physics: alt/speed/att]
+    MAV -.detected by.-> PR1[Protocol: rogue src/seq]
+    CMD -.detected by.-> PR2[Protocol: cmd provenance]
+    DOS -.detected by.-> PR3[Protocol: rate/gaps/liveness]
+    FW -.detected by.-> INT[Integrity detector]

@@ -1,0 +1,27 @@
+%% AegisFlight — one telemetry tick through the system
+sequenceDiagram
+    participant Sim as FlightSimulator
+    participant Atk as Attack
+    participant Enc as MavlinkEncoder
+    participant Dec as MavlinkDecoder
+    participant Ext as FeatureExtractor
+    participant Det as Detectors (4)
+    participant Fus as FusionEngine
+    participant Log as EventStore
+    participant API as Backend/WS
+
+    Sim->>Atk: FlightState (clean truth)
+    Atk->>Atk: perturb_state() (GPS spoof / telemetry manip)
+    Atk->>Enc: (possibly modified) FlightState
+    Enc->>Enc: encode 6 msg types + sensor noise
+    Atk->>Enc: before_encode() (seq scramble)
+    Enc->>Atk: RawPacket[]
+    Atk->>Dec: perturb_packets() (drop/dup/inject/reid)
+    Dec->>Ext: MessageEnvelope[] (update())
+    Note over Ext: every decision tick (5 Hz):
+    Ext->>Det: FeatureFrame (extract())
+    Det->>Fus: DetectorResult x4 (score, votes, evidence)
+    Fus->>Fus: noisy-OR combine + attribute + severity
+    Fus->>Log: ThreatAssessment (if is_alert)
+    Fus->>API: ThreatAssessment (broadcast)
+    API->>API: WebSocket push {telemetry, threat}
