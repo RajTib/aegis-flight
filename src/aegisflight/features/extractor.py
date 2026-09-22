@@ -22,10 +22,14 @@ from ..core.geo import EARTH_RADIUS_M, wrap_deg_180
 from ..core.types import MessageEnvelope, TelemetrySnapshot
 from ..mavlink.codec import MODE_NAMES
 
-# Leaky-integrator retention for the position residual (per position fix).
-# Chosen so benign GPS noise stays ~4 m RMS while a sustained drift accumulates
-# well past the 12 m threshold.
-_RESID_LEAK = 0.98
+# Position-residual sliding window (in position fixes; GPS ≈ 5 Hz => ~3 s).
+# A bounded window (rather than an infinite leaky integrator) accumulates the
+# sub-GPS-noise gradual-drift signal past the 12 m threshold while keeping the
+# benign residual ~4 m RMS AND recovering within the window length once an
+# attack stops (no long post-attack detector tail). Per-fix increments are
+# magnitude-clamped so a single position snap-back can't dominate the window.
+_RESID_WINDOW = 15
+_RESID_CLAMP_M = 30.0
 # ML feature vector order (policy-free continuous signals, benign-stable).
 ML_FEATURES = (
     "msg_rate_hz",
@@ -112,8 +116,7 @@ class FeatureExtractor:
         self._expected_msgs = 0.0  # for loss estimate
 
         # navigation bookkeeping
-        self._resid_n = 0.0
-        self._resid_e = 0.0
+        self._resid_incs: deque[tuple[float, float]] = deque(maxlen=_RESID_WINDOW)
         self._last_fix: tuple[float, float, float] | None = None  # (t, lat, lon)
         self._vel_hist: deque[tuple[float, float, float]] = deque(maxlen=6)  # (t, vx, vy)
         self._accel_prev: tuple[float, float] | None = None  # (t, accel)
@@ -199,13 +202,22 @@ class FeatureExtractor:
                 # measured displacement (local NE metres)
                 dn = math.radians(lat - lat0) * EARTH_RADIUS_M
                 de = math.radians(lon - lon0) * EARTH_RADIUS_M * math.cos(math.radians(lat))
-                # velocity-implied displacement
-                en = vx * dt
-                ee = vy * dt
-                self._resid_n = _RESID_LEAK * self._resid_n + (dn - en)
-                self._resid_e = _RESID_LEAK * self._resid_e + (de - ee)
+                # velocity-implied displacement; residual increment is the gap
+                inc_n = dn - vx * dt
+                inc_e = de - vy * dt
+                mag = math.hypot(inc_n, inc_e)
+                if mag > _RESID_CLAMP_M:  # clamp so a snap-back can't dominate
+                    scale = _RESID_CLAMP_M / mag
+                    inc_n *= scale
+                    inc_e *= scale
+                self._resid_incs.append((inc_n, inc_e))
         self._last_fix = (t, lat, lon)
         self._vel_hist.append((t, vx, vy))
+
+    def _position_residual(self) -> float:
+        rn = sum(i[0] for i in self._resid_incs)
+        re = sum(i[1] for i in self._resid_incs)
+        return math.hypot(rn, re)
 
     # -- feature emission --------------------------------------------------- #
 
@@ -235,7 +247,7 @@ class FeatureExtractor:
         hb_age = max(0.0, t - self._last_heartbeat_t) if self._last_heartbeat_t > -1e8 else 999.0
 
         # ---- navigation / physics ----
-        pos_residual = math.hypot(self._resid_n, self._resid_e)
+        pos_residual = self._position_residual()
         gps_speed = math.hypot(snap.vx or 0.0, snap.vy or 0.0)
         vfr_speed = snap.groundspeed or 0.0
         speed_diff = abs(gps_speed - vfr_speed)

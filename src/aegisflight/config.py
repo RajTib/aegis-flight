@@ -207,7 +207,7 @@ class AegisConfig:
     attacks: dict[str, Any] = field(default_factory=lambda: copy.deepcopy(DEFAULT_ATTACKS))
 
     @classmethod
-    def load(cls, config_dir: Path | str | None = None) -> "AegisConfig":
+    def load(cls, config_dir: Path | str | None = None) -> AegisConfig:
         """Load config from YAML, deep-merged over the built-in defaults."""
         cfg_dir = Path(config_dir) if config_dir else CONFIG_DIR
         sim = _deep_merge(DEFAULT_SIMULATION, _read_yaml(cfg_dir / "simulation.yaml"))

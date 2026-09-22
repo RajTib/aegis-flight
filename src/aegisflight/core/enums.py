@@ -47,7 +47,7 @@ class Severity(str, Enum):
         return _SEVERITY_RANK[self]
 
     @classmethod
-    def from_rank(cls, rank: int) -> "Severity":
+    def from_rank(cls, rank: int) -> Severity:
         rank = max(0, min(rank, len(_SEVERITY_ORDER) - 1))
         return _SEVERITY_ORDER[rank]
 

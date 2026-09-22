@@ -59,7 +59,9 @@ src = ["src", "backend", "scripts"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "W", "UP", "B", "C4"]
-ignore = ["E501", "B008"]
+# E501: line length handled by formatter; B008: FastAPI Depends() default;
+# UP042: enums deliberately use (str, Enum) for JSON-serialisation clarity.
+ignore = ["E501", "B008", "UP042"]
 
 [tool.mypy]
 python_version = "3.11"
