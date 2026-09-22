@@ -1,0 +1,88 @@
+# AegisFlight
+
+**A hybrid, explainable, real-time Intrusion Detection System for UAV
+cyber-physical security.** Stage-1 proof-of-concept for the **PUSHPAK Grand
+Challenge 2026-27 (IIT Bombay Techfest) — Security of Drones, Objective 2**.
+
+> ⚠️ **Everything here is a safe, local SIMULATION.** AegisFlight detects
+> attacks on *simulated* MAVLink telemetry and firmware. It does not connect to,
+> or attack, any real aircraft or network.
+
+AegisFlight fuses four complementary detectors over a genuine MAVLink 2 stream:
+
+1. **Protocol / rule engine** — transport anomalies (rate, sequence, rogue
+   sources, liveness, command provenance).
+2. **Cyber-physical consistency** — cross-checks physically-coupled telemetry
+   (position vs velocity, GPS vs baro altitude, attitude vs course, battery).
+3. **ML anomaly detector** — benign-trained Isolation-Forest + Mahalanobis
+   ensemble.
+4. **Firmware integrity** — real SHA-256 manifest verification.
+
+An evidence-fusion engine turns these into severity-ranked, **explainable**
+threat assessments, logged to a tamper-evident SHA-256 hash chain and streamed
+to a live dashboard.
+
+## Results (from `scripts/benchmark.py`, 6 seeds × 7 scenarios, 23,430 decisions)
+
+| Accuracy | Precision | Recall | **FPR** | F1 | Detection latency | Compute/decision |
+|---|---|---|---|---|---|---|
+| 0.997 | 0.999 | 0.990 | **0.0002** | 0.995 | 0.36 s mean | 17.7 ms mean (p95 23.6) |
+
+Per-attack recall: GPS 0.95 · MAVLink 1.00 · Command 1.00 · Telemetry 1.00 ·
+DoS 1.00 · Firmware 0.99. All figures: `artifacts/figures/`. Reproduce with
+`aegis benchmark`. *No metric in this repo is hand-written.*
+
+## Quick start
+
+```bash
+python -m venv .venv && .venv/Scripts/activate      # Windows
+# source .venv/bin/activate                          # Linux/macOS
+pip install -e ".[dev]"
+
+aegis train                 # train the anomaly model (~15 s)  [optional]
+aegis simulate --attack gps_spoofing   # run one IDS session, print alerts
+aegis benchmark             # full metrics + figures -> artifacts/
+pytest                      # 44 tests
+
+# Live dashboard:
+npm --prefix frontend install && npm --prefix frontend run build
+aegis serve                 # http://127.0.0.1:8000
+```
+Full steps: [`docs/QUICKSTART.md`](docs/QUICKSTART.md) ·
+[`docs/installation.md`](docs/installation.md).
+
+## Demo in 30 seconds
+`aegis serve`, open the dashboard, click **GPS Spoofing** → within ~1.5 s the
+threat panel goes **HIGH / GPS_SPOOFING** with evidence *"position residual
+> 12 m (reported track diverges from velocity)"*; **Firmware Tamper** → an
+INVALID SHA-256 integrity alert; **Denial of Service** → CRITICAL. Every alert
+is logged to a verifiable hash chain. See
+[`docs/DEMO_RUNBOOK.md`](docs/DEMO_RUNBOOK.md).
+
+## Architecture
+
+```
+FlightSimulator → MAVLink(+noise) → [attack] → decode → FeatureExtractor
+   → {Protocol, Physics, ML, Integrity} detectors → FusionEngine
+   → ThreatAssessment → EventStore (hash chain) + FastAPI/WebSocket → Dashboard
+```
+Details: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md),
+[`docs/diagrams/`](docs/diagrams/).
+
+## Repository layout
+`src/aegisflight/` (library: core, simulator, mavlink, attacks, integrity,
+sources, features, detectors, fusion, logging, metrics, benchmark, pipeline,
+backend, cli) · `frontend/` (React dashboard) · `configs/` (YAML) ·
+`scripts/` · `tests/` · `artifacts/` (benchmark evidence) · `docs/`.
+
+## Documentation
+Start at [`docs/README.md`](docs/README.md). Key docs:
+[HANDOFF](docs/HANDOFF.md) · [ARCHITECTURE](docs/ARCHITECTURE.md) ·
+[DETECTION](docs/DETECTION.md) · [FEATURES](docs/FEATURES.md) ·
+[THREAT_MODEL](docs/THREAT_MODEL.md) · [BENCHMARKING](docs/BENCHMARKING.md) ·
+[ML_PIPELINE](docs/ML_PIPELINE.md) · [technical_proposal](docs/technical_proposal.md).
+
+## Status & scope
+Stage-1 **proof-of-concept**: a reproducible local simulation, not a
+field-deployed product. Real-RF / SITL / hardware-in-the-loop are documented as
+the future deployment path, not implemented. License: MIT.
