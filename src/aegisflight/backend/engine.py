@@ -56,6 +56,7 @@ class LiveEngine:
         self._n_decisions = 0
         self._alerts: deque[dict] = deque(maxlen=200)
         self._latest_update: dict | None = None
+        self._last_threat: dict = {}  # last DECISION's threat block (for status)
         self._run_id = time.strftime("live-%Y%m%d-%H%M%S")
 
         self._build()
@@ -87,6 +88,7 @@ class LiveEngine:
         self._n_decisions = 0
         self._alerts.clear()
         self._latest_update = None
+        self._last_threat = {}
         self.pipeline.reset()
         self._run_id = time.strftime("live-%Y%m%d-%H%M%S")
         self.source = SimulatedTelemetrySource(self.cfg, NoAttack(), seed=42)
@@ -157,6 +159,7 @@ class LiveEngine:
             self._latest_update = update
             if assessment is not None:
                 self._n_decisions += 1
+                self._last_threat = update.get("threat", {})
                 if assessment.is_alert:
                     row = self.store.log_event(assessment, self._run_id)
                     self._alerts.appendleft(self._alert_dict(assessment, row.get("id")))
@@ -206,7 +209,7 @@ class LiveEngine:
     # -- status snapshots --------------------------------------------------- #
 
     def status(self) -> dict:
-        thr = (self._latest_update or {}).get("threat", {})
+        thr = self._last_threat
         return {
             "running": self.running,
             "sim": True,
@@ -230,7 +233,7 @@ class LiveEngine:
             "decisions": self._n_decisions,
             "alerts": len(self._alerts),
             "throughput_msgs_per_s": round(self._n_messages / uptime, 1),
-            "last_latency_ms": (self._latest_update or {}).get("threat", {}).get("latency_ms"),
+            "last_latency_ms": self._last_threat.get("latency_ms"),
             "event_log": {"count": cs.length, "chain_ok": cs.ok},
             "ml_available": self.pipeline.ml_available,
         }

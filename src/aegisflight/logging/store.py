@@ -91,13 +91,16 @@ class EventStore:
 
     # -- events ------------------------------------------------------------- #
 
-    def _last_hash(self) -> str:
-        row = self.conn.execute("SELECT hash FROM events ORDER BY id DESC LIMIT 1").fetchone()
+    def _last_hash(self, run_id: str) -> str:
+        """Last hash within a run (each run is its own chain from GENESIS)."""
+        row = self.conn.execute(
+            "SELECT hash FROM events WHERE run_id=? ORDER BY id DESC LIMIT 1", (run_id,)
+        ).fetchone()
         return row["hash"] if row else GENESIS_HASH
 
     def log_event(self, a: ThreatAssessment, run_id: str) -> dict:
-        """Append one alert to the chain; returns the stored row as a dict."""
-        prev = self._last_hash()
+        """Append one alert to the run's chain; returns the stored row as a dict."""
+        prev = self._last_hash(run_id)
         payload = {
             "run_id": run_id,
             "t": round(a.t, 3),
@@ -163,13 +166,27 @@ class EventStore:
     # -- integrity ---------------------------------------------------------- #
 
     def verify_chain(self, run_id: str | None = None) -> ChainStatus:
-        q = "SELECT * FROM events"
-        args: list[Any] = []
-        if run_id:
-            q += " WHERE run_id=?"
-            args.append(run_id)
-        q += " ORDER BY id ASC"
-        rows = self.conn.execute(q, args).fetchall()
+        """Verify per-run hash chains.
+
+        With ``run_id`` given, verify just that run. Without, verify every run
+        independently and report the first failure (chains are per-run, so a
+        global id-ordered scan would interleave runs and false-positive).
+        """
+        if run_id is None:
+            runs = [r["run_id"] for r in
+                    self.conn.execute("SELECT DISTINCT run_id FROM events").fetchall()]
+            total = 0
+            for rid in runs:
+                cs = self.verify_chain(rid)
+                total += cs.length
+                if not cs.ok:
+                    return ChainStatus(ok=False, length=total, broken_at=cs.broken_at,
+                                       detail=f"run {rid}: {cs.detail}")
+            return ChainStatus(ok=True, length=total, detail=f"{len(runs)} run chain(s) intact")
+
+        rows = self.conn.execute(
+            "SELECT * FROM events WHERE run_id=? ORDER BY id ASC", (run_id,)
+        ).fetchall()
         prev = GENESIS_HASH
         for i, r in enumerate(rows):
             payload = {

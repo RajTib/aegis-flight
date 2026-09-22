@@ -14,6 +14,7 @@ Run ``aegis <cmd> -h`` for per-command options.
 from __future__ import annotations
 
 import argparse
+import contextlib
 import sys
 
 from .. import __version__
@@ -138,7 +139,7 @@ def _cmd_verify_log(args: argparse.Namespace) -> int:
 
     store = EventStore(args.db)
     cs = store.verify_chain()
-    print(f"events: {cs.length}  chain: {'OK ✓' if cs.ok else 'BROKEN ✗'}  {cs.detail}")
+    print(f"events: {cs.length}  chain: {'OK' if cs.ok else 'BROKEN'}  {cs.detail}")
     store.close()
     return 0 if cs.ok else 2
 
@@ -189,6 +190,11 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: list[str] | None = None) -> int:
+    # Evidence strings use unicode (≥, °, ²); ensure the console can print them
+    # on Windows (cp1252 default) without crashing.
+    for stream in (sys.stdout, sys.stderr):
+        with contextlib.suppress(Exception):
+            stream.reconfigure(encoding="utf-8")
     parser = build_parser()
     args = parser.parse_args(argv)
     return args.func(args)
