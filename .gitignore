@@ -18,17 +18,17 @@ frontend/dist/
 frontend/.vite/
 *.local
 
-# ---- Generated data & artifacts (reproducible; not source of truth) ----
+# ---- Generated data (reproducible; not source of truth) ----
 data/generated/*
 !data/generated/.gitkeep
-artifacts/benchmarks/*
-!artifacts/benchmarks/.gitkeep
-artifacts/figures/*
-!artifacts/figures/.gitkeep
 artifacts/reports/*
 !artifacts/reports/.gitkeep
-demo/screenshots/*
-!demo/screenshots/.gitkeep
+
+# Benchmark results + figures ARE committed as competition evidence
+# (regenerable via `aegis benchmark`), so they are intentionally NOT ignored.
+
+# demo screenshots: keep committed if present (video/demo evidence)
+!demo/screenshots/
 
 # ---- Databases / logs ----
 *.sqlite

@@ -1,0 +1,198 @@
+"""AegisFlight command-line interface (the ``aegis`` entry point).
+
+Subcommands:
+    aegis simulate    run one telemetry session through the IDS and print results
+    aegis benchmark   run the full detection benchmark -> artifacts/
+    aegis train       train the anomaly model on benign flights
+    aegis serve       start the FastAPI backend (live dashboard API + WebSocket)
+    aegis verify-log  verify a SQLite event log's SHA-256 hash chain
+    aegis version     print version
+
+Run ``aegis <cmd> -h`` for per-command options.
+"""
+
+from __future__ import annotations
+
+import argparse
+import sys
+
+from .. import __version__
+
+
+def _cmd_simulate(args: argparse.Namespace) -> int:
+    from ..benchmark.runner import run_session
+    from ..config import load_config
+    from ..logging import EventStore
+    from ..metrics import evaluate
+
+    cfg = load_config()
+    model = None if args.no_model else args.model
+    print(f"Simulating scenario='{args.attack}' seed={args.seed} route={args.route or 'default'} "
+          f"model={'off' if model is None else model}")
+    res = run_session(cfg, args.attack, seed=args.seed, route=args.route, model_path=model)
+
+    alerts = [a for a in res.assessments if a.is_alert]
+    scored = [r for r in res.records if r.scored]
+    ev = evaluate([r.true_label for r in scored], [r.pred_label for r in scored])
+
+    print(f"\nDecisions: {res.n_decisions}  messages: {res.n_messages}  "
+          f"throughput: {res.throughput_msgs_per_s:.0f} msg/s")
+    if args.attack not in ("benign", "none"):
+        print(f"Attack window: {res.window[0]:.0f}-{res.window[1] if res.window[1] < 1e17 else 'end'}s"
+              f"  time-to-detect: {res.time_to_detect_s}s  recall: {ev.binary.recall:.2f}")
+    print(f"FPR (this session): {ev.binary.fpr:.3f}")
+    print(f"\nAlerts raised: {len(alerts)}")
+    for a in alerts[:8]:
+        print(f"  t={a.t:6.1f}s  {a.severity.value:9} {a.attack_type.value:22} "
+              f"score={a.threat_score:.2f} conf={a.confidence:.2f}")
+        for e in a.evidence[:2]:
+            print(f"           └─ {e}")
+
+    if args.db:
+        store = EventStore(args.db)
+        run_id = f"{args.attack}-{args.seed}"
+        store.start_run(run_id, label=args.attack)
+        for a in alerts:
+            store.log_event(a, run_id)
+        cs = store.verify_chain(run_id)
+        print(f"\nLogged {len(alerts)} alerts to {args.db} (run={run_id}); "
+              f"chain: {'OK' if cs.ok else 'BROKEN'} ({cs.length} events)")
+        store.close()
+    return 0
+
+
+def _cmd_benchmark(args: argparse.Namespace) -> int:
+    from ..benchmark.harness import run_benchmark
+    from ..config import load_config
+
+    cfg = load_config()
+    model = None if args.no_model else args.model
+    result = run_benchmark(cfg, seeds=args.seeds, model_path=model, out_dir=args.out)
+    b = result["binary"]
+    print(f"accuracy={b['accuracy']} recall={b['recall_tpr']} FPR={b['fpr']} F1={b['f1']}")
+    if not args.no_figures:
+        from ..benchmark import plots
+        plots.generate_all(cfg, result, "artifacts/figures")
+    print(f"Artifacts -> {args.out}/")
+    return 0
+
+
+def _cmd_train(args: argparse.Namespace) -> int:
+    # scripts/ is not an importable package, so the trainer logic is inlined
+    # here (kept in sync with scripts/train_models.py).
+    import platform as _pf
+    from datetime import UTC, datetime
+    from pathlib import Path
+
+    import joblib
+    import numpy as np
+    import sklearn
+    from sklearn.ensemble import IsolationForest
+    from sklearn.preprocessing import StandardScaler
+
+    from ..benchmark.dataset import collect_benign_dataset
+    from ..config import load_config
+    from ..detectors.anomaly import combined_anomaly_raw
+    from ..features.extractor import ML_FEATURES
+
+    cfg = load_config()
+    acfg = cfg.detector["anomaly"]
+    ds = collect_benign_dataset(cfg, n_sessions=args.sessions, seed=args.seed)
+    split = ds.split_by_session(seed=args.seed)
+    Xtr, Xva = split["train"], split["val"]
+    scaler = StandardScaler().fit(Xtr)
+    model = IsolationForest(n_estimators=int(acfg["n_estimators"]),
+                            contamination=float(acfg["contamination"]),
+                            random_state=args.seed, n_jobs=-1).fit(scaler.transform(Xtr))
+    Xtr_s = scaler.transform(Xtr)
+    iso = -model.score_samples(Xtr_s)
+    maha = np.linalg.norm(Xtr_s, axis=1)
+    bundle = {"model": model, "scaler": scaler, "feature_names": list(ML_FEATURES),
+              "iso_mean": float(iso.mean()), "iso_std": float(iso.std() or 1e-3),
+              "maha_mean": float(maha.mean()), "maha_std": float(maha.std() or 1e-3)}
+    va = combined_anomaly_raw(bundle, Xva)
+    bundle["score_thr"] = float(va.mean() + 3.0 * va.std())
+    bundle["score_scale"] = float(max(va.std(), 1e-3))
+    bundle["metadata"] = {"created": datetime.now(UTC).isoformat(),
+                          "sklearn_version": sklearn.__version__,
+                          "python_version": _pf.python_version(), "seed": args.seed,
+                          "n_sessions": args.sessions}
+    Path(args.out).parent.mkdir(parents=True, exist_ok=True)
+    joblib.dump(bundle, args.out)
+    print(f"Trained on {len(Xtr)} benign vectors; saved -> {args.out}")
+    return 0
+
+
+def _cmd_serve(args: argparse.Namespace) -> int:
+    try:
+        import uvicorn
+    except ImportError:
+        print("uvicorn not installed", file=sys.stderr)
+        return 1
+    uvicorn.run("aegisflight.backend.app:app", host=args.host, port=args.port, reload=args.reload)
+    return 0
+
+
+def _cmd_verify_log(args: argparse.Namespace) -> int:
+    from ..logging import EventStore
+
+    store = EventStore(args.db)
+    cs = store.verify_chain()
+    print(f"events: {cs.length}  chain: {'OK ✓' if cs.ok else 'BROKEN ✗'}  {cs.detail}")
+    store.close()
+    return 0 if cs.ok else 2
+
+
+def build_parser() -> argparse.ArgumentParser:
+    p = argparse.ArgumentParser(prog="aegis", description="AegisFlight UAV IDS")
+    sub = p.add_subparsers(dest="command", required=True)
+
+    s = sub.add_parser("simulate", help="run one IDS session and print results")
+    s.add_argument("--attack", default="benign",
+                   help="benign|gps_spoofing|mavlink_anomaly|command_injection|"
+                        "telemetry_manipulation|dos|firmware_integrity")
+    s.add_argument("--seed", type=int, default=42)
+    s.add_argument("--route", default=None, help="survey_box|out_and_back|perimeter")
+    s.add_argument("--model", default="models/isoforest.joblib")
+    s.add_argument("--no-model", action="store_true")
+    s.add_argument("--db", default=None, help="log alerts to this SQLite path")
+    s.set_defaults(func=_cmd_simulate)
+
+    b = sub.add_parser("benchmark", help="run the full detection benchmark")
+    b.add_argument("--seeds", type=int, nargs="+", default=[1, 2, 3, 4, 5, 6])
+    b.add_argument("--out", default="artifacts/benchmarks")
+    b.add_argument("--model", default="models/isoforest.joblib")
+    b.add_argument("--no-model", action="store_true")
+    b.add_argument("--no-figures", action="store_true")
+    b.set_defaults(func=_cmd_benchmark)
+
+    t = sub.add_parser("train", help="train the anomaly model")
+    t.add_argument("--sessions", type=int, default=24)
+    t.add_argument("--out", default="models/isoforest.joblib")
+    t.add_argument("--seed", type=int, default=100)
+    t.set_defaults(func=_cmd_train)
+
+    sv = sub.add_parser("serve", help="start the FastAPI backend")
+    sv.add_argument("--host", default="127.0.0.1")
+    sv.add_argument("--port", type=int, default=8000)
+    sv.add_argument("--reload", action="store_true")
+    sv.set_defaults(func=_cmd_serve)
+
+    v = sub.add_parser("verify-log", help="verify a SQLite event-log hash chain")
+    v.add_argument("db", help="path to the SQLite event log")
+    v.set_defaults(func=_cmd_verify_log)
+
+    ver = sub.add_parser("version", help="print version")
+    ver.set_defaults(func=lambda a: (print(f"aegisflight {__version__}"), 0)[1])
+
+    return p
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = build_parser()
+    args = parser.parse_args(argv)
+    return args.func(args)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
