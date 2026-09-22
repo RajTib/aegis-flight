@@ -1,13 +1,21 @@
-"""Detector C — lightweight ML anomaly detector (Isolation Forest).
+"""Detector C — lightweight ML anomaly detector (benign-trained).
 
-Trained on **benign-only** feature vectors (see ``scripts/train_model.py``),
-so it flags any telemetry that departs from learned normal flight without ever
-seeing an attack during training. The saved bundle carries the scaler, the
-model, the exact feature order, benign score statistics for normalisation, and
-the sklearn version — inference reconstructs the identical feature schema.
+An **ensemble** of two benign-only anomaly signals over the ``ML_FEATURES``
+vector, combined by taking the stronger of the two:
 
-If no model is present the detector degrades gracefully to a no-op (score 0),
-so the rest of the pipeline runs before the model is trained.
+1. **Isolation Forest** — captures subtle *multivariate, in-distribution*
+   anomalies (e.g. an unusual combination of otherwise-normal values).
+2. **Robust Mahalanobis / scaled-norm** — the L2 norm of the standardised
+   feature vector. Isolation Forest cannot extrapolate past its training range,
+   so it is blind to features that spike far outside benign (msg-rate floods,
+   sequence gaps). The scaled-norm grows without bound for such out-of-range
+   values and covers that blind spot. Near-constant benign features get a
+   variance floor so any nonzero value registers.
+
+Both are trained on benign flights only (see ``scripts/train_models.py``); the
+bundle carries the scaler, model, feature schema, per-component benign
+statistics, the calibrated score threshold/scale, and the sklearn version.
+Missing/incompatible model => the detector degrades to a no-op (score 0).
 """
 
 from __future__ import annotations
@@ -16,6 +24,7 @@ import math
 from pathlib import Path
 
 import joblib
+import numpy as np
 
 from ..core.enums import AttackType, DetectorName
 from ..core.types import DetectorResult
@@ -37,6 +46,29 @@ FEATURE_ATTACK_MAP: dict[str, AttackType] = {
     "cmd_rate_hz": AttackType.COMMAND_INJECTION,
     "loss_ratio": AttackType.DOS,
 }
+
+# Variance floor (in scaled units) so near-constant benign features still
+# contribute to the Mahalanobis norm when they take a nonzero attack value.
+_VAR_FLOOR = 1.0
+
+
+def combined_anomaly_raw(bundle: dict, X: np.ndarray) -> np.ndarray:
+    """Combined benign-anomaly signal per row (shared by training & inference).
+
+    Returns ``max(iso_z, maha_z)`` where each component is standardised by its
+    benign train statistics, so the two are on a comparable scale.
+    """
+    scaler = bundle["scaler"]
+    model = bundle["model"]
+    Xs = scaler.transform(X)
+
+    iso = -model.score_samples(Xs)  # higher => more anomalous
+    iso_z = (iso - bundle["iso_mean"]) / max(1e-9, bundle["iso_std"])
+
+    maha = np.linalg.norm(Xs, axis=1)  # scaled features are z-scores
+    maha_z = (maha - bundle["maha_mean"]) / max(1e-9, bundle["maha_std"])
+
+    return np.maximum(iso_z, maha_z)
 
 
 class AnomalyDetector(Detector):
@@ -68,26 +100,22 @@ class AnomalyDetector(Detector):
                 evidence=[], attack_votes={}, signals=signals,
             )
 
-        scaler = self.bundle["scaler"]
-        model = self.bundle["model"]
         thr = self.bundle["score_thr"]
         scale = self.bundle["score_scale"]
-
-        vec = [[float(getattr(frame, n)) for n in ML_FEATURES]]
-        xs = scaler.transform(vec)
-        anomaly = float(-model.score_samples(xs)[0])  # higher => more anomalous
-        norm = 1.0 / (1.0 + math.exp(-(anomaly - thr) / max(1e-6, scale)))
-        signals["anomaly_raw"] = anomaly
+        vec = np.array([[float(getattr(frame, n)) for n in ML_FEATURES]])
+        raw = float(combined_anomaly_raw(self.bundle, vec)[0])
+        norm = 1.0 / (1.0 + math.exp(-(raw - thr) / max(1e-6, scale)))
+        signals["anomaly_raw"] = raw
         signals["anomaly_score"] = norm
 
         # Attribute to the most-deviating standardised feature.
-        z = xs[0]
-        idx = max(range(len(z)), key=lambda i: abs(z[i]))
+        z = self.bundle["scaler"].transform(vec)[0]
+        idx = int(np.argmax(np.abs(z)))
         top_feat = ML_FEATURES[idx]
         attack = FEATURE_ATTACK_MAP.get(top_feat, AttackType.GPS_SPOOFING)
 
         triggered = norm >= self.threshold
-        evidence = []
+        evidence: list[str] = []
         votes: dict[AttackType, float] = {}
         if triggered:
             evidence.append(
