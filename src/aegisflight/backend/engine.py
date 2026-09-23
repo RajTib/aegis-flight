@@ -13,6 +13,7 @@ the dashboard can never misrepresent simulated activity as a real UAV.
 from __future__ import annotations
 
 import asyncio
+import contextlib
 import tempfile
 import time
 from collections import deque
@@ -57,11 +58,22 @@ class LiveEngine:
         self._alerts: deque[dict] = deque(maxlen=200)
         self._latest_update: dict | None = None
         self._last_threat: dict = {}  # last DECISION's threat block (for status)
-        self._run_id = time.strftime("live-%Y%m%d-%H%M%S")
+        self._run_seq = 0
+        self._run_id = self._new_run_id()
 
         self._build()
 
     # -- lifecycle ---------------------------------------------------------- #
+
+    def _new_run_id(self) -> str:
+        """A unique run id per run, even across resets within the same second.
+
+        A monotonic suffix keeps each run's hash chain independent (two resets
+        in one wall-clock second would otherwise share a run_id and merge
+        chains).
+        """
+        self._run_seq += 1
+        return f"{time.strftime('live-%Y%m%d-%H%M%S')}-{self._run_seq}"
 
     def _build(self) -> None:
         self.pipeline = IDSPipeline(self.cfg, model_path=self.model_path, firmware_dir=self.fw_dir)
@@ -70,17 +82,43 @@ class LiveEngine:
         self.store = EventStore(self.db_path)
         self.store.start_run(self._run_id, label="live-demo")
 
-    def start(self) -> None:
+    async def start(self) -> None:
+        """Start the live loop on the current event loop (idempotent).
+
+        Must be awaited from the event loop — ``asyncio.create_task`` needs a
+        running loop, so the REST endpoints that call it are ``async`` (a sync
+        endpoint runs in a threadpool worker with no loop and would raise).
+        """
         if self.running:
             return
         self.running = True
         self._task = asyncio.create_task(self._loop())
 
-    def stop(self) -> None:
+    async def stop(self) -> None:
+        """Stop the live loop and await the task's cancellation.
+
+        Safe to call when not running. Cancelling *and awaiting* the old task
+        before any restart prevents two ``_loop`` coroutines from ever driving
+        the same pipeline concurrently (a restart race).
+        """
         self.running = False
+        task, self._task = self._task, None
+        if task is not None:
+            task.cancel()
+            with contextlib.suppress(asyncio.CancelledError):
+                await task
 
     def reset(self) -> None:
-        self.stop()
+        """Return the engine to a clean baseline (synchronous state reset).
+
+        Task lifecycle is the caller's job: the REST reset endpoint awaits
+        :meth:`stop` before this and :meth:`start` after, so this method does no
+        async work and stays callable from tests / any thread. It reflashes the
+        simulated firmware and clears all runtime state (see
+        :meth:`IDSPipeline.reset`) and starts a fresh run id; historical event
+        records from earlier runs are left untouched.
+        """
+        self.running = False
         self._active_attack_name = None
         self._pending_attack = "__none__"
         self._sim_t = 0.0
@@ -89,8 +127,11 @@ class LiveEngine:
         self._alerts.clear()
         self._latest_update = None
         self._last_threat = {}
+        # Restore the simulated vehicle to a clean baseline: this reflashes the
+        # firmware fixture to known-good AND clears extractor/detector/fusion
+        # state (see IDSPipeline.reset).
         self.pipeline.reset()
-        self._run_id = time.strftime("live-%Y%m%d-%H%M%S")
+        self._run_id = self._new_run_id()
         self.source = SimulatedTelemetrySource(self.cfg, NoAttack(), seed=42)
         self._gen = self.source.stream()
         self.store.start_run(self._run_id, label="live-demo")

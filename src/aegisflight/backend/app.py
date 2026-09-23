@@ -38,10 +38,10 @@ def get_engine() -> LiveEngine:
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
-    get_engine().start()  # auto-start the live simulation
+    await get_engine().start()  # auto-start the live simulation
     yield
     if engine is not None:
-        engine.stop()
+        await engine.stop()
 
 
 app = FastAPI(title="AegisFlight IDS", version=__version__, lifespan=lifespan)
@@ -95,22 +95,25 @@ def config() -> dict:
 
 
 @app.post("/api/simulation/start")
-def sim_start() -> dict:
-    get_engine().start()
+async def sim_start() -> dict:
+    await get_engine().start()
     return {"ok": True, "running": True}
 
 
 @app.post("/api/simulation/stop")
-def sim_stop() -> dict:
-    get_engine().stop()
+async def sim_stop() -> dict:
+    await get_engine().stop()
     return {"ok": True, "running": False}
 
 
 @app.post("/api/simulation/reset")
-def sim_reset() -> dict:
+async def sim_reset() -> dict:
+    # Stop the running loop, restore a clean baseline, then start a fresh loop.
+    # Async (not sync) so start()'s create_task runs on the event loop.
     eng = get_engine()
+    await eng.stop()
     eng.reset()
-    eng.start()
+    await eng.start()
     return {"ok": True, "reset": True}
 
 

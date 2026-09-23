@@ -105,6 +105,16 @@ class FeatureExtractor:
     def __init__(self, rate_window_s: float = 1.0, cmd_window_s: float = 2.0) -> None:
         self.rate_window_s = rate_window_s
         self.cmd_window_s = cmd_window_s
+        self.reset()
+
+    def reset(self) -> None:
+        """Clear all online state so the extractor behaves like a fresh instance.
+
+        Called by :meth:`IDSPipeline.reset`; without this, a live reset leaves
+        stale receive-time / navigation / battery windows behind, which — once
+        the sim clock restarts near t=0 — read as a message flood and phantom
+        anomalies (false positives on a benign source).
+        """
         self.snapshot = TelemetrySnapshot(t=0.0)
 
         # network bookkeeping

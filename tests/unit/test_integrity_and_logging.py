@@ -32,6 +32,36 @@ def test_firmware_missing_component(tmp_path):
     assert "comms_stack.bin" in rep.missing
 
 
+def test_restore_fixture_reflashes_known_good_not_tampered_bytes(tmp_path):
+    """Reset must reflash the *known-good* image, not re-trust tampered bytes.
+
+    Tampers a component AND drops a stray unexpected component, then restores.
+    The restored bytes must equal the pristine fixture (proving tampered bytes
+    were discarded, not promoted into the manifest) and the stray file must be
+    gone — otherwise a reset would silently bless a compromised firmware.
+    """
+    v = FirmwareVerifier(tmp_path)
+    v.write_fixture()
+    v.build_manifest()
+    good = (tmp_path / "ekf3_params.bin").read_bytes()
+
+    v.tamper("ekf3_params.bin")
+    (tmp_path / "evil.bin").write_bytes(b"attacker payload")
+    assert v.verify().status is IntegrityStatus.INVALID
+
+    v.restore_fixture()
+
+    rep = v.verify()
+    assert rep.status is IntegrityStatus.VALID
+    # tampered bytes were discarded and known-good bytes restored
+    assert (tmp_path / "ekf3_params.bin").read_bytes() == good
+    # the stray unexpected component was removed
+    assert not (tmp_path / "evil.bin").exists()
+    # the manifest describes the known-good image, so a re-tamper is caught again
+    v.tamper("ekf3_params.bin")
+    assert v.verify().status is IntegrityStatus.INVALID
+
+
 # ---- event log hash chain ----
 def _assessment(t):
     return ThreatAssessment(

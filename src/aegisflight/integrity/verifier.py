@@ -156,6 +156,34 @@ class FirmwareVerifier:
             evidence=evidence,
         )
 
+    def restore_fixture(self) -> None:
+        """Restore the simulated firmware to its known-good baseline.
+
+        Unlike clearing a cache, this rebuilds the on-disk artifact itself:
+        every component is rewritten from the deterministic known-good fixture
+        content — the current (possibly tampered) bytes are *not* trusted or
+        reused — any stray ``*.bin`` is removed, and the expected SHA-256
+        manifest is rebuilt from the restored bytes.
+
+        Order matters: known-good bytes are written **first**, then the manifest
+        is rebuilt from them, so a tampered component can never be promoted into
+        the "valid" baseline. After this call :meth:`verify` returns VALID.
+
+        This models a firmware *reflash* to a known-good image. In a real
+        deployment, firmware compromise persists until such a reflash; in this
+        local simulation, RESET performs it explicitly to return the whole
+        simulated vehicle to a clean baseline.
+        """
+        # Drop anything that isn't a known-good component so an "unexpected
+        # component" can't survive a restore. (The manifest is *.json, not
+        # *.bin, so it is never removed here.)
+        if self.firmware_dir.exists():
+            for p in self.firmware_dir.glob("*.bin"):
+                if p.name not in _FIXTURE_COMPONENTS:
+                    p.unlink()
+        self.write_fixture()   # authoritative known-good bytes (ignores disk)
+        self.build_manifest()  # rebuild expected manifest from restored bytes
+
     def restore(self) -> None:
-        """Rewrite the fixture to its pristine content (undo tampering)."""
-        self.write_fixture()
+        """Backwards-compatible alias for :meth:`restore_fixture`."""
+        self.restore_fixture()

@@ -130,3 +130,8 @@ class AnomalyDetector(Detector):
             attack_votes=votes,
             signals=signals,
         )
+
+    def reset(self) -> None:
+        # Restart the warm-up so the ML layer waits for a fresh feature window
+        # to fill (the extractor is reset alongside it) before scoring again.
+        self._ticks = 0

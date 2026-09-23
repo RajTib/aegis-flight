@@ -109,6 +109,24 @@ class IDSPipeline:
                 yield a
 
     def reset(self) -> None:
+        """Return the pipeline (and its simulated firmware) to a clean baseline.
+
+        Order matters. The simulated firmware artifact is restored to known-good
+        *first*, so when the integrity detector next re-verifies it reads clean
+        bytes — clearing the detector cache alone would just re-read the still
+        tampered file and report INVALID again. Then every extractor / detector /
+        fusion state is cleared so no stale signal (network windows, position
+        residual, alert hysteresis, firmware verdict) survives into the next run.
+        """
+        # 1. Restore the simulated firmware to known-good (reflash) BEFORE
+        #    the integrity detector re-verifies against it.
+        if self.verifier is not None:
+            self.verifier.restore_fixture()
+        # 2. Reset feature extraction + every detector + fusion state.
+        self.extractor.reset()
+        self.protocol.reset()
         self.physics.reset()
+        self.anomaly.reset()
         self.integrity.reset()
         self.fusion.reset()
+        self._last = None

@@ -41,10 +41,18 @@ Sanitised config: `attacks` (choices), `decision_rate_hz`, `sample_rate_hz`,
 |---|---|---|
 | `/api/simulation/start` | — | start the live loop |
 | `/api/simulation/stop` | — | pause the loop |
-| `/api/simulation/reset` | — | reset sim + engine, then start |
+| `/api/simulation/reset` | — | stop loop → restore clean baseline → start a fresh run |
 | `/api/simulation/attack` | `{"attack":"gps_spoofing"}` or `{"attack":"none"}` | inject / clear an attack at runtime |
 
 Unknown attack → `400 {"ok":false,"error":…,"choices":[…]}`.
+
+**Reset semantics.** Reset returns the simulated vehicle to a known-good
+baseline: it clears the active attack, **reflashes the simulated firmware fixture
+to known-good bytes** (a tampered image is discarded, never re-trusted — see
+`FirmwareVerifier.restore_fixture`), clears every extractor / detector / fusion
+runtime state, and starts a **new run id** (its own hash chain). Historical audit
+records from earlier runs are preserved. These endpoints are `async` so the
+loop restart runs on the event loop.
 
 Example:
 ```bash
