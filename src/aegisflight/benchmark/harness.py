@@ -6,9 +6,11 @@ matrix, and computes binary + per-attack + latency + throughput + resource
 metrics. Writes ``results.json``, ``results.csv`` and ``summary.md`` to the
 output directory. **No metric here is hand-written** — all derive from the runs.
 
-Reproducibility: benchmark seeds are disjoint from the ML training seeds
-(training uses 100+; benchmark uses 1..N), so the model is evaluated on flights
-it never saw.
+Reproducibility: benchmark seeds (1..N) drive sensor noise / attack RNGs and are
+disjoint from the ML training seeds (101-124). Flight kinematics use the fixed
+simulator seed from ``configs/simulation.yaml`` (42) at 12 m/s / 60 m, so the grid
+contains three distinct trajectories (one per route). For per-session trajectory
+diversity see :mod:`aegisflight.benchmark.extended` (benchmark v2).
 """
 
 from __future__ import annotations

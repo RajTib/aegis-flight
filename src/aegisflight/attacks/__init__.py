@@ -6,6 +6,7 @@ import numpy as np
 
 from ..core.enums import AttackType
 from .base import Attack, AttackContext, NoAttack
+from .composite import CompositeAttack
 from .scenarios import (
     CommandInjectionAttack,
     DosAttack,
@@ -42,10 +43,19 @@ def build_attack(
     rng: np.random.Generator | None = None,
     **kwargs,
 ) -> Attack:
-    """Instantiate an attack by config key (or ``"benign"``/``"none"``)."""
+    """Instantiate an attack by config key (or ``"benign"``/``"none"``).
+
+    ``"a+b"`` builds a :class:`CompositeAttack` of ``a`` and ``b`` (simultaneous
+    attacks); ``firmware_dir`` is passed only to the firmware component.
+    """
     rng = rng or np.random.default_rng(1234)
     if name in ("benign", "none", "", None):
         return NoAttack(rng)
+    if "+" in name:
+        parts = [p.strip() for p in name.split("+") if p.strip()]
+        comps = [build_attack(p, attacks_cfg, rng,
+                              **(kwargs if p == "firmware_integrity" else {})) for p in parts]
+        return CompositeAttack(comps, rng)
     if name not in ATTACK_REGISTRY:
         raise KeyError(f"unknown attack '{name}'; choices: {sorted(ATTACK_REGISTRY)}")
     cls = ATTACK_REGISTRY[name]
@@ -57,6 +67,7 @@ __all__ = [
     "Attack",
     "AttackContext",
     "NoAttack",
+    "CompositeAttack",
     "GpsSpoofingAttack",
     "MavlinkAnomalyAttack",
     "CommandInjectionAttack",

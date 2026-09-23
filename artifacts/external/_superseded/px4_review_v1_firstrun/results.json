@@ -1,0 +1,383 @@
+{
+  "experiment": "E1 PX4 Flight Review ULog navigation replay",
+  "dataset_manifest": "data/external/manifests/px4_review.json",
+  "selection": {
+    "mav_type": "Quadrotor",
+    "ratings": [
+      "good",
+      "great",
+      "BRAVO!"
+    ],
+    "min_duration_s": 120,
+    "max_duration_s": 1800,
+    "years": [
+      "2024",
+      "2025",
+      "2026"
+    ],
+    "estimator": "EKF2",
+    "exclude_hw_substrings": [
+      "SITL"
+    ]
+  },
+  "seed": 2026,
+  "n_public_logs": 468513,
+  "n_eligible": 77,
+  "n_downloaded": 40,
+  "thresholds": {
+    "pos_residual_m": 12.0,
+    "gps_vfr_speed_diff_ms": 5.0,
+    "gps_baro_alt_diff_m": 8.0,
+    "alt_rate_ms": 25.0,
+    "accel_ms2": 20.0,
+    "yaw_course_diff_deg": 25.0,
+    "ml_score_threshold": 0.62,
+    "ml_lone_threat_threshold": 0.9563
+  },
+  "exclusions": [
+    {
+      "file": "370f31f0-0a27-4802-8446-82b2cd086541.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "6d30dfd4-a1e1-41c8-8859-438f8cae0498.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "d4e35711-1610-41c7-afe9-294f48c8b11c.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "32d12bcd-d7c0-4f32-a52f-adac614f83df.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "5163133a-95a9-402c-9363-4c7170a43213.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "ae49f040-d4fc-444f-b87f-80ec979404ab.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "c0a489d0-378e-4103-a532-59b2a8964629.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "b5706710-4eef-495a-9cb6-2146c128418a.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "530e12d6-7349-44c5-89aa-38125e06332c.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "0004dbb9-c57b-442c-be97-3d24d722d5fa.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "2824f811-342c-4b81-82f6-d421a82341a3.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "3316607c-c57a-47c0-8b9a-feff89368b7d.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "67cd4cf3-64b0-4719-8183-dfd83edbaeac.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "ada72fd8-352b-4fa8-bb38-c0029b182c83.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "19960f9c-0917-4512-ac89-4c03f7f2fc47.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "ef9e101a-f8bf-407a-8278-c6db4659c96b.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "dbbf3d5c-fd38-40ff-b588-df3c18157cf9.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "e1009c3f-e4be-4f3f-bd68-7c8e07a0da47.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "b586564f-8fe1-462e-b4e0-480775aa049b.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "78d7daaa-962b-4947-9027-f30324aa02c7.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "5569e544-579f-4c57-a411-198882060869.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "e070ddb8-cc7a-40bd-9e33-f5ea66ae5afe.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "3e4b3d06-0ea0-4607-8e04-22b5b079dd78.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "f2a396e0-17bb-44a9-aa2e-745b22e2f827.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "4be3c3fc-26a9-4274-86cd-d7a1683831a7.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "39c74546-1959-422e-ba0e-e2db26ab9328.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "42d95143-096d-4069-8e1c-63040c386537.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "999a88df-6ea4-4d06-9625-98e24dddf96d.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "4b735bce-34a3-490d-b3a5-13811e5ff8c6.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "5e105ea7-4ded-4a34-bdeb-7c1ac643bcfc.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "fbbec1fe-adff-4eec-96be-eb4f1af30366.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "15ce6e15-c49c-4a3e-b259-304b037ea52e.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "3f96796a-0d64-40ce-942e-709eed4fa8a9.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "164765f1-28ff-460b-bc45-1e53a7154cce.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "63863e7a-b81c-45be-8b20-2ff17960782b.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "3a536f9d-09be-4e7d-888e-2e8d2e93e941.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "6c90ceb9-7f59-423d-864f-df3a4c2fdfdb.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    },
+    {
+      "file": "51c41177-e55e-4bdd-bc53-ec864fc21b62.ulg",
+      "reason": "simulation build (SITL/HITL)"
+    }
+  ],
+  "mappings": {
+    "px4_telemetry": {
+      "n_usable_flights": 0,
+      "exclusions": [
+        {
+          "file": "d57b4c0c-174d-49bd-b46b-7040dcf540ca.ulg",
+          "reason": "missing topics: vehicle_global_position"
+        },
+        {
+          "file": "630e1da2-b755-465b-8d34-3545e40939bd.ulg",
+          "reason": "missing topics: vehicle_global_position"
+        }
+      ],
+      "rates": {
+        "n_flights": 0,
+        "n_airborne_ticks": 0,
+        "airborne_hours": 0.0
+      },
+      "features": {},
+      "hardware": [],
+      "ks_vs_sim": {}
+    },
+    "independent_sensors": {
+      "n_usable_flights": 0,
+      "exclusions": [
+        {
+          "file": "d57b4c0c-174d-49bd-b46b-7040dcf540ca.ulg",
+          "reason": "missing topics: vehicle_gps_position|sensor_gps"
+        },
+        {
+          "file": "630e1da2-b755-465b-8d34-3545e40939bd.ulg",
+          "reason": "missing topics: vehicle_gps_position|sensor_gps"
+        }
+      ],
+      "rates": {
+        "n_flights": 0,
+        "n_airborne_ticks": 0,
+        "airborne_hours": 0.0
+      },
+      "features": {},
+      "hardware": [],
+      "ks_vs_sim": {}
+    },
+    "independent_sensors_biascorr": {
+      "n_usable_flights": 0,
+      "exclusions": [
+        {
+          "file": "d57b4c0c-174d-49bd-b46b-7040dcf540ca.ulg",
+          "reason": "missing topics: vehicle_gps_position|sensor_gps"
+        },
+        {
+          "file": "630e1da2-b755-465b-8d34-3545e40939bd.ulg",
+          "reason": "missing topics: vehicle_gps_position|sensor_gps"
+        }
+      ],
+      "rates": {
+        "n_flights": 0,
+        "n_airborne_ticks": 0,
+        "airborne_hours": 0.0
+      },
+      "features": {},
+      "hardware": [],
+      "ks_vs_sim": {}
+    }
+  },
+  "sim_reference": {
+    "n_flights": 12,
+    "seeds": [
+      9001,
+      9002,
+      9003,
+      9004,
+      9005,
+      9006,
+      9007,
+      9008,
+      9009,
+      9010,
+      9011,
+      9012
+    ],
+    "rates": {
+      "n_flights": 12,
+      "n_airborne_ticks": 6323,
+      "airborne_hours": 0.3512777777777778,
+      "physics_trigger_rate": {
+        "pooled": 0.0,
+        "median_of_flights": 0.0,
+        "flights_with_any": 0
+      },
+      "ml_probe_alarm_rate": {
+        "pooled": 0.0030049027360430176,
+        "median_of_flights": 0.0020081616852428343,
+        "flights_with_any": 9
+      },
+      "ml_probe_lone_threat_rate": {
+        "pooled": 0.0007907638779060573,
+        "median_of_flights": 0.0,
+        "flights_with_any": 4
+      },
+      "exceed_pos_residual_m": {
+        "pooled": 0.0,
+        "median_of_flights": 0.0,
+        "flights_with_any": 0
+      },
+      "exceed_gps_vfr_speed_diff_ms": {
+        "pooled": 0.0,
+        "median_of_flights": 0.0,
+        "flights_with_any": 0
+      },
+      "exceed_gps_baro_alt_diff_m": {
+        "pooled": 0.0,
+        "median_of_flights": 0.0,
+        "flights_with_any": 0
+      },
+      "exceed_alt_rate_ms": {
+        "pooled": 0.00047445832674363435,
+        "median_of_flights": 0.0,
+        "flights_with_any": 3
+      },
+      "exceed_accel_ms2": {
+        "pooled": 0.0,
+        "median_of_flights": 0.0,
+        "flights_with_any": 0
+      },
+      "exceed_yaw_course_diff_deg": {
+        "pooled": 0.0,
+        "median_of_flights": 0.0,
+        "flights_with_any": 0
+      }
+    },
+    "features": {
+      "pos_residual_m": {
+        "n": 6323,
+        "p50": 1.1514363353690868,
+        "p95": 2.4840801132458146,
+        "p99": 3.0538927534735025,
+        "max": 4.4871719594508335,
+        "mean": 1.2435366427020715
+      },
+      "gps_vfr_speed_diff_ms": {
+        "n": 6323,
+        "p50": 0.15478123207580885,
+        "p95": 0.4503460708743941,
+        "p99": 0.5931961340981864,
+        "max": 0.9698093800155991,
+        "mean": 0.1836117244232573
+      },
+      "gps_baro_alt_diff_m": {
+        "n": 6323,
+        "p50": 1.1006278076171867,
+        "p95": 3.36238693237305,
+        "p99": 4.461278480224603,
+        "max": 7.125294738769531,
+        "mean": 1.3382017074107146
+      },
+      "alt_rate_ms": {
+        "n": 6323,
+        "p50": -0.04219055175781228,
+        "p95": 11.142532348632663,
+        "p99": 15.952127075195296,
+        "max": 28.363037109376613,
+        "mean": 0.006729208478514104
+      },
+      "accel_ms2": {
+        "n": 6323,
+        "p50": 1.6492422502470423,
+        "p95": 7.607676959109312,
+        "p99": 9.287076356966734,
+        "max": 11.070794912742105,
+        "mean": 2.3275843967859866
+      },
+      "yaw_course_diff_deg": {
+        "n": 6323,
+        "p50": 0.34976339792174826,
+        "p95": 2.144093361283273,
+        "p99": 3.2237306789764886,
+        "max": 16.108844155789257,
+        "mean": 0.6174399191289399
+      },
+      "ml_nav_probe": {
+        "n": 6323,
+        "p50": 0.035768358151225636,
+        "p95": 0.17973239027123036,
+        "p99": 0.36482611932149256,
+        "max": 0.999999544149945,
+        "mean": 0.05986544723738627
+      }
+    }
+  },
+  "python": "3.13.11",
+  "wall_time_s": 43.1
+}

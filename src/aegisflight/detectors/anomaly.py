@@ -5,12 +5,13 @@ vector, combined by taking the stronger of the two:
 
 1. **Isolation Forest** — captures subtle *multivariate, in-distribution*
    anomalies (e.g. an unusual combination of otherwise-normal values).
-2. **Robust Mahalanobis / scaled-norm** — the L2 norm of the standardised
+2. **Diagonal Mahalanobis / scaled-norm** — the L2 norm of the standardised
    feature vector. Isolation Forest cannot extrapolate past its training range,
    so it is blind to features that spike far outside benign (msg-rate floods,
    sequence gaps). The scaled-norm grows without bound for such out-of-range
-   values and covers that blind spot. Near-constant benign features get a
-   variance floor so any nonzero value registers.
+   values and covers that blind spot. (Diagonal covariance and ordinary
+   mean/std -- not a robust estimator.) Zero-variance benign features get unit
+   scale from ``StandardScaler``, so any nonzero value registers.
 
 Both are trained on benign flights only (see ``scripts/train_models.py``); the
 bundle carries the scaler, model, feature schema, per-component benign
@@ -46,11 +47,6 @@ FEATURE_ATTACK_MAP: dict[str, AttackType] = {
     "loss_ratio": AttackType.DOS,
 }
 
-# Variance floor (in scaled units) so near-constant benign features still
-# contribute to the Mahalanobis norm when they take a nonzero attack value.
-_VAR_FLOOR = 1.0
-
-
 def combined_anomaly_raw(bundle: dict, X: np.ndarray) -> np.ndarray:
     """Combined benign-anomaly signal per row (shared by training & inference).
 
@@ -74,13 +70,20 @@ class AnomalyDetector(Detector):
     name = DetectorName.ANOMALY
 
     def __init__(self, cfg: dict, model_path: str | Path | None = None) -> None:
+        """``model_path=None`` means **ML off** (detector is a no-op).
+
+        Previously ``None`` silently fell back to ``cfg["model_path"]``, so the
+        documented ``--no-model`` / ``model_path=None`` "rule + physics only"
+        runs still loaded the model whenever ``models/isoforest.joblib`` existed.
+        Callers that want the model pass its path explicitly.
+        """
         self.threshold = float(cfg.get("score_threshold", 0.62))
         self.warmup_ticks = int(cfg.get("warmup_ticks", 20))
-        path = Path(model_path or cfg.get("model_path", "models/isoforest.joblib"))
+        path = Path(model_path) if model_path else None
         self.model_path = path
         self.bundle: dict | None = None
         self._ticks = 0
-        if path.exists():
+        if path is not None and path.exists():
             try:
                 self.bundle = joblib.load(path)
             except Exception:  # noqa: BLE001 - corrupt/incompatible model => degrade

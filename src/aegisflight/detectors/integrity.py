@@ -1,7 +1,7 @@
 """Detector D — firmware integrity.
 
-Independently re-hashes the firmware components against a signed SHA-256
-manifest (via :class:`~aegisflight.integrity.verifier.FirmwareVerifier`) and
+Independently re-hashes the firmware components against a SHA-256
+manifest (unsigned in this PoC -- see ``FirmwareVerifier.build_manifest``) (via :class:`~aegisflight.integrity.verifier.FirmwareVerifier`) and
 surfaces the verdict as a detector score. An INVALID result is a hard,
 unambiguous firmware-integrity alert. The verification is genuine crypto; the
 tampering attack and this detector interact only through the shared firmware

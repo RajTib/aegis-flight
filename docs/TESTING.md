@@ -7,7 +7,8 @@
      ╱   unit (30)      ╲    geo/config/simulator/codec/integrity/logging/
     ╱────────────────────╲   fusion/metrics
 ```
-**44 tests total**, all passing. Run with the project venv.
+Run with the project venv; the suite must pass in full (the count grows with new
+features — `pytest -q` prints it).
 
 ## Commands
 | Command | Purpose |
@@ -45,7 +46,7 @@
 ## Minimum sequence before a demo / release
 ```bash
 ruff check src tests scripts backend      # clean
-pytest -q                                  # 44 passing
+pytest -q                                  # all passing
 aegis train && aegis benchmark             # metrics regenerate, FPR ≈ 0
 python scripts/run_demo.py                 # scenarios narrate correctly
 ```

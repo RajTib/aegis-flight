@@ -133,6 +133,15 @@ class MavlinkAnomalyAttack(Attack):
 # 4. Command injection (stream attack)
 # --------------------------------------------------------------------------- #
 class CommandInjectionAttack(Attack):
+    """Rogue commands.
+
+    ``gcs_replay`` re-sends a previously legitimate ``MAV_CMD_DO_SET_MODE``
+    *from the legitimate GCS identity* (sysid 255 / compid 190). Without
+    MAVLink-2 message signing nothing on the wire distinguishes it from the real
+    operator, so it is deliberately included as a **known-gap** case: the
+    provenance rule cannot fire on it by design.
+    """
+
     attack_type = AttackType.COMMAND_INJECTION
 
     def __init__(self, cfg, rng):
@@ -141,6 +150,8 @@ class CommandInjectionAttack(Attack):
         self.src_compid = int(cfg.get("source_compid", 200))
         self.command = str(cfg.get("command", "MAV_CMD_COMPONENT_ARM_DISARM"))
         self.burst = int(cfg.get("burst", 6))
+        self.replay_sysid = int(cfg.get("replay_sysid", 255))
+        self.replay_compid = int(cfg.get("replay_compid", 190))
 
     def perturb_packets(self, t, packets, ctx: AttackContext):
         if not self.active(t):
@@ -156,6 +167,14 @@ class CommandInjectionAttack(Attack):
                     sysid=self.src_sysid, compid=self.src_compid,
                     params=(float(i % 2),),  # alternate arm(1)/disarm(0)
                 ))
+        elif self.mode == "gcs_replay":
+            # One replayed legit-GCS mode command every 2 s (tick % 20), not a burst.
+            if ctx.tick % 20 != 0:
+                return packets
+            injected.append(ctx.encoder.encode_command_long(
+                t, "MAV_CMD_DO_SET_MODE",
+                sysid=self.replay_sysid, compid=self.replay_compid, params=(1.0, 6.0),  # -> RTL
+            ))
         elif self.mode == "mode_flip":
             injected.append(ctx.encoder.encode_command_long(
                 t, "MAV_CMD_DO_SET_MODE",
@@ -172,6 +191,15 @@ class CommandInjectionAttack(Attack):
 # 5. Denial of service (stream attack)
 # --------------------------------------------------------------------------- #
 class DosAttack(Attack):
+    """Link / channel denial.
+
+    ``gnss_jamming`` models RF denial of the GNSS channel (not the telemetry
+    link): the receiver loses its fix (fix_type 1, 0-3 satellites, HDOP 99.99)
+    while the autopilot keeps streaming its dead-reckoned GLOBAL_POSITION_INT.
+    It is scored under the DOS class (denial of the navigation channel); a
+    dedicated GPS_JAMMING class would need enum/dashboard changes (future work).
+    """
+
     attack_type = AttackType.DOS
 
     def __init__(self, cfg, rng):
@@ -180,9 +208,16 @@ class DosAttack(Attack):
         self.blackout_prob = float(cfg.get("blackout_prob", 0.9))
         self.latency_ms = float(cfg.get("latency_ms", 400.0))
 
+    def perturb_state(self, t, state):
+        if not self.active(t) or self.mode != "gnss_jamming":
+            return state
+        return replace(state, gps_fix_type=1, satellites=int(self.rng.integers(0, 4)), hdop=99.99)
+
     def perturb_packets(self, t, packets, ctx: AttackContext):
         if not self.active(t):
             return packets
+        if self.mode == "gnss_jamming":
+            return packets  # value attack only, see perturb_state
         if self.mode == "flood":
             extra = max(1, int(self.flood_multiplier) - 1)
             flood = [RawPacket(p.send_time, p.data) for _ in range(extra) for p in packets]

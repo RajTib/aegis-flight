@@ -26,7 +26,7 @@ information carried on that link and the vehicle's firmware attestation.
 | 3 | **Command injection** | Unauthorised commands | inject `COMMAND_LONG` from a rogue GCS id (arm/disarm burst, mode flip, rogue command) | commands from an unexpected source; sensitive/burst | Protocol: command provenance |
 | 4 | **Telemetry manipulation** | Falsified sensor readouts | `perturb_state`: altitude bias / speed mismatch / battery jump / frozen attitude | cross-channel inconsistency (GPS vs baro, GPS vs VFR, attitude vs course) | Physics: alt/speed/att/battery |
 | 5 | **Denial of service** | Link saturation / blackout | `perturb_packets`: flood (×N), blackout (drop), latency (jitter) | rate spike / heartbeat & GPS dropout / seq gaps | Protocol: rate, liveness, gaps |
-| 6 | **Firmware integrity** | Tampered firmware | flip a byte in a component file in the shared firmware dir | SHA-256 mismatch vs signed manifest | Integrity: INVALID + component name |
+| 6 | **Firmware integrity** | Tampered firmware | flip a byte in a component file in the shared firmware dir | SHA-256 mismatch vs manifest (unsigned in PoC) | Integrity: INVALID + component name |
 
 Each attack's ground-truth window (`Attack.label(t)`) is used **only** by the
 benchmark to score detections — never by the detectors.
@@ -39,7 +39,8 @@ benchmark to score detections — never by the detectors.
   spoofed) velocity is only detectable at the transition — see
   `docs/FEATURES.md`. Sustained gradual drift and replay-freeze are detected
   throughout.
-- The firmware check assumes a trustworthy signed manifest and read access to
+- The firmware check assumes a trustworthy manifest (it is **not signed** in the PoC —
+  signing is future work) and read access to
   the components.
 - This is a PoC over a *simulated* link; real-RF, multi-vehicle, and
   hardware-in-the-loop coverage are future work (see the technical proposal).

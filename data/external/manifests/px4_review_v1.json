@@ -1,0 +1,758 @@
+{
+  "dataset": {
+    "name": "PX4 Flight Review public logs",
+    "source": "https://review.px4.io/dbinfo",
+    "license": "public uploads; no dataset licence stated -- analysed locally, raw logs not redistributed",
+    "real_or_synthetic": "uploaded flight logs (SITL excluded by selection; HITL excluded at load time)"
+  },
+  "files": [
+    {
+      "url": "https://review.px4.io/download?log=370f31f0-0a27-4802-8446-82b2cd086541",
+      "path": "data/external/raw/px4_review/ulg/370f31f0-0a27-4802-8446-82b2cd086541.ulg",
+      "bytes": 5732144,
+      "sha256": "edde309a1354a139b569bc6c7f25aed349337954c6fb5e3b584ad2afc4670887",
+      "retrieved_utc": "2026-09-23T18:07:29+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=6d30dfd4-a1e1-41c8-8859-438f8cae0498",
+      "path": "data/external/raw/px4_review/ulg/6d30dfd4-a1e1-41c8-8859-438f8cae0498.ulg",
+      "bytes": 4269090,
+      "sha256": "8007bf801702550f543cedd8fdf4bda83005cf9c27a74e097ea0c55cc58b0ad8",
+      "retrieved_utc": "2026-09-23T18:07:33+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=d4e35711-1610-41c7-afe9-294f48c8b11c",
+      "path": "data/external/raw/px4_review/ulg/d4e35711-1610-41c7-afe9-294f48c8b11c.ulg",
+      "bytes": 7461089,
+      "sha256": "af769b4b18f2ee9406e004733660637b8c8d4e83ddc7504ee40cbe02b41c07f8",
+      "retrieved_utc": "2026-09-23T18:07:38+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=d57b4c0c-174d-49bd-b46b-7040dcf540ca",
+      "path": "data/external/raw/px4_review/ulg/d57b4c0c-174d-49bd-b46b-7040dcf540ca.ulg",
+      "bytes": 5854441,
+      "sha256": "e00ba26f725967d076a9adde285e79c959df9e04df06a610365218971ebfccc3",
+      "retrieved_utc": "2026-09-23T18:07:43+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=32d12bcd-d7c0-4f32-a52f-adac614f83df",
+      "path": "data/external/raw/px4_review/ulg/32d12bcd-d7c0-4f32-a52f-adac614f83df.ulg",
+      "bytes": 4002157,
+      "sha256": "e62a3df24d2b016c78c937715a0013b0ee84b278dfdb93612782910c45df016d",
+      "retrieved_utc": "2026-09-23T18:07:47+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=5163133a-95a9-402c-9363-4c7170a43213",
+      "path": "data/external/raw/px4_review/ulg/5163133a-95a9-402c-9363-4c7170a43213.ulg",
+      "bytes": 6180596,
+      "sha256": "76ee4a1bb6244350c5b7edc9d6402aa6dd6e790d6ab60359f7164fc074e42815",
+      "retrieved_utc": "2026-09-23T18:07:52+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=ae49f040-d4fc-444f-b87f-80ec979404ab",
+      "path": "data/external/raw/px4_review/ulg/ae49f040-d4fc-444f-b87f-80ec979404ab.ulg",
+      "bytes": 3830994,
+      "sha256": "25f55924f435a517f3f46a1f71b24f26d4c87a2c1c9fb142eace4f22199f25ae",
+      "retrieved_utc": "2026-09-23T18:07:56+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=c0a489d0-378e-4103-a532-59b2a8964629",
+      "path": "data/external/raw/px4_review/ulg/c0a489d0-378e-4103-a532-59b2a8964629.ulg",
+      "bytes": 11889110,
+      "sha256": "e358d5edce5d4e45632e1fc8d00c904fdfe1e49e34947a26434964061e57915e",
+      "retrieved_utc": "2026-09-23T18:08:03+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=b5706710-4eef-495a-9cb6-2146c128418a",
+      "path": "data/external/raw/px4_review/ulg/b5706710-4eef-495a-9cb6-2146c128418a.ulg",
+      "bytes": 4221456,
+      "sha256": "6ae0ceaef61eb9ecf92e94ad9631ea0191971fa9ac7294d712ac9fcbef658b29",
+      "retrieved_utc": "2026-09-23T18:08:07+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=530e12d6-7349-44c5-89aa-38125e06332c",
+      "path": "data/external/raw/px4_review/ulg/530e12d6-7349-44c5-89aa-38125e06332c.ulg",
+      "bytes": 7173913,
+      "sha256": "48b9cbfb7682a1457fab457077fd446f9ccb456c8ed7ac06577b8f951f79ed63",
+      "retrieved_utc": "2026-09-23T18:08:12+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=0004dbb9-c57b-442c-be97-3d24d722d5fa",
+      "path": "data/external/raw/px4_review/ulg/0004dbb9-c57b-442c-be97-3d24d722d5fa.ulg",
+      "bytes": 4233870,
+      "sha256": "33256cd71a8e22a2931be64ed11507ea6a326a25fd5cb42a7e51b6345150ad75",
+      "retrieved_utc": "2026-09-23T18:08:16+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=2824f811-342c-4b81-82f6-d421a82341a3",
+      "path": "data/external/raw/px4_review/ulg/2824f811-342c-4b81-82f6-d421a82341a3.ulg",
+      "bytes": 3158064,
+      "sha256": "fdd222710bdaaada9702f19906e1de1975154cd2be7397dca8f2053444e44e9b",
+      "retrieved_utc": "2026-09-23T18:08:20+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=3316607c-c57a-47c0-8b9a-feff89368b7d",
+      "path": "data/external/raw/px4_review/ulg/3316607c-c57a-47c0-8b9a-feff89368b7d.ulg",
+      "bytes": 4228133,
+      "sha256": "5c56fb1ac00e90c425c59f593a0a650ed6533adf8edd80ffd6eccce9006b0cab",
+      "retrieved_utc": "2026-09-23T18:08:24+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=67cd4cf3-64b0-4719-8183-dfd83edbaeac",
+      "path": "data/external/raw/px4_review/ulg/67cd4cf3-64b0-4719-8183-dfd83edbaeac.ulg",
+      "bytes": 4226074,
+      "sha256": "03dd26593f4e0fedbdfffa426b0d710fb78248ca61f5ba51ff6e5721286a93bf",
+      "retrieved_utc": "2026-09-23T18:08:29+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=ada72fd8-352b-4fa8-bb38-c0029b182c83",
+      "path": "data/external/raw/px4_review/ulg/ada72fd8-352b-4fa8-bb38-c0029b182c83.ulg",
+      "bytes": 4252959,
+      "sha256": "79abd2d5faa29b1d5a8832c7c7c68aeb798df484c0dc3124d807d26c979c66bd",
+      "retrieved_utc": "2026-09-23T18:08:33+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=19960f9c-0917-4512-ac89-4c03f7f2fc47",
+      "path": "data/external/raw/px4_review/ulg/19960f9c-0917-4512-ac89-4c03f7f2fc47.ulg",
+      "bytes": 4202728,
+      "sha256": "3fa1b7c74b0e984855175ff0b93e977721ea5746ad0f479ff57b9f641dbb2fc9",
+      "retrieved_utc": "2026-09-23T18:08:37+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=ef9e101a-f8bf-407a-8278-c6db4659c96b",
+      "path": "data/external/raw/px4_review/ulg/ef9e101a-f8bf-407a-8278-c6db4659c96b.ulg",
+      "bytes": 4253928,
+      "sha256": "540ae465cf6e55138c2f61cde4d9b7b3b8163aedf908006c29929f1b16b7fa42",
+      "retrieved_utc": "2026-09-23T18:08:41+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=dbbf3d5c-fd38-40ff-b588-df3c18157cf9",
+      "path": "data/external/raw/px4_review/ulg/dbbf3d5c-fd38-40ff-b588-df3c18157cf9.ulg",
+      "bytes": 4253335,
+      "sha256": "11d709a95900a21f6dd47b713dd282b90a138079e54416b7a55595f3614edca8",
+      "retrieved_utc": "2026-09-23T18:08:45+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=e1009c3f-e4be-4f3f-bd68-7c8e07a0da47",
+      "path": "data/external/raw/px4_review/ulg/e1009c3f-e4be-4f3f-bd68-7c8e07a0da47.ulg",
+      "bytes": 4223040,
+      "sha256": "1a50ecd765c0cb8d3f9cf96079381dbc508555f994a4d37a29818ba20cab6504",
+      "retrieved_utc": "2026-09-23T18:08:49+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=b586564f-8fe1-462e-b4e0-480775aa049b",
+      "path": "data/external/raw/px4_review/ulg/b586564f-8fe1-462e-b4e0-480775aa049b.ulg",
+      "bytes": 8068452,
+      "sha256": "1bb3cddf1733613a2730498e4694bcf9c5105e0d2fe67a62ad48291b3cea82ab",
+      "retrieved_utc": "2026-09-23T18:08:54+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=78d7daaa-962b-4947-9027-f30324aa02c7",
+      "path": "data/external/raw/px4_review/ulg/78d7daaa-962b-4947-9027-f30324aa02c7.ulg",
+      "bytes": 15005436,
+      "sha256": "52cff234bbf3cd4e9cb554464e0d237a893be01be98cbd250de98d00aee6136d",
+      "retrieved_utc": "2026-09-23T18:09:03+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=5569e544-579f-4c57-a411-198882060869",
+      "path": "data/external/raw/px4_review/ulg/5569e544-579f-4c57-a411-198882060869.ulg",
+      "bytes": 4220040,
+      "sha256": "091d70b3e03b5dda643eb28d8a78e97641eba872566f472e2814afd87f042812",
+      "retrieved_utc": "2026-09-23T18:09:07+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=e070ddb8-cc7a-40bd-9e33-f5ea66ae5afe",
+      "path": "data/external/raw/px4_review/ulg/e070ddb8-cc7a-40bd-9e33-f5ea66ae5afe.ulg",
+      "bytes": 4232710,
+      "sha256": "996c9760d9abe603ab03ac99dd307130ee0cf5f5ffac68713f62f8e6b484eca9",
+      "retrieved_utc": "2026-09-23T18:09:11+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=3e4b3d06-0ea0-4607-8e04-22b5b079dd78",
+      "path": "data/external/raw/px4_review/ulg/3e4b3d06-0ea0-4607-8e04-22b5b079dd78.ulg",
+      "bytes": 4273530,
+      "sha256": "5efcde9f67ade44b5adb9a719a626c8592d1f9a1d28e6c4bcafd0d5e949822a2",
+      "retrieved_utc": "2026-09-23T18:09:15+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=f2a396e0-17bb-44a9-aa2e-745b22e2f827",
+      "path": "data/external/raw/px4_review/ulg/f2a396e0-17bb-44a9-aa2e-745b22e2f827.ulg",
+      "bytes": 3667337,
+      "sha256": "c94b5e8b046ce3775500c2a1421e0fed28f1876148f1d718c5136cd6adeae964",
+      "retrieved_utc": "2026-09-23T18:09:19+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=4be3c3fc-26a9-4274-86cd-d7a1683831a7",
+      "path": "data/external/raw/px4_review/ulg/4be3c3fc-26a9-4274-86cd-d7a1683831a7.ulg",
+      "bytes": 14477428,
+      "sha256": "268839ab8167211ab9e081d2565114d8961623ce32e57b12eb779618f8902e9b",
+      "retrieved_utc": "2026-09-23T18:09:27+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=39c74546-1959-422e-ba0e-e2db26ab9328",
+      "path": "data/external/raw/px4_review/ulg/39c74546-1959-422e-ba0e-e2db26ab9328.ulg",
+      "bytes": 4234149,
+      "sha256": "0bea6dbf53faaa8f6b3ebdc51ee23c3bf7bb8cd96bf0abe7eb2884197d9f9528",
+      "retrieved_utc": "2026-09-23T18:09:32+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=42d95143-096d-4069-8e1c-63040c386537",
+      "path": "data/external/raw/px4_review/ulg/42d95143-096d-4069-8e1c-63040c386537.ulg",
+      "bytes": 3488907,
+      "sha256": "bdf8f3f88695cd798f4f59d799bc39f8c5244a3509df3197344a1efbcdfbc989",
+      "retrieved_utc": "2026-09-23T18:09:36+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=999a88df-6ea4-4d06-9625-98e24dddf96d",
+      "path": "data/external/raw/px4_review/ulg/999a88df-6ea4-4d06-9625-98e24dddf96d.ulg",
+      "bytes": 3530995,
+      "sha256": "bd6949c3db476edc863d837a5aa6c0401704127f75cbf193b0b10a84cf225023",
+      "retrieved_utc": "2026-09-23T18:09:40+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=4b735bce-34a3-490d-b3a5-13811e5ff8c6",
+      "path": "data/external/raw/px4_review/ulg/4b735bce-34a3-490d-b3a5-13811e5ff8c6.ulg",
+      "bytes": 29659996,
+      "sha256": "b79d09d7a28760cc035c5c03bff6aff347edfa5f2f64ce623824312f8ff87fb1",
+      "retrieved_utc": "2026-09-23T18:09:55+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=5e105ea7-4ded-4a34-bdeb-7c1ac643bcfc",
+      "path": "data/external/raw/px4_review/ulg/5e105ea7-4ded-4a34-bdeb-7c1ac643bcfc.ulg",
+      "bytes": 4253890,
+      "sha256": "4e54f5beee84765877a4145494a8fae3fe124e43a2ee12d8aa1def1220d6ebd8",
+      "retrieved_utc": "2026-09-23T18:09:59+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=fbbec1fe-adff-4eec-96be-eb4f1af30366",
+      "path": "data/external/raw/px4_review/ulg/fbbec1fe-adff-4eec-96be-eb4f1af30366.ulg",
+      "bytes": 37705999,
+      "sha256": "1097101bbd0241741618d93e9d34136602ab046bf2061f9b93cb23261865f78e",
+      "retrieved_utc": "2026-09-23T18:10:17+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=15ce6e15-c49c-4a3e-b259-304b037ea52e",
+      "path": "data/external/raw/px4_review/ulg/15ce6e15-c49c-4a3e-b259-304b037ea52e.ulg",
+      "bytes": 11979338,
+      "sha256": "1ff10cdaf9adf025b64f84a96ba63186ce0f0ba614b6c7245b322a402d743b0c",
+      "retrieved_utc": "2026-09-23T18:10:24+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=3f96796a-0d64-40ce-942e-709eed4fa8a9",
+      "path": "data/external/raw/px4_review/ulg/3f96796a-0d64-40ce-942e-709eed4fa8a9.ulg",
+      "bytes": 4208719,
+      "sha256": "3b3bfdd3d2d1a5e2ce37718512dfe45b1eccb21a6673da7c69c98237dd22ab48",
+      "retrieved_utc": "2026-09-23T18:10:29+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=164765f1-28ff-460b-bc45-1e53a7154cce",
+      "path": "data/external/raw/px4_review/ulg/164765f1-28ff-460b-bc45-1e53a7154cce.ulg",
+      "bytes": 4166121,
+      "sha256": "f66e3fac830bc01304602e0a0cdf41e2ca4562222c3a6f08e335a5ad22eb635c",
+      "retrieved_utc": "2026-09-23T18:10:33+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=63863e7a-b81c-45be-8b20-2ff17960782b",
+      "path": "data/external/raw/px4_review/ulg/63863e7a-b81c-45be-8b20-2ff17960782b.ulg",
+      "bytes": 4247750,
+      "sha256": "365cfa82f7f060e6d0f14a06620fc13bb4c421dd9619f2313adeb7ef9ea57656",
+      "retrieved_utc": "2026-09-23T18:10:37+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=630e1da2-b755-465b-8d34-3545e40939bd",
+      "path": "data/external/raw/px4_review/ulg/630e1da2-b755-465b-8d34-3545e40939bd.ulg",
+      "bytes": 5091489,
+      "sha256": "47a4b67251cf2a703f5d8c0042a80b855845f9c1953c7098f9af7e676fa8190c",
+      "retrieved_utc": "2026-09-23T18:10:41+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=3a536f9d-09be-4e7d-888e-2e8d2e93e941",
+      "path": "data/external/raw/px4_review/ulg/3a536f9d-09be-4e7d-888e-2e8d2e93e941.ulg",
+      "bytes": 3408170,
+      "sha256": "7b58844948d7e0bb5e9a88d6d62bc7fef59d0930cb8b39023a61336441c9f5f0",
+      "retrieved_utc": "2026-09-23T18:10:45+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=6c90ceb9-7f59-423d-864f-df3a4c2fdfdb",
+      "path": "data/external/raw/px4_review/ulg/6c90ceb9-7f59-423d-864f-df3a4c2fdfdb.ulg",
+      "bytes": 4215724,
+      "sha256": "3f4bcfb76aa16602d618774c022414c23e220b23b6e0f8c63b8336dfc3cb4386",
+      "retrieved_utc": "2026-09-23T18:10:49+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=51c41177-e55e-4bdd-bc53-ec864fc21b62",
+      "path": "data/external/raw/px4_review/ulg/51c41177-e55e-4bdd-bc53-ec864fc21b62.ulg",
+      "bytes": 16983538,
+      "sha256": "b2509a1687f111903bf3d4a320278e31fd63cc47e4a019d1b6dd0c53630c2522",
+      "retrieved_utc": "2026-09-23T18:11:01+00:00"
+    }
+  ],
+  "selection": {
+    "mav_type": "Quadrotor",
+    "ratings": [
+      "good",
+      "great",
+      "BRAVO!"
+    ],
+    "min_duration_s": 120,
+    "max_duration_s": 1800,
+    "years": [
+      "2024",
+      "2025",
+      "2026"
+    ],
+    "estimator": "EKF2",
+    "exclude_hw_substrings": [
+      "SITL"
+    ],
+    "name": "v1_rated"
+  },
+  "seed": 2026,
+  "n_requested": 40,
+  "n_public_logs": 468513,
+  "n_eligible": 77,
+  "logs": [
+    {
+      "log_id": "370f31f0-0a27-4802-8446-82b2cd086541",
+      "log_date": "2025-06-06",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 199,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "6d30dfd4-a1e1-41c8-8859-438f8cae0498",
+      "log_date": "2025-06-08",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 149,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "d4e35711-1610-41c7-afe9-294f48c8b11c",
+      "log_date": "2025-06-05",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 259,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "d57b4c0c-174d-49bd-b46b-7040dcf540ca",
+      "log_date": "2025-08-16",
+      "sys_hw": "PX4_FMU_V6X",
+      "mav_type": "Quadrotor",
+      "duration_s": 139,
+      "rating": "good",
+      "ver_sw_release": "v1.16.0 255",
+      "airframe_name": "Generic Quadcopter",
+      "wind_speed": 0
+    },
+    {
+      "log_id": "32d12bcd-d7c0-4f32-a52f-adac614f83df",
+      "log_date": "2025-06-16",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 148,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "5163133a-95a9-402c-9363-4c7170a43213",
+      "log_date": "2025-06-05",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 222,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "ae49f040-d4fc-444f-b87f-80ec979404ab",
+      "log_date": "2025-06-05",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 133,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "c0a489d0-378e-4103-a532-59b2a8964629",
+      "log_date": "2024-08-23",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 411,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 8
+    },
+    {
+      "log_id": "b5706710-4eef-495a-9cb6-2146c128418a",
+      "log_date": "2025-06-06",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 147,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "530e12d6-7349-44c5-89aa-38125e06332c",
+      "log_date": "2025-06-06",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 248,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "0004dbb9-c57b-442c-be97-3d24d722d5fa",
+      "log_date": "2025-06-08",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 146,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "2824f811-342c-4b81-82f6-d421a82341a3",
+      "log_date": "2025-06-16",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 121,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "3316607c-c57a-47c0-8b9a-feff89368b7d",
+      "log_date": "2025-06-08",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 148,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "67cd4cf3-64b0-4719-8183-dfd83edbaeac",
+      "log_date": "2025-06-08",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 148,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "ada72fd8-352b-4fa8-bb38-c0029b182c83",
+      "log_date": "2025-06-08",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 147,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "19960f9c-0917-4512-ac89-4c03f7f2fc47",
+      "log_date": "2025-06-08",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 147,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "ef9e101a-f8bf-407a-8278-c6db4659c96b",
+      "log_date": "2025-06-08",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 147,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "dbbf3d5c-fd38-40ff-b588-df3c18157cf9",
+      "log_date": "2025-06-08",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 148,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "e1009c3f-e4be-4f3f-bd68-7c8e07a0da47",
+      "log_date": "2025-06-08",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 146,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "b586564f-8fe1-462e-b4e0-480775aa049b",
+      "log_date": "2024-09-05",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 270,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "78d7daaa-962b-4947-9027-f30324aa02c7",
+      "log_date": "2025-06-05",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 526,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "5569e544-579f-4c57-a411-198882060869",
+      "log_date": "2025-06-08",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 146,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "e070ddb8-cc7a-40bd-9e33-f5ea66ae5afe",
+      "log_date": "2025-06-08",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 148,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "3e4b3d06-0ea0-4607-8e04-22b5b079dd78",
+      "log_date": "2025-06-15",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 149,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "f2a396e0-17bb-44a9-aa2e-745b22e2f827",
+      "log_date": "2025-06-15",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 144,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "4be3c3fc-26a9-4274-86cd-d7a1683831a7",
+      "log_date": "2024-09-06",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 515,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "39c74546-1959-422e-ba0e-e2db26ab9328",
+      "log_date": "2025-06-08",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 147,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "42d95143-096d-4069-8e1c-63040c386537",
+      "log_date": "2025-06-16",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 149,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "999a88df-6ea4-4d06-9625-98e24dddf96d",
+      "log_date": "2025-06-16",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 149,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "4b735bce-34a3-490d-b3a5-13811e5ff8c6",
+      "log_date": "2024-08-23",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 1025,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 8
+    },
+    {
+      "log_id": "5e105ea7-4ded-4a34-bdeb-7c1ac643bcfc",
+      "log_date": "2025-06-08",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 148,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "fbbec1fe-adff-4eec-96be-eb4f1af30366",
+      "log_date": "2025-06-05",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 1306,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "15ce6e15-c49c-4a3e-b259-304b037ea52e",
+      "log_date": "2024-09-06",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 423,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "3f96796a-0d64-40ce-942e-709eed4fa8a9",
+      "log_date": "2025-06-08",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 147,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "164765f1-28ff-460b-bc45-1e53a7154cce",
+      "log_date": "2025-06-08",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 147,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "63863e7a-b81c-45be-8b20-2ff17960782b",
+      "log_date": "2025-06-15",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 147,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "630e1da2-b755-465b-8d34-3545e40939bd",
+      "log_date": "2025-08-16",
+      "sys_hw": "PX4_FMU_V6X",
+      "mav_type": "Quadrotor",
+      "duration_s": 123,
+      "rating": "good",
+      "ver_sw_release": "v1.16.0 255",
+      "airframe_name": "Generic Quadcopter",
+      "wind_speed": 0
+    },
+    {
+      "log_id": "3a536f9d-09be-4e7d-888e-2e8d2e93e941",
+      "log_date": "2025-06-08",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 120,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "6c90ceb9-7f59-423d-864f-df3a4c2fdfdb",
+      "log_date": "2025-06-08",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 147,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    },
+    {
+      "log_id": "51c41177-e55e-4bdd-bc53-ec864fc21b62",
+      "log_date": "2024-09-02",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 569,
+      "rating": "good",
+      "ver_sw_release": "v1.12.1 255",
+      "airframe_name": "HIL Quadcopter X",
+      "wind_speed": 10
+    }
+  ],
+  "protocol": "v1",
+  "note": "v1 protocol result: 38/40 logs were HITL (SYS_HITL=1, airframe 'HIL Quadcopter X', PX4_FMU_V3, one site) and 2 had no GNSS topics -> 0 usable real flights. Superseded by v2; kept for transparency."
+}

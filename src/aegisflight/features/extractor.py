@@ -25,7 +25,8 @@ from ..mavlink.codec import MODE_NAMES
 # Position-residual sliding window (in position fixes; GPS ≈ 5 Hz => ~3 s).
 # A bounded window (rather than an infinite leaky integrator) accumulates the
 # sub-GPS-noise gradual-drift signal past the 12 m threshold while keeping the
-# benign residual ~4 m RMS AND recovering within the window length once an
+# benign residual at a few metres (see the sim reference in
+# artifacts/external/*/summary.md) AND recovering within the window length once an
 # attack stops (no long post-attack detector tail). Per-fix increments are
 # magnitude-clamped so a single position snap-back can't dominate the window.
 _RESID_WINDOW = 15

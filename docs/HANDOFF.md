@@ -29,7 +29,9 @@ simulation — no real drone or network is involved.**
 | CLI (`aegis`) | ✅ COMPLETE |
 | Backend (FastAPI REST + WebSocket) | ✅ COMPLETE |
 | Frontend dashboard (React/Vite) | ✅ COMPLETE (builds to `frontend/dist`) |
-| Tests (44: unit/integration/e2e/API) | ✅ COMPLETE |
+| Tests (unit/integration/e2e/API) | ✅ COMPLETE |
+| External real-flight validation (PX4 ULog, ALFA tlog) | ✅ analysis-only (`docs/EXTERNAL_DATA.md`) |
+| Extended benchmark v2 + simultaneous attacks | ✅ (`docs/BENCHMARKING.md`) |
 | Real-RF / SITL / hardware | ⛔ PLANNED (future work; not built) |
 
 ## What you can demonstrate today
@@ -61,7 +63,7 @@ pip install -e ".[dev]"                     # deps + editable install
 aegis train                                 # train anomaly model -> models/isoforest.joblib
 aegis simulate --attack dos                 # one session, printed alerts
 aegis benchmark                             # metrics + figures -> artifacts/
-pytest                                      # 44 tests
+pytest                                      # full suite
 npm --prefix frontend install && npm --prefix frontend run build
 aegis serve                                 # dashboard at http://127.0.0.1:8000
 aegis verify-log artifacts/aegisflight_live.sqlite

@@ -29,7 +29,7 @@ and must not depend on real hardware at Stage 1.
 Six attack classes, all simulated locally (see `docs/THREAT_MODEL.md`):
 GPS spoofing, MAVLink anomaly, command injection, telemetry manipulation, denial
 of service, and firmware integrity violation. The IDS observes the full MAVLink 2
-stream (vehicle sysid 1, GCS 254/255) plus a signed firmware manifest. The
+stream (vehicle sysid 1, GCS 254/255) plus a SHA-256 firmware manifest (unsigned in the PoC). The
 adversary can inject/modify/drop frames and tamper firmware files but cannot
 forge a valid SHA-256.
 
@@ -61,7 +61,7 @@ frames; firmware tampering flips a byte, breaking the SHA-256 manifest.
 
 Four detectors (`docs/DETECTION.md`): (A) a stateless **protocol/rule engine**;
 (B) a **cyber-physical consistency** detector that cross-checks coupled channels;
-(C) a benign-trained **ML anomaly** ensemble (Isolation Forest + robust
+(C) a benign-trained **ML anomaly** ensemble (Isolation Forest + diagonal
 Mahalanobis, the latter covering Isolation Forest's inability to extrapolate
 past its training range); (D) a **firmware integrity** verifier. Fusion uses a
 **noisy-OR with max-normalised weights**, so a single high-trust detector (or a
@@ -81,7 +81,8 @@ after an attack stops (avoiding a long detector tail).
 The anomaly model is trained **only on benign flights**, varied across route,
 speed, altitude, sensor-noise scale, and seed, and split **by session** (whole
 flights, never rows) into train/val/test to prevent leakage
-(`docs/ML_PIPELINE.md`). Benchmark seeds are disjoint from training seeds. The
+(`docs/ML_PIPELINE.md`). Benchmark noise seeds are disjoint from training seeds (the
+baseline's kinematics are fixed — 3 trajectories; benchmark v2 adds diversity). The
 saved bundle records the scaler, model, feature schema, calibration statistics,
 and `sklearn` version. Benign held-out alarm rate ≈ 0.2 %.
 

@@ -33,6 +33,12 @@ class ProtocolDetector(Detector):
         self.sensitive = set(p.get("sensitive_commands", []))
         self.burst_max = int(p.get("command_burst_max", 4))
         self.require_signing = bool(p.get("require_signing", False))
+        # GNSS fix loss (jamming / receiver denial): fix_type < min_fix_type or
+        # satellites < min_satellites for >= gnss_loss_ticks consecutive decisions.
+        self.min_fix_type = int(p.get("min_gnss_fix_type", 3))
+        self.min_sats = int(p.get("min_gnss_satellites", 5))
+        self.gnss_loss_ticks = int(p.get("gnss_loss_ticks", 5))
+        self._gnss_bad = 0
 
     def process(self, frame: FeatureFrame) -> DetectorResult:
         evidence: list[str] = []
@@ -94,6 +100,19 @@ class ProtocolDetector(Detector):
             bump(AttackType.DOS, max(0.5, s))
             evidence.append(f"GPS dropout {frame.gps_age_s:.1f}s > {self.gps_dropout:.1f}s")
 
+        # ---- GNSS fix loss (navigation-channel denial / jamming) ----
+        snap = frame.snapshot
+        fix, sats = snap.gps_fix_type, snap.satellites
+        if fix is not None and sats is not None and (fix < self.min_fix_type or sats < self.min_sats):
+            self._gnss_bad += 1
+        else:
+            self._gnss_bad = 0
+        if self._gnss_bad >= self.gnss_loss_ticks:
+            bump(AttackType.DOS, 0.7)
+            evidence.append(f"GNSS fix lost: fix_type={fix}, satellites={sats} "
+                            f"for {self._gnss_bad} decisions")
+        signals["gnss_bad_ticks"] = float(self._gnss_bad)
+
         # ---- command provenance (injection) ----
         unexpected = [
             c
@@ -131,3 +150,6 @@ class ProtocolDetector(Detector):
             attack_votes=votes,
             signals=signals,
         )
+
+    def reset(self) -> None:
+        self._gnss_bad = 0

@@ -16,7 +16,8 @@ detector below the 0.45 threat threshold — a firmware SHA-256 failure alone
 This keeps the config's *relative* detector trust (physics is trusted most, ML
 least), lets a single strong high-trust detector raise a threat, boosts the
 score when independent detectors corroborate, and keeps a lone weak ML signal
-below threshold (avoiding ML false positives).
+below threshold. A lone *strong* ML score (>= 0.45 / 0.47 ~= 0.956) does cross
+the threshold on its own -- that is the source of the baseline's false positives.
 
 Attack attribution is a weighted vote across detectors; severity comes from the
 configured bands; alerting adds per-attack-type cooldown de-duplication and a

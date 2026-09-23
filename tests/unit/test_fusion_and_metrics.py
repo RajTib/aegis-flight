@@ -84,3 +84,17 @@ def test_evaluate_false_positive_and_miss():
     assert ev.binary.fn == 1
     assert ev.binary.recall == 0.0
     assert ev.binary.fpr == 1.0
+
+
+def test_model_path_none_really_disables_ml(tmp_path, monkeypatch):
+    """Regression: ``model_path=None`` must mean ML off, even if the default model exists."""
+    from pathlib import Path
+
+    from aegisflight.config import load_config
+    from aegisflight.detectors.anomaly import AnomalyDetector
+
+    cfg = load_config().detector["anomaly"]
+    assert not AnomalyDetector(cfg, None).available
+    default = Path(cfg["model_path"])
+    if default.exists():  # repo checkout with a trained model
+        assert AnomalyDetector(cfg, default).available

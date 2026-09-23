@@ -1,0 +1,778 @@
+{
+  "experiment": "E1 PX4 Flight Review ULog navigation replay",
+  "dataset_manifest": "data/external/manifests/px4_review_v2.json",
+  "protocol": "v2",
+  "selection": {
+    "name": "v2_unrated_one_per_vehicle",
+    "mav_type": "Quadrotor",
+    "exclude_ratings": [
+      "crash_sw_hw",
+      "crash_pilot",
+      "unsatisfactory"
+    ],
+    "max_logged_errors": 0,
+    "min_duration_s": 120,
+    "max_duration_s": 1800,
+    "years": [
+      "2024",
+      "2025",
+      "2026"
+    ],
+    "estimator": "EKF2",
+    "exclude_hw_substrings": [
+      "SITL"
+    ],
+    "exclude_airframe_substrings": [
+      "HIL",
+      "SIH",
+      "Sim"
+    ],
+    "exclude_autostart_ids": [
+      1001,
+      1002,
+      1100,
+      1101,
+      1102,
+      1103
+    ],
+    "one_per_vehicle_uuid": true
+  },
+  "seed": 2026,
+  "n_public_logs": 468513,
+  "n_eligible": 11974,
+  "n_downloaded": 40,
+  "thresholds": {
+    "pos_residual_m": 12.0,
+    "gps_vfr_speed_diff_ms": 5.0,
+    "gps_baro_alt_diff_m": 8.0,
+    "alt_rate_ms": 25.0,
+    "accel_ms2": 20.0,
+    "yaw_course_diff_deg": 25.0,
+    "ml_score_threshold": 0.62,
+    "ml_lone_threat_threshold": 0.9563
+  },
+  "exclusions": [],
+  "mappings": {
+    "px4_telemetry": {
+      "n_usable_flights": 24,
+      "exclusions": [
+        {
+          "file": "7cf1c590-9555-426b-95a3-56d2457c2252.ulg",
+          "reason": "missing topics: vehicle_global_position"
+        },
+        {
+          "file": "55f952e0-670f-441f-bfd9-903b014259bd.ulg",
+          "reason": "missing topics: vehicle_global_position"
+        },
+        {
+          "file": "8e633227-0d15-4b36-b75e-4fa95498aac3.ulg",
+          "reason": "missing topics: vehicle_global_position"
+        },
+        {
+          "file": "ffcf5149-e7d1-40d1-abfb-8e5af689c588.ulg",
+          "reason": "missing topics: vehicle_global_position"
+        },
+        {
+          "file": "5da22945-a38d-4fb9-9a80-2f7d35f0e071.ulg",
+          "reason": "missing topics: vehicle_global_position"
+        },
+        {
+          "file": "23664a4b-bda3-4124-b1ac-428430b3468b.ulg",
+          "reason": "missing topics: vehicle_global_position"
+        },
+        {
+          "file": "07eb5225-c21a-47e5-bbdf-46ed6b5df037.ulg",
+          "reason": "missing topics: vehicle_global_position"
+        },
+        {
+          "file": "df5c031f-03e1-4068-bb2b-4944c7fc5701.ulg",
+          "reason": "missing topics: vehicle_global_position"
+        },
+        {
+          "file": "7278db06-fdf7-4d9e-af0c-b768220888e6.ulg",
+          "reason": "missing topics: vehicle_global_position"
+        },
+        {
+          "file": "db1110a1-8860-4077-a13b-100001a377cb.ulg",
+          "reason": "less than 60 s airborne"
+        },
+        {
+          "file": "35842819-623b-445e-b2b2-f0a257f21304.ulg",
+          "reason": "missing topics: vehicle_global_position"
+        },
+        {
+          "file": "25edff5f-e125-48fe-ac99-ab0ac0551cd9.ulg",
+          "reason": "missing topics: vehicle_global_position"
+        },
+        {
+          "file": "4141aa54-a802-4fd0-9f8c-2e120eb732d2.ulg",
+          "reason": "missing topics: vehicle_global_position"
+        },
+        {
+          "file": "47b3fbbf-b6f0-400d-ba18-568b1f3d69fd.ulg",
+          "reason": "missing topics: vehicle_global_position"
+        },
+        {
+          "file": "c0302ade-ba4a-4f7c-a3de-fd3b835558b0.ulg",
+          "reason": "missing topics: vehicle_global_position"
+        },
+        {
+          "file": "fa408f23-f775-4fe4-b173-bd85b1cb216d.ulg",
+          "reason": "missing topics: vehicle_global_position"
+        }
+      ],
+      "rates": {
+        "n_flights": 24,
+        "n_airborne_ticks": 39240,
+        "airborne_hours": 2.18,
+        "physics_trigger_rate": {
+          "pooled": 0.055071355759429154,
+          "median_of_flights": 0.01966917976215467,
+          "flights_with_any": 16
+        },
+        "ml_probe_alarm_rate": {
+          "pooled": 0.07900101936799185,
+          "median_of_flights": 0.04174518379367362,
+          "flights_with_any": 17
+        },
+        "ml_probe_lone_threat_rate": {
+          "pooled": 0.07525484199796126,
+          "median_of_flights": 0.029898938575992854,
+          "flights_with_any": 17
+        },
+        "exceed_pos_residual_m": {
+          "pooled": 0.0014780835881753314,
+          "median_of_flights": 0.0,
+          "flights_with_any": 2
+        },
+        "exceed_gps_vfr_speed_diff_ms": {
+          "pooled": 0.0,
+          "median_of_flights": 0.0,
+          "flights_with_any": 0
+        },
+        "exceed_gps_baro_alt_diff_m": {
+          "pooled": 2.5484199796126402e-05,
+          "median_of_flights": 0.0,
+          "flights_with_any": 1
+        },
+        "exceed_alt_rate_ms": {
+          "pooled": 0.00010193679918450561,
+          "median_of_flights": 0.0,
+          "flights_with_any": 3
+        },
+        "exceed_accel_ms2": {
+          "pooled": 2.5484199796126402e-05,
+          "median_of_flights": 0.0,
+          "flights_with_any": 1
+        },
+        "exceed_yaw_course_diff_deg": {
+          "pooled": 0.48005114895785,
+          "median_of_flights": 0.6126702114637663,
+          "flights_with_any": 16
+        }
+      },
+      "features": {
+        "pos_residual_m": {
+          "n": 39240,
+          "p50": 0.13414965062759768,
+          "p95": 1.078522147468777,
+          "p99": 2.5216784643966554,
+          "max": 91.34421630959322,
+          "mean": 0.33523762477396957
+        },
+        "gps_vfr_speed_diff_ms": {
+          "n": 39240,
+          "p50": 0.0064542262410140355,
+          "p95": 0.012229781218459029,
+          "p99": 0.0782499527995037,
+          "max": 1.861780167531978,
+          "mean": 0.009643398721720715
+        },
+        "gps_baro_alt_diff_m": {
+          "n": 39240,
+          "p50": 0.0009201812743668825,
+          "p95": 0.08955483015775627,
+          "p99": 0.2839660993957487,
+          "max": 26.35824417877197,
+          "mean": 0.017412454353570164
+        },
+        "alt_rate_ms": {
+          "n": 39240,
+          "p50": -0.00021994113922119607,
+          "p95": 1.3796205520629674,
+          "p99": 2.9899645805359625,
+          "max": 24.113242626184704,
+          "mean": -0.0030928066580110966
+        },
+        "accel_ms2": {
+          "n": 39240,
+          "p50": 0.15000000000000852,
+          "p95": 2.5495097567958105,
+          "p99": 5.612685524022849,
+          "max": 23.898640128676437,
+          "mean": 0.5004754502480881
+        },
+        "yaw_course_diff_deg": {
+          "n": 39240,
+          "p50": 0.0,
+          "p95": 57.66482093889511,
+          "p99": 169.57603439870178,
+          "max": 179.99043990030205,
+          "mean": 6.833338422637743
+        },
+        "ml_nav_probe": {
+          "n": 39240,
+          "p50": 0.06770042232473501,
+          "p95": 1.0,
+          "p99": 1.0,
+          "max": 1.0,
+          "mean": 0.13859973937028075
+        }
+      },
+      "hardware": [
+        "CODEV_AQUILA_V3",
+        "CUAV_NORA",
+        "CUAV_X7PRO",
+        "CZI_TF_MINI",
+        "FREEFLY_ASTRO_FMU_V5X",
+        "GDCX_H743VI",
+        "MICOAIR_H743",
+        "MICOAIR_H743_V2",
+        "PX4_FMU_V3",
+        "PX4_FMU_V4",
+        "PX4_FMU_V5",
+        "PX4_FMU_V6C",
+        "PX4_FMU_V6X",
+        "UVIFY_CORE",
+        "WGDRONES_DR001"
+      ],
+      "ks_vs_sim": {
+        "pos_residual_m": 0.7264325239812648,
+        "gps_vfr_speed_diff_ms": 0.9200790626844411,
+        "gps_baro_alt_diff_m": 0.9092055434724255,
+        "alt_rate_ms": 0.38228546237439065,
+        "accel_ms2": 0.7330173582747193,
+        "yaw_course_diff_deg": 0.5344266510480725
+      }
+    },
+    "independent_sensors": {
+      "n_usable_flights": 26,
+      "exclusions": [
+        {
+          "file": "7cf1c590-9555-426b-95a3-56d2457c2252.ulg",
+          "reason": "missing topics: vehicle_gps_position|sensor_gps"
+        },
+        {
+          "file": "55f952e0-670f-441f-bfd9-903b014259bd.ulg",
+          "reason": "missing topics: vehicle_air_data, vehicle_gps_position|sensor_gps"
+        },
+        {
+          "file": "8e633227-0d15-4b36-b75e-4fa95498aac3.ulg",
+          "reason": "less than 60 s airborne"
+        },
+        {
+          "file": "ffcf5149-e7d1-40d1-abfb-8e5af689c588.ulg",
+          "reason": "missing topics: vehicle_gps_position|sensor_gps"
+        },
+        {
+          "file": "5da22945-a38d-4fb9-9a80-2f7d35f0e071.ulg",
+          "reason": "missing topics: vehicle_gps_position|sensor_gps"
+        },
+        {
+          "file": "23664a4b-bda3-4124-b1ac-428430b3468b.ulg",
+          "reason": "missing topics: vehicle_gps_position|sensor_gps"
+        },
+        {
+          "file": "07eb5225-c21a-47e5-bbdf-46ed6b5df037.ulg",
+          "reason": "missing topics: vehicle_gps_position|sensor_gps"
+        },
+        {
+          "file": "df5c031f-03e1-4068-bb2b-4944c7fc5701.ulg",
+          "reason": "missing topics: vehicle_gps_position|sensor_gps"
+        },
+        {
+          "file": "35842819-623b-445e-b2b2-f0a257f21304.ulg",
+          "reason": "missing topics: vehicle_gps_position|sensor_gps"
+        },
+        {
+          "file": "25edff5f-e125-48fe-ac99-ab0ac0551cd9.ulg",
+          "reason": "missing topics: vehicle_gps_position|sensor_gps"
+        },
+        {
+          "file": "4141aa54-a802-4fd0-9f8c-2e120eb732d2.ulg",
+          "reason": "missing topics: vehicle_gps_position|sensor_gps"
+        },
+        {
+          "file": "47b3fbbf-b6f0-400d-ba18-568b1f3d69fd.ulg",
+          "reason": "missing topics: vehicle_gps_position|sensor_gps"
+        },
+        {
+          "file": "c0302ade-ba4a-4f7c-a3de-fd3b835558b0.ulg",
+          "reason": "less than 60 s airborne"
+        },
+        {
+          "file": "fa408f23-f775-4fe4-b173-bd85b1cb216d.ulg",
+          "reason": "missing topics: vehicle_air_data, vehicle_gps_position|sensor_gps"
+        }
+      ],
+      "rates": {
+        "n_flights": 26,
+        "n_airborne_ticks": 42541,
+        "airborne_hours": 2.363388888888889,
+        "physics_trigger_rate": {
+          "pooled": 0.9342046496321196,
+          "median_of_flights": 1.0,
+          "flights_with_any": 26
+        },
+        "ml_probe_alarm_rate": {
+          "pooled": 0.9465221786041701,
+          "median_of_flights": 1.0,
+          "flights_with_any": 26
+        },
+        "ml_probe_lone_threat_rate": {
+          "pooled": 0.8958416586351989,
+          "median_of_flights": 1.0,
+          "flights_with_any": 26
+        },
+        "exceed_pos_residual_m": {
+          "pooled": 0.0002820808161538281,
+          "median_of_flights": 0.0,
+          "flights_with_any": 1
+        },
+        "exceed_gps_vfr_speed_diff_ms": {
+          "pooled": 0.056627723842880985,
+          "median_of_flights": 0.0,
+          "flights_with_any": 3
+        },
+        "exceed_gps_baro_alt_diff_m": {
+          "pooled": 0.9298794104510942,
+          "median_of_flights": 1.0,
+          "flights_with_any": 25
+        },
+        "exceed_alt_rate_ms": {
+          "pooled": 0.004301732446345878,
+          "median_of_flights": 0.0,
+          "flights_with_any": 6
+        },
+        "exceed_accel_ms2": {
+          "pooled": 7.052020403845702e-05,
+          "median_of_flights": 0.0,
+          "flights_with_any": 2
+        },
+        "exceed_yaw_course_diff_deg": {
+          "pooled": 0.5014135500982092,
+          "median_of_flights": 0.5903717166715434,
+          "flights_with_any": 18
+        }
+      },
+      "features": {
+        "pos_residual_m": {
+          "n": 42541,
+          "p50": 0.0928501015747237,
+          "p95": 1.0021569669765418,
+          "p99": 2.015025057461569,
+          "max": 17.742703764584434,
+          "mean": 0.24801926758846576
+        },
+        "gps_vfr_speed_diff_ms": {
+          "n": 42541,
+          "p50": 0.044169896458492855,
+          "p95": 10.997395685455817,
+          "p99": 12.001636692385928,
+          "max": 12.001636692385928,
+          "mean": 0.7581136303420677
+        },
+        "gps_baro_alt_diff_m": {
+          "n": 42541,
+          "p50": 104.36121142578128,
+          "p95": 5455.6559921875,
+          "p99": 5458.78013984375,
+          "max": 5463.99089453125,
+          "mean": 1136.0621530622586
+        },
+        "alt_rate_ms": {
+          "n": 42541,
+          "p50": 0.0,
+          "p95": 6.15661621093785,
+          "p99": 14.374237060547692,
+          "max": 45.97640991210954,
+          "mean": -0.002910268665132649
+        },
+        "accel_ms2": {
+          "n": 42541,
+          "p50": 0.2610076627227786,
+          "p95": 2.6575364531830576,
+          "p99": 5.537642391289298,
+          "max": 28.113920039725695,
+          "mean": 0.6263113080578652
+        },
+        "yaw_course_diff_deg": {
+          "n": 42541,
+          "p50": 0.0,
+          "p95": 40.463895242999456,
+          "p99": 167.57699541403733,
+          "max": 179.990900584767,
+          "mean": 6.479406474969352
+        },
+        "ml_nav_probe": {
+          "n": 42541,
+          "p50": 1.0,
+          "p95": 1.0,
+          "p99": 1.0,
+          "max": 1.0,
+          "mean": 0.9478184426744269
+        }
+      },
+      "hardware": [
+        "CFH_CFH_RK3588",
+        "CODEV_AQUILA_V3",
+        "CUAV_NORA",
+        "CUAV_X7PRO",
+        "CZI_TF_MINI",
+        "DRONEYEE_ZYRACER_V14",
+        "FREEFLY_ASTRO_FMU_V5X",
+        "GDCX_H743VI",
+        "MICOAIR_H743",
+        "MICOAIR_H743_V2",
+        "PX4_FMU_V3",
+        "PX4_FMU_V4",
+        "PX4_FMU_V5",
+        "PX4_FMU_V6C",
+        "PX4_FMU_V6X",
+        "UVIFY_CORE",
+        "WGDRONES_DR001"
+      ],
+      "ks_vs_sim": {
+        "pos_residual_m": 0.7511769752905629,
+        "gps_vfr_speed_diff_ms": 0.39560879399918975,
+        "gps_baro_alt_diff_m": 0.9441987890087208,
+        "alt_rate_ms": 0.2148982747450866,
+        "accel_ms2": 0.6482923398198848,
+        "yaw_course_diff_deg": 0.5393334458865878
+      }
+    },
+    "independent_sensors_biascorr": {
+      "n_usable_flights": 26,
+      "exclusions": [
+        {
+          "file": "7cf1c590-9555-426b-95a3-56d2457c2252.ulg",
+          "reason": "missing topics: vehicle_gps_position|sensor_gps"
+        },
+        {
+          "file": "55f952e0-670f-441f-bfd9-903b014259bd.ulg",
+          "reason": "missing topics: vehicle_air_data, vehicle_gps_position|sensor_gps"
+        },
+        {
+          "file": "8e633227-0d15-4b36-b75e-4fa95498aac3.ulg",
+          "reason": "less than 60 s airborne"
+        },
+        {
+          "file": "ffcf5149-e7d1-40d1-abfb-8e5af689c588.ulg",
+          "reason": "missing topics: vehicle_gps_position|sensor_gps"
+        },
+        {
+          "file": "5da22945-a38d-4fb9-9a80-2f7d35f0e071.ulg",
+          "reason": "missing topics: vehicle_gps_position|sensor_gps"
+        },
+        {
+          "file": "23664a4b-bda3-4124-b1ac-428430b3468b.ulg",
+          "reason": "missing topics: vehicle_gps_position|sensor_gps"
+        },
+        {
+          "file": "07eb5225-c21a-47e5-bbdf-46ed6b5df037.ulg",
+          "reason": "missing topics: vehicle_gps_position|sensor_gps"
+        },
+        {
+          "file": "df5c031f-03e1-4068-bb2b-4944c7fc5701.ulg",
+          "reason": "missing topics: vehicle_gps_position|sensor_gps"
+        },
+        {
+          "file": "35842819-623b-445e-b2b2-f0a257f21304.ulg",
+          "reason": "missing topics: vehicle_gps_position|sensor_gps"
+        },
+        {
+          "file": "25edff5f-e125-48fe-ac99-ab0ac0551cd9.ulg",
+          "reason": "missing topics: vehicle_gps_position|sensor_gps"
+        },
+        {
+          "file": "4141aa54-a802-4fd0-9f8c-2e120eb732d2.ulg",
+          "reason": "missing topics: vehicle_gps_position|sensor_gps"
+        },
+        {
+          "file": "47b3fbbf-b6f0-400d-ba18-568b1f3d69fd.ulg",
+          "reason": "missing topics: vehicle_gps_position|sensor_gps"
+        },
+        {
+          "file": "c0302ade-ba4a-4f7c-a3de-fd3b835558b0.ulg",
+          "reason": "less than 60 s airborne"
+        },
+        {
+          "file": "fa408f23-f775-4fe4-b173-bd85b1cb216d.ulg",
+          "reason": "missing topics: vehicle_air_data, vehicle_gps_position|sensor_gps"
+        }
+      ],
+      "rates": {
+        "n_flights": 26,
+        "n_airborne_ticks": 42541,
+        "airborne_hours": 2.363388888888889,
+        "physics_trigger_rate": {
+          "pooled": 0.2855833196210714,
+          "median_of_flights": 0.11164182741091316,
+          "flights_with_any": 20
+        },
+        "ml_probe_alarm_rate": {
+          "pooled": 0.34905150325568274,
+          "median_of_flights": 0.1676608323516795,
+          "flights_with_any": 22
+        },
+        "ml_probe_lone_threat_rate": {
+          "pooled": 0.2180249641522296,
+          "median_of_flights": 0.10645144912248186,
+          "flights_with_any": 22
+        },
+        "exceed_pos_residual_m": {
+          "pooled": 0.0002820808161538281,
+          "median_of_flights": 0.0,
+          "flights_with_any": 1
+        },
+        "exceed_gps_vfr_speed_diff_ms": {
+          "pooled": 0.056627723842880985,
+          "median_of_flights": 0.0,
+          "flights_with_any": 3
+        },
+        "exceed_gps_baro_alt_diff_m": {
+          "pooled": 0.25558872617004774,
+          "median_of_flights": 0.0019342489945135706,
+          "flights_with_any": 15
+        },
+        "exceed_alt_rate_ms": {
+          "pooled": 0.004301732446345878,
+          "median_of_flights": 0.0,
+          "flights_with_any": 6
+        },
+        "exceed_accel_ms2": {
+          "pooled": 7.052020403845702e-05,
+          "median_of_flights": 0.0,
+          "flights_with_any": 2
+        },
+        "exceed_yaw_course_diff_deg": {
+          "pooled": 0.5014135500982092,
+          "median_of_flights": 0.5903717166715434,
+          "flights_with_any": 18
+        }
+      },
+      "features": {
+        "pos_residual_m": {
+          "n": 42541,
+          "p50": 0.0928501015747237,
+          "p95": 1.0021569669765418,
+          "p99": 2.015025057461569,
+          "max": 17.742703764584434,
+          "mean": 0.24801926758846576
+        },
+        "gps_vfr_speed_diff_ms": {
+          "n": 42541,
+          "p50": 0.044169896458492855,
+          "p95": 10.997395685455817,
+          "p99": 12.001636692385928,
+          "max": 12.001636692385928,
+          "mean": 0.7581136303420677
+        },
+        "gps_baro_alt_diff_m": {
+          "n": 42541,
+          "p50": 3.3337841796874272,
+          "p95": 49.12765682983398,
+          "p99": 57.7601338470458,
+          "max": 93.35496398925781,
+          "mean": 7.664040682419185
+        },
+        "alt_rate_ms": {
+          "n": 42541,
+          "p50": 0.0,
+          "p95": 6.15661621093785,
+          "p99": 14.374237060547692,
+          "max": 45.97640991210954,
+          "mean": -0.002910268665132649
+        },
+        "accel_ms2": {
+          "n": 42541,
+          "p50": 0.2610076627227786,
+          "p95": 2.6575364531830576,
+          "p99": 5.537642391289298,
+          "max": 28.113920039725695,
+          "mean": 0.6263113080578652
+        },
+        "yaw_course_diff_deg": {
+          "n": 42541,
+          "p50": 0.0,
+          "p95": 40.463895242999456,
+          "p99": 167.57699541403733,
+          "max": 179.990900584767,
+          "mean": 6.479406474969352
+        },
+        "ml_nav_probe": {
+          "n": 42541,
+          "p50": 0.12020951251312055,
+          "p95": 1.0,
+          "p99": 1.0,
+          "max": 1.0,
+          "mean": 0.3951588125830478
+        }
+      },
+      "hardware": [
+        "CFH_CFH_RK3588",
+        "CODEV_AQUILA_V3",
+        "CUAV_NORA",
+        "CUAV_X7PRO",
+        "CZI_TF_MINI",
+        "DRONEYEE_ZYRACER_V14",
+        "FREEFLY_ASTRO_FMU_V5X",
+        "GDCX_H743VI",
+        "MICOAIR_H743",
+        "MICOAIR_H743_V2",
+        "PX4_FMU_V3",
+        "PX4_FMU_V4",
+        "PX4_FMU_V5",
+        "PX4_FMU_V6C",
+        "PX4_FMU_V6X",
+        "UVIFY_CORE",
+        "WGDRONES_DR001"
+      ],
+      "ks_vs_sim": {
+        "pos_residual_m": 0.7511769752905629,
+        "gps_vfr_speed_diff_ms": 0.39560879399918975,
+        "gps_baro_alt_diff_m": 0.458500038420109,
+        "alt_rate_ms": 0.2148982747450866,
+        "accel_ms2": 0.6482923398198848,
+        "yaw_course_diff_deg": 0.5393334458865878
+      }
+    }
+  },
+  "sim_reference": {
+    "n_flights": 12,
+    "seeds": [
+      9001,
+      9002,
+      9003,
+      9004,
+      9005,
+      9006,
+      9007,
+      9008,
+      9009,
+      9010,
+      9011,
+      9012
+    ],
+    "rates": {
+      "n_flights": 12,
+      "n_airborne_ticks": 6323,
+      "airborne_hours": 0.3512777777777778,
+      "physics_trigger_rate": {
+        "pooled": 0.0,
+        "median_of_flights": 0.0,
+        "flights_with_any": 0
+      },
+      "ml_probe_alarm_rate": {
+        "pooled": 0.0030049027360430176,
+        "median_of_flights": 0.0020081616852428343,
+        "flights_with_any": 9
+      },
+      "ml_probe_lone_threat_rate": {
+        "pooled": 0.0007907638779060573,
+        "median_of_flights": 0.0,
+        "flights_with_any": 4
+      },
+      "exceed_pos_residual_m": {
+        "pooled": 0.0,
+        "median_of_flights": 0.0,
+        "flights_with_any": 0
+      },
+      "exceed_gps_vfr_speed_diff_ms": {
+        "pooled": 0.0,
+        "median_of_flights": 0.0,
+        "flights_with_any": 0
+      },
+      "exceed_gps_baro_alt_diff_m": {
+        "pooled": 0.0,
+        "median_of_flights": 0.0,
+        "flights_with_any": 0
+      },
+      "exceed_alt_rate_ms": {
+        "pooled": 0.00047445832674363435,
+        "median_of_flights": 0.0,
+        "flights_with_any": 3
+      },
+      "exceed_accel_ms2": {
+        "pooled": 0.0,
+        "median_of_flights": 0.0,
+        "flights_with_any": 0
+      },
+      "exceed_yaw_course_diff_deg": {
+        "pooled": 0.0,
+        "median_of_flights": 0.0,
+        "flights_with_any": 0
+      }
+    },
+    "features": {
+      "pos_residual_m": {
+        "n": 6323,
+        "p50": 1.1514363353690868,
+        "p95": 2.4840801132458146,
+        "p99": 3.0538927534735025,
+        "max": 4.4871719594508335,
+        "mean": 1.2435366427020715
+      },
+      "gps_vfr_speed_diff_ms": {
+        "n": 6323,
+        "p50": 0.15478123207580885,
+        "p95": 0.4503460708743941,
+        "p99": 0.5931961340981864,
+        "max": 0.9698093800155991,
+        "mean": 0.1836117244232573
+      },
+      "gps_baro_alt_diff_m": {
+        "n": 6323,
+        "p50": 1.1006278076171867,
+        "p95": 3.36238693237305,
+        "p99": 4.461278480224603,
+        "max": 7.125294738769531,
+        "mean": 1.3382017074107146
+      },
+      "alt_rate_ms": {
+        "n": 6323,
+        "p50": -0.04219055175781228,
+        "p95": 11.142532348632663,
+        "p99": 15.952127075195296,
+        "max": 28.363037109376613,
+        "mean": 0.006729208478514104
+      },
+      "accel_ms2": {
+        "n": 6323,
+        "p50": 1.6492422502470423,
+        "p95": 7.607676959109312,
+        "p99": 9.287076356966734,
+        "max": 11.070794912742105,
+        "mean": 2.3275843967859866
+      },
+      "yaw_course_diff_deg": {
+        "n": 6323,
+        "p50": 0.34976339792174826,
+        "p95": 2.144093361283273,
+        "p99": 3.2237306789764886,
+        "max": 16.108844155789257,
+        "mean": 0.6174399191289399
+      },
+      "ml_nav_probe": {
+        "n": 6323,
+        "p50": 0.035768358151225636,
+        "p95": 0.17973239027123036,
+        "p99": 0.36482611932149256,
+        "max": 0.999999544149945,
+        "mean": 0.05986544723738627
+      }
+    }
+  },
+  "python": "3.13.11",
+  "wall_time_s": 1027.6
+}

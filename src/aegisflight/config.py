@@ -104,6 +104,9 @@ DEFAULT_DETECTOR: dict[str, Any] = {
         "command_burst_window_s": 2.0,
         "command_burst_max": 4,
         "require_signing": False,  # if True, unsigned msgs are flagged
+        "min_gnss_fix_type": 3,  # GPS_RAW_INT fix_type below this = no 3D fix
+        "min_gnss_satellites": 5,
+        "gnss_loss_ticks": 5,  # consecutive decisions before the fix-loss rule fires
     },
     "physics": {
         "gps_pos_residual_m": 12.0,  # predicted vs reported position gap

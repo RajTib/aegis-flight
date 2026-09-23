@@ -18,7 +18,9 @@ save bundle (models/isoforest.joblib) ──▶ inference in AnomalyDetector
 
 ## Model
 - **Type:** ensemble of `sklearn.ensemble.IsolationForest`
-  (`n_estimators=200`, `contamination=0.02`) and a robust
+  (`n_estimators=200`; `contamination=0.02` is passed but only affects
+  `predict()`/`decision_function()`, which AegisFlight does not use — decisions come from
+  `score_samples()` + the calibration below) and a diagonal
   Mahalanobis/scaled-norm over the same `StandardScaler`. Combined by
   `max(iso_z, maha_z)` (see `detectors/anomaly.py:combined_anomaly_raw` — the
   identical function is used for both calibration and inference).
@@ -36,8 +38,10 @@ save bundle (models/isoforest.joblib) ──▶ inference in AnomalyDetector
 - **Session-level split** (`split_by_session`): whole *flights* go to
   train/val/test (60/20/20). Rows from one flight are highly autocorrelated, so
   a random row split would leak — this avoids it.
-- **Reproducibility seeds are disjoint from the benchmark** (training uses
-  100+, benchmark uses 1–6), so evaluation flights are unseen.
+- **Seeds are disjoint from the benchmark** (training kinematics/noise seeds 101–124;
+  baseline benchmark noise seeds 1–6, kinematics seed fixed at 42). Evaluation flights
+  are therefore different noise realisations of 3 fixed trajectories, not a broad set of
+  unseen flights — see the extended benchmark v2 for per-session trajectory diversity.
 
 ## Calibration
 The combined signal is standardised by benign *train* statistics

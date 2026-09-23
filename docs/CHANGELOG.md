@@ -41,3 +41,22 @@ continuation. See `docs/RECOVERY_AUDIT.md`.
 Working PoC: simulator → MAVLink → six attacks → four detectors → fusion →
 tamper-evident logging → REST/WebSocket → dashboard, with a reproducible
 benchmark and a 44-test suite. See `docs/HANDOFF.md` for status detail.
+
+## External validation & benchmark v2 (2026-09-24)
+- **External real-flight data (analysis only):** provenance-tracked download of PX4
+  Flight Review public logs (selection protocol v1 → failed, 38/40 HITL; v2 → one log per
+  vehicle) and the ALFA dataset (real ArduPilot MAVLink `.tlog`s). ULog and tlog adapters;
+  `scripts/external_validation.py` (E1 navigation replay, E2 full-pipeline replay, E2b
+  per-vehicle link calibration on held-out dates). No retraining. `docs/EXTERNAL_DATA.md`.
+- **Extended benchmark v2** (`scripts/benchmark_extended.py`): per-session trajectory
+  seeds/speed/altitude/noise, all 20 attack modes, grace 5 s *and* 0 s, excl.-firmware
+  metrics, simultaneous attacks (`CompositeAttack`, multi-label ground truth), benign
+  link-impairment stress (FIFO and reordering). Baseline benchmark untouched and
+  re-verified bit-identical after the changes.
+- **New attack variants:** `dos:gnss_jamming` (+ protocol rule *GNSS fix lost*),
+  `command_injection:gcs_replay` (documented known gap).
+- **Bug fix:** `model_path=None` / `--no-model` now really disables ML (it previously
+  loaded `models/isoforest.joblib` if present). ML-off ablation regenerated.
+- **Docs honesty pass:** unsigned manifest, diagonal (not robust) Mahalanobis, "unseen
+  noise realisations" not "unseen flights", lone-ML threat behaviour, missing
+  `tune_thresholds.py`, unimplemented baro bias correction.

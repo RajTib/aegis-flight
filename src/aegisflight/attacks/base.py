@@ -63,6 +63,15 @@ class Attack:
     def label(self, t: float) -> AttackType:
         return self.attack_type if self.active(t) else AttackType.BENIGN
 
+    def labels(self, t: float) -> frozenset[AttackType]:
+        """All attack classes active at ``t`` (multi-label ground truth).
+
+        Single attacks return at most one class; :class:`CompositeAttack`
+        returns every active component's class.
+        """
+        lab = self.label(t)
+        return frozenset() if lab is AttackType.BENIGN else frozenset({lab})
+
     def window(self) -> tuple[float, float]:
         return self.start_s, self.start_s + self.duration_s
 

@@ -38,6 +38,9 @@ class DecisionRecord:
     severity: str
     scored: bool  # False for warmup/grace ticks
     features: list[float] = field(default_factory=list)
+    in_grace: bool = False  # post-attack recovery tick (excluded when scored)
+    true_set: tuple[str, ...] = ()  # multi-label ground truth (active attack classes)
+    pred_secondary: tuple[str, ...] = ()  # fusion's secondary indicators
 
 
 @dataclass
@@ -77,7 +80,8 @@ def run_session(
     pipe = IDSPipeline(cfg, model_path=model_path, firmware_dir=fw_dir)
 
     rng = np.random.default_rng(rng_seed if rng_seed is not None else seed + 99)
-    atk_kwargs = {"firmware_dir": fw_dir} if attack_name == "firmware_integrity" else {}
+    atk_kwargs = ({"firmware_dir": fw_dir}
+                  if "firmware_integrity" in str(attack_name).split("+") else {})
     attack = build_attack(attack_name, cfg.attacks, rng, **atk_kwargs)
     win = attack.window() if attack_name not in ("benign", "none") else (1e18, 1e18)
 
@@ -129,6 +133,9 @@ def run_session(
                 severity=a.severity.value,
                 scored=scored,
                 features=[],
+                in_grace=in_grace,
+                true_set=tuple(sorted(lab.value for lab in tick.labels)),
+                pred_secondary=tuple(x.value for x in a.secondary_indicators),
             )
         )
     wall = time.perf_counter() - t_wall0

@@ -24,6 +24,11 @@ data/generated/*
 artifacts/reports/*
 !artifacts/reports/.gitkeep
 
+# External real-flight data: raw downloads are NOT committed (size + licences);
+# manifests (URL, bytes, SHA-256) and generated results ARE committed.
+data/external/raw/
+artifacts/external/**/feature_samples.npz
+
 # Benchmark results + figures ARE committed as competition evidence
 # (regenerable via `aegis benchmark`), so they are intentionally NOT ignored.
 
@@ -36,7 +41,7 @@ artifacts/reports/*
 *.db
 *.log
 
-# ---- Trained models (regenerable via scripts/train_model.py) ----
+# ---- Trained models (regenerable via scripts/train_models.py / aegis train) ----
 models/*.joblib
 models/*.pkl
 

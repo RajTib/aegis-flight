@@ -1,6 +1,6 @@
 """Firmware-integrity verification via SHA-256 manifests.
 
-This is a *real* cryptographic check, not a mock: a signed manifest records the
+This is a *real* cryptographic hash check, not a mock: a manifest records the
 SHA-256 of every firmware component; the verifier re-hashes the on-disk files
 and reports any mismatch, addition, or deletion. The firmware-tampering attack
 scenario flips bytes in a component file and this verifier genuinely detects it.
@@ -78,7 +78,12 @@ class FirmwareVerifier:
             (self.firmware_dir / name).write_bytes(content)
 
     def build_manifest(self) -> dict:
-        """Hash every ``*.bin`` component and write the signed manifest."""
+        """Hash every ``*.bin`` component and write the manifest.
+
+        NB: the manifest is **not** cryptographically signed in this PoC and lives next
+        to the firmware, so an attacker able to rewrite both is out of scope. A deployment
+        would sign it (e.g. Ed25519) and keep the public key in read-only storage.
+        """
         files = {
             p.name: sha256_file(p)
             for p in sorted(self.firmware_dir.glob("*.bin"))

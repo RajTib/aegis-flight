@@ -53,7 +53,9 @@ Benign-trained **ensemble** over the 11-feature `ML_FEATURES` vector, combined
 as `max(isolation-forest z, mahalanobis z)`:
 
 - **Isolation Forest** — subtle *in-distribution* multivariate anomalies.
-- **Robust Mahalanobis / scaled-norm** — the L2 norm of the standardised vector.
+- **Diagonal Mahalanobis / scaled-norm** — the L2 norm of the standardised (z-score) vector,
+  i.e. Mahalanobis distance with a *diagonal* covariance (feature correlations ignored) and
+  ordinary mean/std (not a robust estimator).
   Isolation Forest cannot extrapolate past its training range, so it is blind to
   out-of-range spikes (msg-rate floods, sequence gaps); the scaled-norm covers
   that blind spot.
@@ -66,7 +68,7 @@ runs. See `docs/ML_PIPELINE.md`.
 
 ## Detector D — Firmware integrity (`detectors/integrity.py`)
 
-Re-hashes firmware components against a signed SHA-256 manifest
+Re-hashes firmware components against a SHA-256 manifest (**unsigned** in the PoC; signing is future work)
 (`FirmwareVerifier`, throttled to every `recheck_every` decisions). An INVALID
 verdict → score 1.0, vote FIRMWARE_INTEGRITY, with the exact mismatched
 component(s) as evidence. This is genuine crypto, not a mock.
@@ -85,7 +87,10 @@ threat = 1 - Π_i (1 - score_i · w'_i)   # noisy-OR
 
 This keeps the config's *relative* trust (physics highest, ML lowest), lets a
 single strong high-trust detector raise a threat, boosts the score when
-detectors corroborate, and keeps a lone weak ML signal below threshold.
+detectors corroborate, and keeps a lone weak ML signal below threshold. Note: a lone ML
+score ≥ 0.956 (0.45 / 0.47) *does* cross the threat threshold on its own, and on the
+baseline benchmark every false positive is of this kind (compare the ML-off ablation,
+`artifacts/benchmarks_ablation_no_ml/summary.md`).
 
 - **Attribution:** `attack_type = argmax` of the weight-scaled vote sum across
   detectors; strong runners-up become `secondary_indicators`.

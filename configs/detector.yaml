@@ -1,9 +1,11 @@
 # AegisFlight - detection engine configuration
 #
 # Every threshold documents: what it means, its unit, and the rationale.
-# Thresholds were set above the benign 99.x-percentile observed in generated
-# baseline flights (see scripts/tune_thresholds.py) to keep the false-positive
-# rate low while retaining high recall. Re-tune after changing the simulator.
+# Thresholds were set against *simulated* benign flights. (Earlier versions of
+# this comment cited scripts/tune_thresholds.py; no such script exists in the
+# repo.) They are NOT calibrated for real vehicles -- see docs/EXTERNAL_DATA.md:
+# e.g. the 28 msg/s nominal rate and the unbiased GPS/baro check do not transfer.
+# Re-tune after changing the simulator.
 
 decision_rate_hz: 5.0          # fusion/decision cadence
 
@@ -36,6 +38,9 @@ protocol:
   command_burst_window_s: 2.0
   command_burst_max: 4
   require_signing: false            # if true, unsigned msgs are flagged
+  min_gnss_fix_type: 3              # GPS_RAW_INT fix_type below this = no 3D fix
+  min_gnss_satellites: 5            # fewer satellites than this = degraded fix
+  gnss_loss_ticks: 5                # consecutive decisions (1 s @5 Hz) before firing
 
 # ------------------------------------------------------------------ #
 # Detector B: physics / cyber-physical consistency
@@ -44,7 +49,7 @@ physics:
   gps_pos_residual_m: 12.0          # |dead-reckoned pos - reported pos|
   gps_pos_residual_hard_m: 30.0     # hard trigger regardless of hysteresis
   gps_speed_consistency_ms: 5.0     # |GPS-derived speed - VFR groundspeed|
-  alt_consistency_m: 8.0            # |GPS alt - baro alt| (bias-corrected)
+  alt_consistency_m: 8.0            # |GPS alt - baro alt| -- NO bias correction is applied
   alt_jump_ms: 25.0                 # altitude rate-of-change ceiling (m/s)
   max_accel_ms2: 20.0               # implausible horizontal acceleration
   max_jerk_ms3: 60.0                # implausible jerk

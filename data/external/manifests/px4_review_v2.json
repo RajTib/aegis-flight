@@ -1,0 +1,772 @@
+{
+  "dataset": {
+    "name": "PX4 Flight Review public logs",
+    "source": "https://review.px4.io/dbinfo",
+    "license": "public uploads; no dataset licence stated -- analysed locally, raw logs not redistributed",
+    "real_or_synthetic": "uploaded flight logs (SITL excluded by selection; HITL excluded at load time)"
+  },
+  "files": [
+    {
+      "url": "https://review.px4.io/download?log=0cf935e3-ee60-4469-9b3f-56990d6064df",
+      "path": "data/external/raw/px4_review/ulg/0cf935e3-ee60-4469-9b3f-56990d6064df.ulg",
+      "bytes": 69757694,
+      "sha256": "d4c99fef7e201272cbd143727e3378799fa042c8bebdba9673299a05644b353a",
+      "retrieved_utc": "2026-09-23T18:17:25+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=36ea4126-a9b3-466b-ae4b-79a37d769e9e",
+      "path": "data/external/raw/px4_review/ulg/36ea4126-a9b3-466b-ae4b-79a37d769e9e.ulg",
+      "bytes": 11007297,
+      "sha256": "fe2aa655f25fe8bd12a4be6ea0f5e13a10d27e0c2e45db8a3e0e1def9817befe",
+      "retrieved_utc": "2026-09-23T18:17:31+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=78bc8359-91f2-4c87-9e23-b2d110bef7f0",
+      "path": "data/external/raw/px4_review/ulg/78bc8359-91f2-4c87-9e23-b2d110bef7f0.ulg",
+      "bytes": 26764038,
+      "sha256": "faadf5fd1c2bb76cc24bf5bf72c11663a375e04f08a557e8dac1f4d0299fc57a",
+      "retrieved_utc": "2026-09-23T18:17:45+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=7cf1c590-9555-426b-95a3-56d2457c2252",
+      "path": "data/external/raw/px4_review/ulg/7cf1c590-9555-426b-95a3-56d2457c2252.ulg",
+      "bytes": 13350580,
+      "sha256": "7d6b4e848777a0cca7035a155855f9d4ffccd6900a23f70325ceda2e484878c9",
+      "retrieved_utc": "2026-09-23T18:17:53+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=c63a91d2-2845-47c4-8ea0-8f7ee914c74c",
+      "path": "data/external/raw/px4_review/ulg/c63a91d2-2845-47c4-8ea0-8f7ee914c74c.ulg",
+      "bytes": 8050324,
+      "sha256": "31977b8f9e613dc431a9483a37bcfaa0e0e54d9d317861c53bd3b11ebcf04cfc",
+      "retrieved_utc": "2026-09-23T18:17:59+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=0ac24534-a693-4570-9377-e04329296c86",
+      "path": "data/external/raw/px4_review/ulg/0ac24534-a693-4570-9377-e04329296c86.ulg",
+      "bytes": 9823856,
+      "sha256": "91a0f1c3627510d5235a539cb13bbe64123c3306271e5933c9c827adef833ee5",
+      "retrieved_utc": "2026-09-23T18:18:06+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=1fa13723-cc23-4a85-a0ba-8aa1d4309a90",
+      "path": "data/external/raw/px4_review/ulg/1fa13723-cc23-4a85-a0ba-8aa1d4309a90.ulg",
+      "bytes": 9146812,
+      "sha256": "a41da81b84804c107dceb16c28acefb62971a3e903ef2ffd1bd6506cc9c26376",
+      "retrieved_utc": "2026-09-23T18:18:12+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=ab789bd0-02e5-4a7d-8c89-fd0dd466e328",
+      "path": "data/external/raw/px4_review/ulg/ab789bd0-02e5-4a7d-8c89-fd0dd466e328.ulg",
+      "bytes": 7192435,
+      "sha256": "0f1dcc8f71596ee5ac26c8c213acad213ab5ad622252d356ac7943e46a774e66",
+      "retrieved_utc": "2026-09-23T18:18:17+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=b6b3f656-2d25-4d4e-9724-238af082fd69",
+      "path": "data/external/raw/px4_review/ulg/b6b3f656-2d25-4d4e-9724-238af082fd69.ulg",
+      "bytes": 17503992,
+      "sha256": "1d6ff72ef3f6eb8fa9951bf326ce03106c21ddd4f5101518f8f65bc167fc1c12",
+      "retrieved_utc": "2026-09-23T18:18:26+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=9271d8b8-7b86-4403-b465-bf328299ef69",
+      "path": "data/external/raw/px4_review/ulg/9271d8b8-7b86-4403-b465-bf328299ef69.ulg",
+      "bytes": 50051852,
+      "sha256": "7e47ab63b605a6368c249684ed8420440c9a6f90eca4cc0a0476e54802f4d358",
+      "retrieved_utc": "2026-09-23T18:18:50+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=55f952e0-670f-441f-bfd9-903b014259bd",
+      "path": "data/external/raw/px4_review/ulg/55f952e0-670f-441f-bfd9-903b014259bd.ulg",
+      "bytes": 128775150,
+      "sha256": "36db755039dc7816858d1340826d0f93abe80757558a2733d34e805fe043dd5f",
+      "retrieved_utc": "2026-09-23T18:19:46+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=9bcf66b3-5617-40a8-a671-d83e4fee9618",
+      "path": "data/external/raw/px4_review/ulg/9bcf66b3-5617-40a8-a671-d83e4fee9618.ulg",
+      "bytes": 17655254,
+      "sha256": "d425a73b7053565c710a56e0a57659ccef45102b6227440237abb05658532f3e",
+      "retrieved_utc": "2026-09-23T18:19:56+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=8e633227-0d15-4b36-b75e-4fa95498aac3",
+      "path": "data/external/raw/px4_review/ulg/8e633227-0d15-4b36-b75e-4fa95498aac3.ulg",
+      "bytes": 33110123,
+      "sha256": "084213eb94423a4ecccc4a1f5266cc3828804ab9978f6831ae7609fdb0aef618",
+      "retrieved_utc": "2026-09-23T18:20:13+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=ffcf5149-e7d1-40d1-abfb-8e5af689c588",
+      "path": "data/external/raw/px4_review/ulg/ffcf5149-e7d1-40d1-abfb-8e5af689c588.ulg",
+      "bytes": 6729181,
+      "sha256": "6e0b09a864b4a749e28a93fc4b6821cea1489bd2923f1e6c458544c75cbdadfb",
+      "retrieved_utc": "2026-09-23T18:20:18+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=72d71748-e015-4eb7-8b20-8e22405bc264",
+      "path": "data/external/raw/px4_review/ulg/72d71748-e015-4eb7-8b20-8e22405bc264.ulg",
+      "bytes": 18712680,
+      "sha256": "9f03adadfac5d0a642ea0f3105d0631054ccbd408be643805476e239b68e0c89",
+      "retrieved_utc": "2026-09-23T18:20:28+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=a305d471-3028-4e95-9759-4fdfa79a30d0",
+      "path": "data/external/raw/px4_review/ulg/a305d471-3028-4e95-9759-4fdfa79a30d0.ulg",
+      "bytes": 25827450,
+      "sha256": "4524b7c690f7a1df4bb5da8d02ff17835dc46db09aaff8bd031bb04222d98b44",
+      "retrieved_utc": "2026-09-23T18:20:41+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=5da22945-a38d-4fb9-9a80-2f7d35f0e071",
+      "path": "data/external/raw/px4_review/ulg/5da22945-a38d-4fb9-9a80-2f7d35f0e071.ulg",
+      "bytes": 18827375,
+      "sha256": "6a2977f9338a4a2ec2fb57753401d210770007991e15291a8d691d03c7a2bb84",
+      "retrieved_utc": "2026-09-23T18:20:57+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=23664a4b-bda3-4124-b1ac-428430b3468b",
+      "path": "data/external/raw/px4_review/ulg/23664a4b-bda3-4124-b1ac-428430b3468b.ulg",
+      "bytes": 20602862,
+      "sha256": "62c01c2a26d9d8e0606044edf48742693f3ccd1fcef11ef44e99545b38bcb8c5",
+      "retrieved_utc": "2026-09-23T18:21:08+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=0038550b-0ba3-4b05-a730-2a0533434965",
+      "path": "data/external/raw/px4_review/ulg/0038550b-0ba3-4b05-a730-2a0533434965.ulg",
+      "bytes": 19292283,
+      "sha256": "37f8fd41e5d67f58c8919cd2310b01cd6633ed98d6224326c4402dae122f2b64",
+      "retrieved_utc": "2026-09-23T18:21:18+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=b2dcf345-e7d0-4339-8a47-8790fd25890b",
+      "path": "data/external/raw/px4_review/ulg/b2dcf345-e7d0-4339-8a47-8790fd25890b.ulg",
+      "bytes": 4190321,
+      "sha256": "5f20feb4d4a765fe6ad9f9bf1385750c057f98aa0e54d8c63417025d1ba72555",
+      "retrieved_utc": "2026-09-23T18:21:22+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=07eb5225-c21a-47e5-bbdf-46ed6b5df037",
+      "path": "data/external/raw/px4_review/ulg/07eb5225-c21a-47e5-bbdf-46ed6b5df037.ulg",
+      "bytes": 26912105,
+      "sha256": "1f9aec0d7fef240d57ce5ca3d5e8dfe73c1f8eca2130dceb46dc4a20fc0e2196",
+      "retrieved_utc": "2026-09-23T18:21:36+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=0bd0e7c1-f8e9-48f4-82bc-74d67fdd231a",
+      "path": "data/external/raw/px4_review/ulg/0bd0e7c1-f8e9-48f4-82bc-74d67fdd231a.ulg",
+      "bytes": 16160165,
+      "sha256": "31e4d73c72f3b32fe268b0270fc1040b0f7e59c466db6e4f084088897c757db3",
+      "retrieved_utc": "2026-09-23T18:21:45+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=2f01f367-ad81-4078-9a42-354ce4f6a958",
+      "path": "data/external/raw/px4_review/ulg/2f01f367-ad81-4078-9a42-354ce4f6a958.ulg",
+      "bytes": 9098946,
+      "sha256": "4e3d1540854f7d43c2ea4c327186680ddd3040115e96d94704237b8802d1fa37",
+      "retrieved_utc": "2026-09-23T18:21:51+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=0a27c22c-661e-42f1-af0a-7551f0353ec4",
+      "path": "data/external/raw/px4_review/ulg/0a27c22c-661e-42f1-af0a-7551f0353ec4.ulg",
+      "bytes": 12973783,
+      "sha256": "ff278780bf4c782c1baa2e3236b2003b67ee40dcbccce0dd1c6f6669e5a5ccd7",
+      "retrieved_utc": "2026-09-23T18:21:59+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=60ebc92a-ba05-4f4e-9a81-71760954dce1",
+      "path": "data/external/raw/px4_review/ulg/60ebc92a-ba05-4f4e-9a81-71760954dce1.ulg",
+      "bytes": 8358116,
+      "sha256": "e9623c5f62ff15aa7779b5f715b33872181d291d75d0664fc80b5744b47c28eb",
+      "retrieved_utc": "2026-09-23T18:22:05+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=00f6218d-f8bd-4192-aa80-ef48d7128485",
+      "path": "data/external/raw/px4_review/ulg/00f6218d-f8bd-4192-aa80-ef48d7128485.ulg",
+      "bytes": 42830221,
+      "sha256": "806a7ba5c7f6e24ce00614896d62fb8e1fce60f24a30d4dea0ba37bf801be983",
+      "retrieved_utc": "2026-09-23T18:22:25+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=df5c031f-03e1-4068-bb2b-4944c7fc5701",
+      "path": "data/external/raw/px4_review/ulg/df5c031f-03e1-4068-bb2b-4944c7fc5701.ulg",
+      "bytes": 5437529,
+      "sha256": "5fc35c7702f04347bfdeb92601791be6a140d91286406ba1467d69877258f305",
+      "retrieved_utc": "2026-09-23T18:22:30+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=7278db06-fdf7-4d9e-af0c-b768220888e6",
+      "path": "data/external/raw/px4_review/ulg/7278db06-fdf7-4d9e-af0c-b768220888e6.ulg",
+      "bytes": 87044299,
+      "sha256": "f87e2f49ad1e8343e425065bd2ff1b3c5b034617fc3e86488eb06be24215353e",
+      "retrieved_utc": "2026-09-23T18:23:09+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=db1110a1-8860-4077-a13b-100001a377cb",
+      "path": "data/external/raw/px4_review/ulg/db1110a1-8860-4077-a13b-100001a377cb.ulg",
+      "bytes": 27524243,
+      "sha256": "3b956b33027ed67d51333a910b29d3a1bb66848d96caae11073bc3f8673947e2",
+      "retrieved_utc": "2026-09-23T18:23:23+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=35842819-623b-445e-b2b2-f0a257f21304",
+      "path": "data/external/raw/px4_review/ulg/35842819-623b-445e-b2b2-f0a257f21304.ulg",
+      "bytes": 25131201,
+      "sha256": "8012f8fc63cc5e76cae2c186fd50145a67132e13c1474c9984f52a2dfb2f7da2",
+      "retrieved_utc": "2026-09-23T18:23:36+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=1cff73e2-bb2e-4ca9-bd7b-525f87f0bd13",
+      "path": "data/external/raw/px4_review/ulg/1cff73e2-bb2e-4ca9-bd7b-525f87f0bd13.ulg",
+      "bytes": 6693237,
+      "sha256": "3872bcf9e7271fa4deea87de026ae5301216349ad7065f04c12cc7f5ab0377db",
+      "retrieved_utc": "2026-09-23T18:23:41+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=4e149e7b-bcee-4f5f-a4d6-81025c36101e",
+      "path": "data/external/raw/px4_review/ulg/4e149e7b-bcee-4f5f-a4d6-81025c36101e.ulg",
+      "bytes": 18166410,
+      "sha256": "5f7d94d791aa9d022bde894dbe5341f6c6068cb58de67ce46472e8f34d24c83c",
+      "retrieved_utc": "2026-09-23T18:23:51+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=25edff5f-e125-48fe-ac99-ab0ac0551cd9",
+      "path": "data/external/raw/px4_review/ulg/25edff5f-e125-48fe-ac99-ab0ac0551cd9.ulg",
+      "bytes": 9035736,
+      "sha256": "5c4c121bd73caed69beb8cec4121a359b769f2706882baf3e531e190b9852142",
+      "retrieved_utc": "2026-09-23T18:23:57+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=3ec45f76-2e9b-40da-8af7-7c7250641744",
+      "path": "data/external/raw/px4_review/ulg/3ec45f76-2e9b-40da-8af7-7c7250641744.ulg",
+      "bytes": 9171010,
+      "sha256": "12cf058472562c23c834cafb2ec2f1f5d1b43b583d114f119f152cf9c9f59de7",
+      "retrieved_utc": "2026-09-23T18:24:03+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=4141aa54-a802-4fd0-9f8c-2e120eb732d2",
+      "path": "data/external/raw/px4_review/ulg/4141aa54-a802-4fd0-9f8c-2e120eb732d2.ulg",
+      "bytes": 29469000,
+      "sha256": "a724263fc699ba61fb62b150317bacd7d6ef9b537d4d78ae5740b37554b916b2",
+      "retrieved_utc": "2026-09-23T18:24:18+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=47b3fbbf-b6f0-400d-ba18-568b1f3d69fd",
+      "path": "data/external/raw/px4_review/ulg/47b3fbbf-b6f0-400d-ba18-568b1f3d69fd.ulg",
+      "bytes": 5510429,
+      "sha256": "ae3fab6c02480d121555a9d3d031513647acd95db2cf62bdde65c4cca7a31acb",
+      "retrieved_utc": "2026-09-23T18:24:23+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=7db22f39-db5a-4c00-8d4e-fd92311741a1",
+      "path": "data/external/raw/px4_review/ulg/7db22f39-db5a-4c00-8d4e-fd92311741a1.ulg",
+      "bytes": 18491854,
+      "sha256": "ddc82ab649b00c0847ac700f74e67d12b7ebb49a58bd2103fe19c8cedf7930c1",
+      "retrieved_utc": "2026-09-23T18:24:35+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=c0302ade-ba4a-4f7c-a3de-fd3b835558b0",
+      "path": "data/external/raw/px4_review/ulg/c0302ade-ba4a-4f7c-a3de-fd3b835558b0.ulg",
+      "bytes": 23108737,
+      "sha256": "aec0cbf5525a8948cf2d3a4036a941a8b93d566333ba23767a5a2d83b71b1ea4",
+      "retrieved_utc": "2026-09-23T18:24:47+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=076369b1-2a29-473d-81c5-8f80535e7a64",
+      "path": "data/external/raw/px4_review/ulg/076369b1-2a29-473d-81c5-8f80535e7a64.ulg",
+      "bytes": 9339521,
+      "sha256": "892588cbc63892f0057647abda5df73c1d0804c69dd23b2fef34af937cedbf69",
+      "retrieved_utc": "2026-09-23T18:24:53+00:00"
+    },
+    {
+      "url": "https://review.px4.io/download?log=fa408f23-f775-4fe4-b173-bd85b1cb216d",
+      "path": "data/external/raw/px4_review/ulg/fa408f23-f775-4fe4-b173-bd85b1cb216d.ulg",
+      "bytes": 10776312,
+      "sha256": "bffce0634f3586940d322246e764b0edf6a71176ee2def1e65baa03e8fb47354",
+      "retrieved_utc": "2026-09-23T18:25:00+00:00"
+    }
+  ],
+  "selection": {
+    "name": "v2_unrated_one_per_vehicle",
+    "mav_type": "Quadrotor",
+    "exclude_ratings": [
+      "crash_sw_hw",
+      "crash_pilot",
+      "unsatisfactory"
+    ],
+    "max_logged_errors": 0,
+    "min_duration_s": 120,
+    "max_duration_s": 1800,
+    "years": [
+      "2024",
+      "2025",
+      "2026"
+    ],
+    "estimator": "EKF2",
+    "exclude_hw_substrings": [
+      "SITL"
+    ],
+    "exclude_airframe_substrings": [
+      "HIL",
+      "SIH",
+      "Sim"
+    ],
+    "exclude_autostart_ids": [
+      1001,
+      1002,
+      1100,
+      1101,
+      1102,
+      1103
+    ],
+    "one_per_vehicle_uuid": true
+  },
+  "protocol": "v2",
+  "seed": 2026,
+  "n_requested": 40,
+  "n_public_logs": 468513,
+  "n_eligible": 11974,
+  "logs": [
+    {
+      "log_id": "0cf935e3-ee60-4469-9b3f-56990d6064df",
+      "log_date": "2025-11-26",
+      "sys_hw": "MICOAIR_H743_V2",
+      "mav_type": "Quadrotor",
+      "duration_s": 207,
+      "rating": "",
+      "ver_sw_release": "v1.15.4 255",
+      "airframe_name": "Generic Quadcopter",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "36ea4126-a9b3-466b-ae4b-79a37d769e9e",
+      "log_date": "2026-06-19",
+      "sys_hw": "CODEV_AQUILA_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 276,
+      "rating": "",
+      "ver_sw_release": "v1.12.3 0",
+      "airframe_name": "",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "78bc8359-91f2-4c87-9e23-b2d110bef7f0",
+      "log_date": "2026-05-27",
+      "sys_hw": "WGDRONES_DR001",
+      "mav_type": "Quadrotor",
+      "duration_s": 618,
+      "rating": "",
+      "ver_sw_release": "v1.12.3 0",
+      "airframe_name": "HolyBro QAV250",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "7cf1c590-9555-426b-95a3-56d2457c2252",
+      "log_date": "2024-07-26",
+      "sys_hw": "CUBEPILOT_CUBEORANGE",
+      "mav_type": "Quadrotor",
+      "duration_s": 327,
+      "rating": "",
+      "ver_sw_release": "v1.14.3 255",
+      "airframe_name": "Generic Quadcopter",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "c63a91d2-2845-47c4-8ea0-8f7ee914c74c",
+      "log_date": "2025-07-28",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 165,
+      "rating": "",
+      "ver_sw_release": "v1.4.1 255",
+      "airframe_name": "",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "0ac24534-a693-4570-9377-e04329296c86",
+      "log_date": "2026-08-09",
+      "sys_hw": "PX4_FMU_V5",
+      "mav_type": "Quadrotor",
+      "duration_s": 206,
+      "rating": "",
+      "ver_sw_release": "v1.17.0 255",
+      "airframe_name": "Generic Quadcopter",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "1fa13723-cc23-4a85-a0ba-8aa1d4309a90",
+      "log_date": "2026-04-20",
+      "sys_hw": "PX4_FMU_V4",
+      "mav_type": "Quadrotor",
+      "duration_s": 296,
+      "rating": "",
+      "ver_sw_release": "v1.12.3 0",
+      "airframe_name": "Generic Quadcopter",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "ab789bd0-02e5-4a7d-8c89-fd0dd466e328",
+      "log_date": "2025-06-09",
+      "sys_hw": "PX4_FMU_V6X",
+      "mav_type": "Quadrotor",
+      "duration_s": 172,
+      "rating": "",
+      "ver_sw_release": "v1.15.4 255",
+      "airframe_name": "Generic Quadcopter",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "b6b3f656-2d25-4d4e-9724-238af082fd69",
+      "log_date": "2025-11-17",
+      "sys_hw": "PX4_FMU_V6C",
+      "mav_type": "Quadrotor",
+      "duration_s": 442,
+      "rating": "",
+      "ver_sw_release": "v1.15.4 255",
+      "airframe_name": "Generic Quadcopter",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "9271d8b8-7b86-4403-b465-bf328299ef69",
+      "log_date": "2024-10-11",
+      "sys_hw": "UVIFY_CORE",
+      "mav_type": "Quadrotor",
+      "duration_s": 458,
+      "rating": "",
+      "ver_sw_release": "v1.12.3 0",
+      "airframe_name": "UVify IFO",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "55f952e0-670f-441f-bfd9-903b014259bd",
+      "log_date": "2024-08-28",
+      "sys_hw": "HKUST_NXT_DUAL",
+      "mav_type": "Quadrotor",
+      "duration_s": 738,
+      "rating": "",
+      "ver_sw_release": "v1.14.0 128",
+      "airframe_name": "Generic 250 Racer",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "9bcf66b3-5617-40a8-a671-d83e4fee9618",
+      "log_date": "2025-08-25",
+      "sys_hw": "GDCX_H743VI",
+      "mav_type": "Quadrotor",
+      "duration_s": 124,
+      "rating": "",
+      "ver_sw_release": "v1.12.24 0",
+      "airframe_name": "Generic Quadcopter",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "8e633227-0d15-4b36-b75e-4fa95498aac3",
+      "log_date": "2024-09-30",
+      "sys_hw": "MODALAI_VOXL2",
+      "mav_type": "Quadrotor",
+      "duration_s": 200,
+      "rating": "",
+      "ver_sw_release": "v1.14.0 0",
+      "airframe_name": "Generic Quadcopter",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "ffcf5149-e7d1-40d1-abfb-8e5af689c588",
+      "log_date": "2026-09-15",
+      "sys_hw": "CUAV_7_NANO",
+      "mav_type": "Quadrotor",
+      "duration_s": 186,
+      "rating": "",
+      "ver_sw_release": "v1.17.0 255",
+      "airframe_name": "Generic Quadcopter",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "72d71748-e015-4eb7-8b20-8e22405bc264",
+      "log_date": "2025-02-08",
+      "sys_hw": "FREEFLY_ASTRO_FMU_V5X",
+      "mav_type": "Quadrotor",
+      "duration_s": 275,
+      "rating": "",
+      "ver_sw_release": "v1.13.0 0",
+      "airframe_name": "",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "a305d471-3028-4e95-9759-4fdfa79a30d0",
+      "log_date": "2024-12-21",
+      "sys_hw": "CZI_TF_MINI",
+      "mav_type": "Quadrotor",
+      "duration_s": 217,
+      "rating": "",
+      "ver_sw_release": "v1.0.1 64",
+      "airframe_name": "",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "5da22945-a38d-4fb9-9a80-2f7d35f0e071",
+      "log_date": "2026-09-04",
+      "sys_hw": "PX4_FMU_V6C",
+      "mav_type": "Quadrotor",
+      "duration_s": 146,
+      "rating": "",
+      "ver_sw_release": "v1.13.3 0",
+      "airframe_name": "",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "23664a4b-bda3-4124-b1ac-428430b3468b",
+      "log_date": "2026-02-25",
+      "sys_hw": "HOLYBRO_KAKUTEH7",
+      "mav_type": "Quadrotor",
+      "duration_s": 122,
+      "rating": "",
+      "ver_sw_release": "v1.16.1 192",
+      "airframe_name": "Generic 250 Racer",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "0038550b-0ba3-4b05-a730-2a0533434965",
+      "log_date": "2025-01-02",
+      "sys_hw": "CUAV_NORA",
+      "mav_type": "Quadrotor",
+      "duration_s": 126,
+      "rating": "",
+      "ver_sw_release": "v1.15.1 255",
+      "airframe_name": "Generic Quadcopter",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "b2dcf345-e7d0-4339-8a47-8790fd25890b",
+      "log_date": "2025-07-23",
+      "sys_hw": "PX4_FMU_V4",
+      "mav_type": "Quadrotor",
+      "duration_s": 481,
+      "rating": "",
+      "ver_sw_release": "v1.14.0 0",
+      "airframe_name": "",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "07eb5225-c21a-47e5-bbdf-46ed6b5df037",
+      "log_date": "2026-06-09",
+      "sys_hw": "PX4_FMU_V6C",
+      "mav_type": "Quadrotor",
+      "duration_s": 251,
+      "rating": "",
+      "ver_sw_release": "v1.15.0 255",
+      "airframe_name": "Generic Quadcopter",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "0bd0e7c1-f8e9-48f4-82bc-74d67fdd231a",
+      "log_date": "2025-06-10",
+      "sys_hw": "CUAV_X7PRO",
+      "mav_type": "Quadrotor",
+      "duration_s": 316,
+      "rating": "",
+      "ver_sw_release": "v1.12.3 0",
+      "airframe_name": "",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "2f01f367-ad81-4078-9a42-354ce4f6a958",
+      "log_date": "2026-01-14",
+      "sys_hw": "MICOAIR_H743",
+      "mav_type": "Quadrotor",
+      "duration_s": 245,
+      "rating": "",
+      "ver_sw_release": "v1.14.0 0",
+      "airframe_name": "Generic Quadcopter",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "0a27c22c-661e-42f1-af0a-7551f0353ec4",
+      "log_date": "2025-05-07",
+      "sys_hw": "CUAV_X7PRO",
+      "mav_type": "Quadrotor",
+      "duration_s": 256,
+      "rating": "",
+      "ver_sw_release": "v1.12.3 0",
+      "airframe_name": "",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "60ebc92a-ba05-4f4e-9a81-71760954dce1",
+      "log_date": "2024-12-05",
+      "sys_hw": "PX4_FMU_V6C",
+      "mav_type": "Quadrotor",
+      "duration_s": 200,
+      "rating": "",
+      "ver_sw_release": "v1.15.2 255",
+      "airframe_name": "Generic Quadcopter",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "00f6218d-f8bd-4192-aa80-ef48d7128485",
+      "log_date": "2024-12-05",
+      "sys_hw": "PX4_FMU_V3",
+      "mav_type": "Quadrotor",
+      "duration_s": 881,
+      "rating": "",
+      "ver_sw_release": "v1.3.6 255",
+      "airframe_name": "",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "df5c031f-03e1-4068-bb2b-4944c7fc5701",
+      "log_date": "2024-05-28",
+      "sys_hw": "PX4_FMU_V6X",
+      "mav_type": "Quadrotor",
+      "duration_s": 143,
+      "rating": "",
+      "ver_sw_release": "v1.14.0 255",
+      "airframe_name": "Generic Quadcopter",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "7278db06-fdf7-4d9e-af0c-b768220888e6",
+      "log_date": "2025-09-23",
+      "sys_hw": "DRONEYEE_ZYRACER_V14",
+      "mav_type": "Quadrotor",
+      "duration_s": 156,
+      "rating": "",
+      "ver_sw_release": "v1.12.3 0",
+      "airframe_name": "",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "db1110a1-8860-4077-a13b-100001a377cb",
+      "log_date": "2026-05-27",
+      "sys_hw": "CFH_CFH_RK3588",
+      "mav_type": "Quadrotor",
+      "duration_s": 558,
+      "rating": "",
+      "ver_sw_release": "v1.15.4 0",
+      "airframe_name": "Generic Quadcopter",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "35842819-623b-445e-b2b2-f0a257f21304",
+      "log_date": "2026-08-31",
+      "sys_hw": "DR_P3P_V3B",
+      "mav_type": "Quadrotor",
+      "duration_s": 170,
+      "rating": "",
+      "ver_sw_release": "v1.14.0 0",
+      "airframe_name": "Generic 250 Racer",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "1cff73e2-bb2e-4ca9-bd7b-525f87f0bd13",
+      "log_date": "2026-07-22",
+      "sys_hw": "PX4_FMU_V4",
+      "mav_type": "Quadrotor",
+      "duration_s": 688,
+      "rating": "",
+      "ver_sw_release": "v1.14.0 0",
+      "airframe_name": "",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "4e149e7b-bcee-4f5f-a4d6-81025c36101e",
+      "log_date": "2025-09-15",
+      "sys_hw": "PX4_FMU_V6C",
+      "mav_type": "Quadrotor",
+      "duration_s": 454,
+      "rating": "",
+      "ver_sw_release": "v1.15.4 0",
+      "airframe_name": "Generic Quadcopter",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "25edff5f-e125-48fe-ac99-ab0ac0551cd9",
+      "log_date": "2026-05-07",
+      "sys_hw": "HKUST_NXT_DUAL",
+      "mav_type": "Quadrotor",
+      "duration_s": 243,
+      "rating": "",
+      "ver_sw_release": "v1.16.0 255",
+      "airframe_name": "Generic Quadcopter",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "3ec45f76-2e9b-40da-8af7-7c7250641744",
+      "log_date": "2025-06-28",
+      "sys_hw": "PX4_FMU_V4",
+      "mav_type": "Quadrotor",
+      "duration_s": 974,
+      "rating": "",
+      "ver_sw_release": "v1.14.0 128",
+      "airframe_name": "",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "4141aa54-a802-4fd0-9f8c-2e120eb732d2",
+      "log_date": "2024-08-17",
+      "sys_hw": "KMAKISE_SPIRALS",
+      "mav_type": "Quadrotor",
+      "duration_s": 229,
+      "rating": "",
+      "ver_sw_release": "v1.14.3 0",
+      "airframe_name": "Generic Quadcopter",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "47b3fbbf-b6f0-400d-ba18-568b1f3d69fd",
+      "log_date": "2026-07-20",
+      "sys_hw": "PX4_FMU_V6X",
+      "mav_type": "Quadrotor",
+      "duration_s": 120,
+      "rating": "",
+      "ver_sw_release": "v1.16.1 192",
+      "airframe_name": "Generic Quadcopter",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "7db22f39-db5a-4c00-8d4e-fd92311741a1",
+      "log_date": "2025-10-14",
+      "sys_hw": "PX4_FMU_V5",
+      "mav_type": "Quadrotor",
+      "duration_s": 370,
+      "rating": "",
+      "ver_sw_release": "v1.12.3 0",
+      "airframe_name": "Generic Quadcopter",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "c0302ade-ba4a-4f7c-a3de-fd3b835558b0",
+      "log_date": "2024-03-25",
+      "sys_hw": "PX4_FMU_V6C",
+      "mav_type": "Quadrotor",
+      "duration_s": 192,
+      "rating": "",
+      "ver_sw_release": "v1.13.3 0",
+      "airframe_name": "Generic 250 Racer",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "076369b1-2a29-473d-81c5-8f80535e7a64",
+      "log_date": "2024-08-20",
+      "sys_hw": "PX4_FMU_V6X",
+      "mav_type": "Quadrotor",
+      "duration_s": 286,
+      "rating": "",
+      "ver_sw_release": "v1.14.0 255",
+      "airframe_name": "Generic Quadcopter",
+      "wind_speed": -1
+    },
+    {
+      "log_id": "fa408f23-f775-4fe4-b173-bd85b1cb216d",
+      "log_date": "2026-06-09",
+      "sys_hw": "PX4_FMU_V6X",
+      "mav_type": "Quadrotor",
+      "duration_s": 251,
+      "rating": "",
+      "ver_sw_release": "v1.16.1 192",
+      "airframe_name": "Holybro X500 V2",
+      "wind_speed": -1
+    }
+  ]
+}

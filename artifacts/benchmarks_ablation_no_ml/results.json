@@ -1,0 +1,240 @@
+{
+  "n_decisions": 23430,
+  "binary": {
+    "accuracy": 0.9959,
+    "precision": 1.0,
+    "recall_tpr": 0.9855,
+    "fpr": 0.0,
+    "f1": 0.9927,
+    "tp": 6504,
+    "fp": 0,
+    "tn": 16830,
+    "fn": 96
+  },
+  "per_attack": {
+    "GPS_SPOOFING": {
+      "precision": 1.0,
+      "recall": 0.9267,
+      "f1": 0.9619,
+      "support": 900
+    },
+    "MAVLINK_ANOMALY": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 900
+    },
+    "COMMAND_INJECTION": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 600
+    },
+    "TELEMETRY_MANIPULATION": {
+      "precision": 1.0,
+      "recall": 0.9933,
+      "f1": 0.9967,
+      "support": 900
+    },
+    "DOS": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 600
+    },
+    "FIRMWARE_INTEGRITY": {
+      "precision": 1.0,
+      "recall": 0.9911,
+      "f1": 0.9955,
+      "support": 2700
+    }
+  },
+  "macro": {
+    "precision": 1.0,
+    "recall": 0.9852,
+    "f1": 0.9924
+  },
+  "confusion_matrix": {
+    "BENIGN": {
+      "BENIGN": 16830,
+      "GPS_SPOOFING": 0,
+      "MAVLINK_ANOMALY": 0,
+      "COMMAND_INJECTION": 0,
+      "TELEMETRY_MANIPULATION": 0,
+      "DOS": 0,
+      "FIRMWARE_INTEGRITY": 0
+    },
+    "GPS_SPOOFING": {
+      "BENIGN": 66,
+      "GPS_SPOOFING": 834,
+      "MAVLINK_ANOMALY": 0,
+      "COMMAND_INJECTION": 0,
+      "TELEMETRY_MANIPULATION": 0,
+      "DOS": 0,
+      "FIRMWARE_INTEGRITY": 0
+    },
+    "MAVLINK_ANOMALY": {
+      "BENIGN": 0,
+      "GPS_SPOOFING": 0,
+      "MAVLINK_ANOMALY": 900,
+      "COMMAND_INJECTION": 0,
+      "TELEMETRY_MANIPULATION": 0,
+      "DOS": 0,
+      "FIRMWARE_INTEGRITY": 0
+    },
+    "COMMAND_INJECTION": {
+      "BENIGN": 0,
+      "GPS_SPOOFING": 0,
+      "MAVLINK_ANOMALY": 0,
+      "COMMAND_INJECTION": 600,
+      "TELEMETRY_MANIPULATION": 0,
+      "DOS": 0,
+      "FIRMWARE_INTEGRITY": 0
+    },
+    "TELEMETRY_MANIPULATION": {
+      "BENIGN": 6,
+      "GPS_SPOOFING": 0,
+      "MAVLINK_ANOMALY": 0,
+      "COMMAND_INJECTION": 0,
+      "TELEMETRY_MANIPULATION": 894,
+      "DOS": 0,
+      "FIRMWARE_INTEGRITY": 0
+    },
+    "DOS": {
+      "BENIGN": 0,
+      "GPS_SPOOFING": 0,
+      "MAVLINK_ANOMALY": 0,
+      "COMMAND_INJECTION": 0,
+      "TELEMETRY_MANIPULATION": 0,
+      "DOS": 600,
+      "FIRMWARE_INTEGRITY": 0
+    },
+    "FIRMWARE_INTEGRITY": {
+      "BENIGN": 24,
+      "GPS_SPOOFING": 0,
+      "MAVLINK_ANOMALY": 0,
+      "COMMAND_INJECTION": 0,
+      "TELEMETRY_MANIPULATION": 0,
+      "DOS": 0,
+      "FIRMWARE_INTEGRITY": 2676
+    }
+  },
+  "detection_latency_s": {
+    "mean": 0.5333333333333344,
+    "p50": 0.10000000000000142,
+    "p95": 2.2500000000000036,
+    "max": 2.4000000000000057
+  },
+  "compute_latency_ms": {
+    "mean": 0.3981,
+    "p50": 0.1173,
+    "p95": 1.5281,
+    "max": 7.3252
+  },
+  "per_attack_detection_latency_s": {
+    "gps_spoofing": {
+      "mean": 2.2,
+      "max": 2.4
+    },
+    "mavlink_anomaly": {
+      "mean": 0.0,
+      "max": 0.0
+    },
+    "command_injection": {
+      "mean": 0.0,
+      "max": 0.0
+    },
+    "telemetry_manipulation": {
+      "mean": 0.2,
+      "max": 0.2
+    },
+    "dos": {
+      "mean": 0.0,
+      "max": 0.0
+    },
+    "firmware_integrity": {
+      "mean": 0.8,
+      "max": 0.8
+    }
+  },
+  "throughput": {
+    "messages_processed": 181920,
+    "decisions": 25200,
+    "wall_time_s": 18.37,
+    "messages_per_s": 9901.8
+  },
+  "distance_m": {
+    "mean_per_session": 1145.8,
+    "total": 48123.2
+  },
+  "resources": {
+    "cpu_percent_mean": 97.13,
+    "cpu_percent_max": 103.5,
+    "rss_mb_mean": 53.41,
+    "rss_mb_max": 55.07,
+    "n_cores": 12
+  },
+  "per_scenario": {
+    "benign": {
+      "recall": NaN,
+      "fpr": 0.0,
+      "precision": NaN,
+      "n_scored": 3450
+    },
+    "gps_spoofing": {
+      "recall": 0.9266666666666666,
+      "fpr": 0.0,
+      "precision": 1.0,
+      "n_scored": 3306
+    },
+    "mavlink_anomaly": {
+      "recall": 1.0,
+      "fpr": 0.0,
+      "precision": 1.0,
+      "n_scored": 3306
+    },
+    "command_injection": {
+      "recall": 1.0,
+      "fpr": 0.0,
+      "precision": 1.0,
+      "n_scored": 3306
+    },
+    "telemetry_manipulation": {
+      "recall": 0.9933333333333333,
+      "fpr": 0.0,
+      "precision": 1.0,
+      "n_scored": 3306
+    },
+    "dos": {
+      "recall": 1.0,
+      "fpr": 0.0,
+      "precision": 1.0,
+      "n_scored": 3306
+    },
+    "firmware_integrity": {
+      "recall": 0.9911111111111112,
+      "fpr": 0.0,
+      "precision": 1.0,
+      "n_scored": 3450
+    }
+  },
+  "config": {
+    "seeds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "routes": [
+      "survey_box",
+      "out_and_back",
+      "perimeter"
+    ],
+    "grace_s": 5.0,
+    "model_used": false,
+    "decision_rate_hz": 5.0,
+    "python": "3.13.11"
+  }
+}

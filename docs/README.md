@@ -37,7 +37,10 @@ QUICKSTART  →  HANDOFF  →  ARCHITECTURE  →  END_TO_END_FLOW  →  FILE_REF
 - [CONFIGURATION.md](CONFIGURATION.md) — every config field.
 
 ## Quality & evaluation
-- [BENCHMARKING.md](BENCHMARKING.md) — how metrics are produced + results.
+- [BENCHMARKING.md](BENCHMARKING.md) — how metrics are produced + results (baseline, ML-off ablation, extended v2).
+- [EXTERNAL_DATA.md](EXTERNAL_DATA.md) — public real-flight datasets, feature compatibility, external validation.
+- [VALIDATION_EVIDENCE.md](VALIDATION_EVIDENCE.md) — real evidence vs simulation-only vs future work; overclaim audit.
+- [REPORT_ALIGNMENT.md](REPORT_ALIGNMENT.md) — Stage-1 report sections ↔ files/artifacts; TC-01…TC-06.
 - [TESTING.md](TESTING.md) — the 44-test suite.
 - [TROUBLESHOOTING.md](TROUBLESHOOTING.md) — symptom → fix.
 

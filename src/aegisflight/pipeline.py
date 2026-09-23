@@ -22,7 +22,7 @@ from pathlib import Path
 from .config import AegisConfig
 from .core.types import ThreatAssessment
 from .detectors import AnomalyDetector, IntegrityDetector, PhysicsDetector, ProtocolDetector
-from .features.extractor import FeatureExtractor
+from .features.extractor import FeatureExtractor, FeatureFrame
 from .fusion.engine import FusionEngine
 from .integrity.verifier import FirmwareVerifier
 from .sources.stream import TelemetryTick
@@ -56,6 +56,9 @@ class IDSPipeline:
         dec = float(det.get("decision_rate_hz", 5.0))
         self.decision_every = max(1, int(round(base / dec)))
         self._last: ThreatAssessment | None = None
+        # Most recent FeatureFrame (read-only; used by external-data analysis
+        # to inspect features without re-running extraction).
+        self.last_frame: FeatureFrame | None = None
 
     @property
     def ml_available(self) -> bool:
@@ -86,6 +89,7 @@ class IDSPipeline:
 
         t0 = time.perf_counter()
         frame = self.extractor.extract(tick.t)
+        self.last_frame = frame
         r_proto = self.protocol.process(frame)
         r_phys = self.physics.process(frame)
         r_anom = self.anomaly.process(frame)
@@ -130,3 +134,4 @@ class IDSPipeline:
         self.integrity.reset()
         self.fusion.reset()
         self._last = None
+        self.last_frame = None
