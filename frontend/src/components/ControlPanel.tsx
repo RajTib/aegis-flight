@@ -5,7 +5,7 @@ const ATTACKS: Array<{ id: string; label: string }> = [
   { id: "gps_spoofing", label: "GPS Spoofing" },
   { id: "mavlink_anomaly", label: "MAVLink Anomaly" },
   { id: "command_injection", label: "Command Injection" },
-  { id: "telemetry_manipulation", label: "Telemetry Manip." },
+  { id: "telemetry_manipulation", label: "Telemetry Manipulation" },
   { id: "dos", label: "Denial of Service" },
   { id: "firmware_integrity", label: "Firmware Tamper" },
 ];
@@ -15,38 +15,66 @@ export function ControlPanel({ activeAttack }: { activeAttack: string | null }) 
 
   const run = async (fn: () => Promise<unknown>) => {
     setBusy(true);
-    try { await fn(); } finally { setBusy(false); }
+    try {
+      await fn();
+    } finally {
+      setBusy(false);
+    }
   };
+
+  const activeLabel = activeAttack
+    ? ATTACKS.find((a) => a.id === activeAttack)?.label ?? activeAttack.replace(/_/g, " ")
+    : null;
 
   return (
     <div className="panel">
-      <h2>Simulation Controls</h2>
-      <div className="controls">
-        <button className="primary" disabled={busy} onClick={() => run(api.start)}>▶ Start</button>
-        <button disabled={busy} onClick={() => run(api.stop)}>⏸ Stop</button>
-        <button className="danger" disabled={busy} onClick={() => run(api.reset)}>↻ Reset</button>
+      <header>
+        <span className="panel-title">Console Controls</span>
+        <span className="panel-note">safe simulation</span>
+      </header>
+
+      <div className="ctl-group">
+        <div className="ctl-label">Simulation</div>
+        <div className="ctl-row">
+          <button className="primary" disabled={busy} onClick={() => run(api.start)}>Start</button>
+          <button disabled={busy} onClick={() => run(api.stop)}>Stop</button>
+          <button className="ghost-danger" disabled={busy} onClick={() => run(api.reset)}>Reset</button>
+        </div>
       </div>
-      <h2 style={{ marginTop: 16 }}>Inject Attack (safe simulation)</h2>
-      <div className="attack-grid">
-        {ATTACKS.map((a) => (
-          <button
-            key={a.id}
-            className={activeAttack === a.id ? "active" : ""}
-            disabled={busy}
-            onClick={() => run(() => api.attack(a.id))}
-          >
-            {a.label}
-          </button>
-        ))}
+
+      <div className="ctl-group">
+        <div className="ctl-label">Attack Injection</div>
+        <div className="attack-grid">
+          {ATTACKS.map((a) => (
+            <button
+              key={a.id}
+              className={`attack${activeAttack === a.id ? " active" : ""}`}
+              disabled={busy}
+              onClick={() => run(() => api.attack(a.id))}
+            >
+              <span className="a-name">{a.label}</span>
+            </button>
+          ))}
+        </div>
+
+        {activeLabel ? (
+          <div className="active-banner">
+            <span className="dot" />
+            <span>Active — <b>{activeLabel}</b></span>
+            <button
+              style={{ marginLeft: "auto" }}
+              disabled={busy}
+              onClick={() => run(() => api.attack("none"))}
+            >
+              Clear
+            </button>
+          </div>
+        ) : (
+          <div className="clear-row">
+            <button disabled>No attack injected</button>
+          </div>
+        )}
       </div>
-      <button
-        style={{ marginTop: 8, width: "100%" }}
-        className={activeAttack ? "primary" : ""}
-        disabled={busy || !activeAttack}
-        onClick={() => run(() => api.attack("none"))}
-      >
-        ■ Clear attack {activeAttack ? `(${activeAttack.replace(/_/g, " ")})` : ""}
-      </button>
     </div>
   );
 }
