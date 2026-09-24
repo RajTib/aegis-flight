@@ -105,7 +105,15 @@ class FirmwareVerifier:
     # -- verification ------------------------------------------------------- #
 
     def tamper(self, component: str) -> bool:
-        """Flip a byte in a component file (simulates firmware tampering).
+        """Corrupt a byte in a component file (simulates firmware tampering).
+
+        The corrupted value is derived from the *known-good fixture* byte
+        (``good ^ 0xFF``), not from the current on-disk byte, so tampering is
+        **idempotent**: the file lands in the same INVALID state no matter how
+        many times it is called. (A plain in-place XOR toggles a byte back to
+        its original value on the second call, spuriously re-validating the
+        firmware — see the tamper double-click bug.) Only :meth:`restore_fixture`
+        returns the component to a valid state.
 
         Returns True if the file existed and was modified.
         """
@@ -114,7 +122,9 @@ class FirmwareVerifier:
             return False
         data = bytearray(target.read_bytes())
         idx = len(data) // 2
-        data[idx] ^= 0xFF  # single-byte flip -> different SHA-256
+        good = _FIXTURE_COMPONENTS.get(component)
+        good_byte = good[idx] if good is not None and idx < len(good) else data[idx]
+        data[idx] = good_byte ^ 0xFF  # deterministic corrupted value -> INVALID
         target.write_bytes(bytes(data))
         return True
 

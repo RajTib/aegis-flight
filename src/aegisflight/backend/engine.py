@@ -25,12 +25,18 @@ from ..attacks import ATTACK_REGISTRY, build_attack
 from ..attacks.base import NoAttack
 from ..config import AegisConfig, load_config
 from ..core.enums import IntegrityStatus
+from ..core.geo import haversine_m
 from ..logging import EventStore
 from ..pipeline import IDSPipeline
 from ..sources.stream import SimulatedTelemetrySource
 
 # Long "live" duration so the survey pattern flies continuously for a demo.
 _LIVE_DURATION_S = 100_000.0
+
+# Rolling window (wall-clock seconds) used to report *current* live throughput.
+# A window — rather than messages-since-boot / uptime — keeps the displayed rate
+# honest across resets (counters restart but a boot-time denominator would not).
+_THROUGHPUT_WINDOW_S = 5.0
 
 
 class LiveEngine:
@@ -55,6 +61,17 @@ class LiveEngine:
         self._t0_wall = time.time()
         self._n_messages = 0
         self._n_decisions = 0
+        # Rolling (wall_time, cumulative_messages) samples for live throughput.
+        self._msg_samples: deque[tuple[float, int]] = deque(maxlen=512)
+        # Cumulative simulated flight-path length (metres), summed from reported
+        # positions — the same methodology the benchmark uses (_distance_m).
+        self._distance_m = 0.0
+        self._last_pos: tuple[float, float] | None = None
+        # Live time-to-detect: sim time an attack was injected, and the elapsed
+        # time to the FIRST alert after that injection (this session only).
+        self._attack_injected_t: float | None = None
+        self._ttd_pending = False
+        self._last_ttd_s: float | None = None
         self._alerts: deque[dict] = deque(maxlen=200)
         self._latest_update: dict | None = None
         self._last_threat: dict = {}  # last DECISION's threat block (for status)
@@ -124,6 +141,12 @@ class LiveEngine:
         self._sim_t = 0.0
         self._n_messages = 0
         self._n_decisions = 0
+        self._msg_samples.clear()
+        self._distance_m = 0.0
+        self._last_pos = None
+        self._attack_injected_t = None
+        self._ttd_pending = False
+        self._last_ttd_s = None
         self._alerts.clear()
         self._latest_update = None
         self._last_threat = {}
@@ -168,6 +191,8 @@ class LiveEngine:
         if not name or name in ("none", "benign"):
             self.source.attack = NoAttack()
             self._active_attack_name = None
+            self._attack_injected_t = None
+            self._ttd_pending = False
             return
         if name not in ATTACK_REGISTRY:
             return
@@ -179,6 +204,10 @@ class LiveEngine:
         atk.duration_s = _LIVE_DURATION_S
         self.source.attack = atk
         self._active_attack_name = name
+        # Arm the live time-to-detect measurement: record the injection instant;
+        # the first alert after this stamps the elapsed onset->detection time.
+        self._attack_injected_t = self._sim_t
+        self._ttd_pending = True
 
     # -- main loop ---------------------------------------------------------- #
 
@@ -195,7 +224,9 @@ class LiveEngine:
 
             self._sim_t = tick.t
             self._n_messages += len(tick.messages)
+            self._msg_samples.append((time.time(), self._n_messages))
             assessment = self.pipeline.process_tick(tick)
+            self._accumulate_distance()
             update = self._make_update(tick, assessment)
             self._latest_update = update
             if assessment is not None:
@@ -204,9 +235,48 @@ class LiveEngine:
                 if assessment.is_alert:
                     row = self.store.log_event(assessment, self._run_id)
                     self._alerts.appendleft(self._alert_dict(assessment, row.get("id")))
+                    # First alert after an injection -> stamp live time-to-detect.
+                    if self._ttd_pending and self._attack_injected_t is not None:
+                        self._last_ttd_s = round(assessment.t - self._attack_injected_t, 2)
+                        self._ttd_pending = False
             await self._broadcast(update)
 
             await asyncio.sleep(max(0.0, self.dt - (time.perf_counter() - t0)))
+
+    # -- runtime metrics ---------------------------------------------------- #
+
+    def _accumulate_distance(self) -> None:
+        """Add the current leg to the cumulative simulated flight-path length.
+
+        Uses the reported (telemetry) position, matching the benchmark's
+        ``_distance_m`` methodology — this is simulated *path length*, not
+        geographic range or straight-line displacement.
+        """
+        s = self.pipeline.extractor.snapshot
+        if s.lat is None or s.lon is None:
+            return
+        pos = (s.lat, s.lon)
+        if self._last_pos is not None:
+            self._distance_m += haversine_m(
+                self._last_pos[0], self._last_pos[1], pos[0], pos[1]
+            )
+        self._last_pos = pos
+
+    def _throughput(self) -> float:
+        """Current live throughput (msg/s) over a rolling wall-clock window.
+
+        Falls back to the full available sample span when the window has not yet
+        filled, and to 0.0 only when there is genuinely no interval to divide by.
+        """
+        samples = self._msg_samples
+        if len(samples) < 2:
+            return 0.0
+        now = time.time()
+        windowed = [(t, n) for (t, n) in samples if now - t <= _THROUGHPUT_WINDOW_S]
+        span = windowed if len(windowed) >= 2 else list(samples)
+        (t0, n0), (t1, n1) = span[0], span[-1]
+        dt = t1 - t0
+        return round((n1 - n0) / dt, 1) if dt > 0 else 0.0
 
     # -- serialisation ------------------------------------------------------ #
 
@@ -217,6 +287,7 @@ class LiveEngine:
             "t": round(tick.t, 2),
             "telemetry": self.pipeline._telemetry_dict(),
             "attack_active": self._active_attack_name,
+            "distance_m": round(self._distance_m, 1),
         }
         if assessment is not None:
             msg["threat"] = {
@@ -263,18 +334,23 @@ class LiveEngine:
             "attack_type": thr.get("attack_type", "BENIGN"),
             "threat_score": thr.get("threat_score", 0.0),
             "integrity_status": thr.get("integrity_status", IntegrityStatus.VALID.value),
+            "distance_m": round(self._distance_m, 1),
             "run_id": self._run_id,
         }
 
     def metrics(self) -> dict:
-        uptime = max(1e-6, time.time() - self._t0_wall)
         cs = self.store.verify_chain(self._run_id)
         return {
             "messages_processed": self._n_messages,
             "decisions": self._n_decisions,
             "alerts": len(self._alerts),
-            "throughput_msgs_per_s": round(self._n_messages / uptime, 1),
-            "last_latency_ms": self._last_threat.get("latency_ms"),
+            "throughput_msgs_per_s": self._throughput(),
+            # Compute cost of one fused decision (NOT attack-onset latency).
+            "decision_compute_ms": self._last_threat.get("latency_ms"),
+            "last_latency_ms": self._last_threat.get("latency_ms"),  # legacy alias
+            # Attack-onset -> first-detection for the current session (or null).
+            "time_to_detect_s": self._last_ttd_s,
+            "distance_m": round(self._distance_m, 1),
             "event_log": {"count": cs.length, "chain_ok": cs.ok},
             "ml_available": self.pipeline.ml_available,
         }

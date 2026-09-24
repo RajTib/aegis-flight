@@ -8,6 +8,7 @@ export interface LiveState {
   telemetry: Telemetry | null;
   threat: Threat | null;
   attackActive: string | null;
+  distance: number; // cumulative simulated flight-path length (m), live
   track: Array<[number, number]>; // recent [lat, lon]
   scoreHistory: Array<{ t: number; score: number }>;
   alerts: AlertRow[];
@@ -23,6 +24,7 @@ export function useLiveData(): LiveState {
   const [telemetry, setTelemetry] = useState<Telemetry | null>(null);
   const [threat, setThreat] = useState<Threat | null>(null);
   const [attackActive, setAttackActive] = useState<string | null>(null);
+  const [distance, setDistance] = useState(0);
   const [alerts, setAlerts] = useState<AlertRow[]>([]);
   const [metrics, setMetrics] = useState<Metrics | null>(null);
   const trackRef = useRef<Array<[number, number]>>([]);
@@ -49,6 +51,7 @@ export function useLiveData(): LiveState {
         setT(msg.t);
         setTelemetry(msg.telemetry);
         setAttackActive(msg.attack_active);
+        if (typeof msg.distance_m === "number") setDistance(msg.distance_m);
         if (msg.telemetry.lat != null && msg.telemetry.lon != null) {
           const tr = trackRef.current;
           tr.push([msg.telemetry.lat, msg.telemetry.lon]);
@@ -98,6 +101,7 @@ export function useLiveData(): LiveState {
     telemetry,
     threat,
     attackActive,
+    distance,
     track: trackRef.current,
     scoreHistory: histRef.current,
     alerts,

@@ -40,12 +40,21 @@ export function ThreatPanel({ threat }: { threat: Threat | null }) {
           <div className="r-label">Threat score</div>
           <div className="r-value">{score.toFixed(3)}</div>
         </div>
-        <div className="readout">
+        <div
+          className="readout"
+          title="Fusion heuristic (weighted detector agreement), not a calibrated probability."
+        >
           <div className="r-label">Confidence</div>
-          <div className="r-value">{(threat?.confidence ?? 0).toFixed(2)}</div>
+          <div className="r-value">
+            {(threat?.confidence ?? 0).toFixed(2)}
+            <span className="u">heuristic</span>
+          </div>
         </div>
-        <div className="readout">
-          <div className="r-label">Detection latency</div>
+        <div
+          className="readout"
+          title="Compute cost of one fused decision — NOT attack-onset detection latency."
+        >
+          <div className="r-label">Decision compute</div>
           <div className="r-value">
             {(threat?.latency_ms ?? 0).toFixed(1)}
             <span className="u">ms</span>

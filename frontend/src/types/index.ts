@@ -34,6 +34,7 @@ export interface Update {
   t: number;
   telemetry: Telemetry;
   attack_active: string | null;
+  distance_m: number;
   threat?: Threat;
 }
 
@@ -69,7 +70,10 @@ export interface Metrics {
   decisions: number;
   alerts: number;
   throughput_msgs_per_s: number;
-  last_latency_ms: number | null;
+  decision_compute_ms: number | null;
+  last_latency_ms: number | null; // legacy alias of decision_compute_ms
+  time_to_detect_s: number | null;
+  distance_m: number;
   event_log: { count: number; chain_ok: boolean };
   ml_available: boolean;
 }
